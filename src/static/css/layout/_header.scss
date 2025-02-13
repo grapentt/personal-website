@@ -19,6 +19,7 @@ body {
   left: 0;
   line-height: 3.5em;
   position: fixed;
+  z-index: 1000; 
   top: 0;
   width: 100%;
   z-index: _misc(z-index-base);
