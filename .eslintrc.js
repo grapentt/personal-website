@@ -12,6 +12,8 @@ module.exports = {
   rules: {
     'max-len': 'off',
     'no-trailing-spaces': 'off',
+    'jsx-a11y/no-noninteractive-element-to-interactive-role': 'off',
+    'operator-linebreak': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {

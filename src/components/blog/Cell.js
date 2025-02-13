@@ -1,21 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import Latex from 'react-latex-next';
+import './cell.css';
 
-const Cell = ({ data }) => (
-  <div className="cell-container">
-    <article className="mini-post">
-      <header>
-        <h3>
-          <a href={data.link}>{data.title}</a>
-        </h3>
-        <time className="published">
-          {dayjs(data.date).format('MMMM, YYYY')}
-        </time>
-      </header>
-    </article>
-  </div>
-);
+const Cell = ({ data }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleClick = () => setIsExpanded(!isExpanded);
+
+  return (
+    <div className="cell-container">
+      <article
+        className={`mini-post ${isExpanded ? 'expanded' : ''}`}
+        role="button"
+        tabIndex="0"
+        onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') handleClick();
+        }}
+      >
+        <header>
+          <h3>
+            <a href={data.link}>{data.title}</a>
+          </h3>
+          <time className="published">
+            {dayjs(data.date).format('MMMM, YYYY')}
+          </time>
+        </header>
+
+        {/* Description (hidden when expanded) */}
+        
+        {!isExpanded && 
+        <div className="descriptionContainer"> 
+          <div className="description">{data.desc} </div>
+        </div> }
+        
+        {/* Expanded content */}
+        {isExpanded && (
+          <div className="content">
+            <Latex>{data.content}</Latex>
+          </div>
+        )}
+      </article>
+    </div>
+  );
+};
 
 Cell.propTypes = {
   data: PropTypes.shape({
@@ -23,7 +53,8 @@ Cell.propTypes = {
     link: PropTypes.string,
     image: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    desc: PropTypes.string.isRequired,
+    desc: PropTypes.string.isRequired, // Short description
+    content: PropTypes.string.isRequired, // Full article content (LaTeX)
   }).isRequired,
 };
 
