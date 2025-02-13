@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Analytics from '../components/Template/Analytics';
 import Navigation from '../components/Template/Navigation';
-import SideBar from '../components/Template/SideBar';
+// import SideBar from '../components/Template/SideBar';
 import ScrollToTop from '../components/Template/ScrollToTop';
 import ContactIcons from '../components/Contact/ContactIcons';
 
@@ -24,7 +24,7 @@ const Main = (props) => (
     <div id="wrapper">
       <Navigation />
       <div id="main">{props.children}</div>
-      {!props.fullPage && <SideBar />} 
+      {/* {!props.fullPage && <SideBar />}  */}
     </div>  
     <section id="footer">
       <ContactIcons />
@@ -40,14 +40,14 @@ Main.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  fullPage: PropTypes.bool,
+  // fullPage: PropTypes.bool,
   title: PropTypes.string,
   description: PropTypes.string,
 };
 
 Main.defaultProps = {
   children: null,
-  fullPage: false,
+  // fullPage: false,
   title: null,
   description: "Thomas Grapentin's personal website.",
 };
