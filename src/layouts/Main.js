@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 
 import Analytics from '../components/Template/Analytics';
 import Navigation from '../components/Template/Navigation';
 import SideBar from '../components/Template/SideBar';
 import ScrollToTop from '../components/Template/ScrollToTop';
+import ContactIcons from '../components/Contact/ContactIcons';
 
 const Main = (props) => (
   <HelmetProvider>
@@ -21,9 +23,15 @@ const Main = (props) => (
     </Helmet>
     <div id="wrapper">
       <Navigation />
+      {!props.fullPage && <SideBar />} {/* Move SideBar above */}
       <div id="main">{props.children}</div>
-      {props.fullPage ? null : <SideBar />}
-    </div>
+    </div>  
+    <section id="footer">
+      <ContactIcons />
+      <p className="copyright">
+        &copy; Thomas Grapentin <Link to="/">https://grapentt.github.io/personal-website</Link>.
+      </p>
+    </section>
   </HelmetProvider>
 );
 
