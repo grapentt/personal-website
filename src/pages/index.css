@@ -19,7 +19,6 @@
   flex: 1;  /* Allow main content to take up remaining space */
   padding: 20px;
   max-width: none;  /* Allow the content to take up all available width */
-  width: 100%;  /* Ensure content fills available space */
   background-color: white;  /* Ensure a solid background */
   opacity: 1;  /* Ensure the article is fully opaque */
 }
