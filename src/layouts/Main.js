@@ -23,8 +23,8 @@ const Main = (props) => (
     </Helmet>
     <div id="wrapper">
       <Navigation />
-      {!props.fullPage && <SideBar />} {/* Move SideBar above */}
       <div id="main">{props.children}</div>
+      {!props.fullPage && <SideBar />} 
     </div>  
     <section id="footer">
       <ContactIcons />
