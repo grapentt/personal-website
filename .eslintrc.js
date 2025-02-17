@@ -15,6 +15,7 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-to-interactive-role': 'off',
     'operator-linebreak': 'off',
     'no-multiple-empty-lines': 'off',
+    'react/self-closing-comp': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
