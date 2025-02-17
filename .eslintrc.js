@@ -16,6 +16,14 @@ module.exports = {
     'operator-linebreak': 'off',
     'no-multiple-empty-lines': 'off',
     'react/self-closing-comp': 'off',
+    'no-unescaped-entities': 'off',
+    'react/jsx-closing-tag-location': 'off',
+    'eol-last': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/jsx-indent': 'off',
+    'react/jsx-tag-spacing': 'off',
+    'react/jsx-closing-bracket-location': 'off',
+    'object-curly-newline': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {

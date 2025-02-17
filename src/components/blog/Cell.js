@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import Latex from 'react-latex-next';
 import './cell.css';
 
 const Cell = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => setIsExpanded(!isExpanded);
-
+  const Content = data.content;
   return (
     <div className="cell-container">
       <article
@@ -39,7 +38,7 @@ const Cell = ({ data }) => {
         {/* Expanded content */}
         {isExpanded && (
           <div className="content">
-            <Latex>{data.content}</Latex>
+            <Content />
           </div>
         )}
       </article>

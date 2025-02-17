@@ -1,4 +1,4 @@
-import firstArticleLatex from './latexArticles/1Quaternions';
+import BlogArticle1 from './latexArticles/BlogArticle1';
 // TODO Add a couple lines about each project
 const data = [
   {
@@ -8,7 +8,7 @@ const data = [
     date: '2025-02-13',
     desc:
       'Very interesting and engaging article. Read more',
-    content: firstArticleLatex,
+    content: BlogArticle1,
   },
 ];
 
