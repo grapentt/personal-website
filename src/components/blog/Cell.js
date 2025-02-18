@@ -8,6 +8,7 @@ const Cell = ({ data }) => {
 
   const handleClick = () => setIsExpanded(!isExpanded);
   const Content = data.content;
+
   return (
     <div className="cell-container">
       <article
@@ -29,12 +30,23 @@ const Cell = ({ data }) => {
         </header>
 
         {/* Description (hidden when expanded) */}
-        
-        {!isExpanded && 
-        <div className="descriptionContainer"> 
-          <div className="description">{data.desc} </div>
-        </div> }
-        
+        {!isExpanded && (
+          <div className="descriptionContainer">
+            {data.desc}
+          </div>
+        )}
+
+        {/* Display image or GIF (hidden when expanded) */}
+        {!isExpanded && data.image && (
+          <div className="image-container">
+            {data.image.endsWith('.gif') ? (
+              <img src={data.image} alt={data.title} className="gif" />
+            ) : (
+              <img src={data.image} alt={data.title} className="image" />
+            )}
+          </div>
+        )}
+
         {/* Expanded content */}
         {isExpanded && (
           <div className="content">
@@ -50,10 +62,10 @@ Cell.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     link: PropTypes.string,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired, // Path to the image or GIF
     date: PropTypes.string.isRequired,
     desc: PropTypes.string.isRequired, // Short description
-    content: PropTypes.string.isRequired, // Full article content (LaTeX)
+    content: PropTypes.func.isRequired, // Full article content (LaTeX)
   }).isRequired,
 };
 

@@ -3,7 +3,7 @@ import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
 const BlogArticle1 = () => (
-  <article style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', lineHeight: '1.6' }}>
+  <article style={{ maxWidth: '90%', margin: '0 auto', padding: '20px', lineHeight: '1.6' }}>
     <h1>Introduction</h1>
     <p>
       Hello and welcome to my very first blog article! Today, we're going on a journey from the familiar 1D and 2D spaces to the wondrous world of 4-dimensional space. By the end of this post, you'll have a taste of how 4-dimensional numbers—known as quaternions—can describe rotations. And don't worry—no advanced prerequisites are needed! <strong>TODO</strong>

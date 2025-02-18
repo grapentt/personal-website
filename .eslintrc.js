@@ -24,6 +24,7 @@ module.exports = {
     'react/jsx-tag-spacing': 'off',
     'react/jsx-closing-bracket-location': 'off',
     'object-curly-newline': 'off',
+    'jsx-a11y/alt-text': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
