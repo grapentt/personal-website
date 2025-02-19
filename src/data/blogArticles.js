@@ -6,7 +6,7 @@ const data = [
   {
     title: 'A geometric introduction to quaternions - A first glimpse into the 4th dimension',
     subtitle: 'Subtitle',
-    image: `${PUBLIC_URL}/visuals/perfect_tesseract.gif`,
+    image: `${PUBLIC_URL}/visuals/Tesseract.gif`,
     date: '2025-02-13',
     desc:
       'This article offers a first glimpse into the fascinating world of 4-dimensional space '
