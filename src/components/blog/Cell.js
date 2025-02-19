@@ -49,7 +49,7 @@ const Cell = ({ data }) => {
 
         {/* Expanded content */}
         {isExpanded && (
-          <div className="content">
+          <div className="content" onClick={(e) => e.stopPropagation()}>
             <Content />
           </div>
         )}

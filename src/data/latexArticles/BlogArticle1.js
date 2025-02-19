@@ -2,6 +2,8 @@ import React from 'react';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
+const { PUBLIC_URL } = process.env; 
+
 const BlogArticle1 = () => (
   <article style={{ maxWidth: '90%', margin: '0 auto', padding: '20px', lineHeight: '1.6' }}>
     <h1>Introduction</h1>
@@ -51,8 +53,11 @@ const BlogArticle1 = () => (
       What do we mean by the symmetries of space? Let’s start by considering the simplest case: the two-dimensional plane, also known as Flatland. The most straightforward transformation we can apply is a <em>translation</em>, shifting the entire plane without changing its shape.
     </p>
     <p>
-      But we can also stretch, shear, or otherwise distort the plane in many different ways. <strong>TODO: Insert an image of a random nonlinear transformation</strong>
+      But we can also twist or stretch the plane in many different ways.
     </p>
+    <div className="image-container">
+      <img src={`${PUBLIC_URL}/visuals/nonlinear_isomorphism.gif`} alt="2dRotations" className="gif" />
+    </div>
     <p>
       Such transformations drastically alter the appearance of the plane, making it feel unnatural to call them "symmetries." In fact, allowing completely arbitrary transformations seems too general to be useful—there’s little structure to study. So, we impose some restrictions and consider only transformations that:
     </p>
@@ -92,7 +97,9 @@ const BlogArticle1 = () => (
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
         <BlockMath math="\text{Rotation by } \theta: \quad g(\theta) = \exp\big( (e_1 \wedge e_2) \theta \big) = \cos(\theta) + (e_1 \wedge e_2) \sin(\theta)"/>
       </div>
-      <strong>TODO: Insert a Python-generated GIF showing a vector and its image under a <InlineMath math="90^\circ"/> rotation.</strong>
+      <div className="image-container">
+        <img src={`${PUBLIC_URL}/visuals/2drotation_animation.gif`} alt="2dRotations" className="gif" />
+      </div>
     </p>
 
     <h2>Rotations in 3D</h2>
@@ -171,7 +178,7 @@ const BlogArticle1 = () => (
 
     <h2>Quaternions: 4-Dimensional Numbers</h2>
     <p>
-      In our exploration of rotations in 4-space, we have secretly uncovered a remarkable set of numbers known as <em>quaternions</em>. But what exactly qualifies an object as a number? Beyond supporting addition, a number must also be multiplicative. Quaternions naturally fulfill both roles. If you are not interested in the algebraic details, you can skip to <a href="#LabelA">the key takeaway</a>.
+      In our exploration of rotations in 4-space, we have secretly uncovered a remarkable set of numbers known as <em>quaternions</em>. But what exactly qualifies an object as a number? Beyond supporting addition, a number must also be multiplicative. Quaternions naturally fulfill both roles. If you are not interested in the algebraic details, you can skip to <a href="#LabelA">the key relationship</a>.
     </p>
     <p>
       Let’s begin by identifying the standard basis for 4-space:
