@@ -109,6 +109,9 @@ const BlogArticle1 = () => {
         <div style={{ overflowX: 'auto', margin: '20px 0' }}>
           <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big) = \cos(\theta) + (v_1 \wedge v_2) \sin(\theta)"/>
         </div>
+        <div className="image-container">
+          <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3dRotations" className="gif" />
+      </div>
         It is worth noting that every rotation in 3D fixes an entire line (the rotation axis), unlike in 2D where only the origin remains fixed.
       </p>
 
@@ -137,7 +140,7 @@ const BlogArticle1 = () => {
         <div style={{ overflowX: 'auto', margin: '20px 0' }}>
           <BlockMath math="\text{Double Rotation:} \quad \exp\Big( (v_1 \wedge v_2) \theta_1 + (v_3 \wedge v_4) \theta_2 \Big)"/>
         </div>
-        <strong>TODO: Insert a GIF demonstrating a rotating sphere in 3D and the concept of double rotations in 4D.</strong>
+        <strong>TODO: Insert a GIF demonstrating single rotation of tesseract.</strong>
       </p>
 
       <h2>Isoclinic Rotations</h2>
@@ -151,6 +154,7 @@ const BlogArticle1 = () => {
           <BlockMath math="\text{Right isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 - v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 - v_3 \wedge v_4) \sin(\theta)"/>
         </div>
         Note that applying one left isoclinic rotation and one right isoclinic rotation to the same set of (orthogonal) planes by angle <InlineMath math="\theta"/> results in a single rotation of one of the planes by angle <InlineMath math="2\theta"/>. We can thus describe any rotation by a combination of left and right isoclinic rotations.
+        <strong>TODO: Insert a GIF demonstrating isoclinic rotation of tesseract. Maybe also show how this gives any rotation</strong>
       </p>
 
       <h2>Geometry of Isoclinic Rotations</h2>
