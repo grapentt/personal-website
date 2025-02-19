@@ -25,6 +25,9 @@ module.exports = {
     'react/jsx-closing-bracket-location': 'off',
     'object-curly-newline': 'off',
     'jsx-a11y/alt-text': 'off',
+    'react/prop-types': 'off',
+    'react/button-has-type': 'off',
+    'arrow-body-style': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {

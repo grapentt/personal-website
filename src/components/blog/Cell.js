@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import './cell.css';
+import BackToTopButton from '../Template/BackToTopButton';
 
 const Cell = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const containerRef = useRef(null);
 
   const handleClick = () => setIsExpanded(!isExpanded);
   const Content = data.content;
 
   return (
-    <div className="cell-container">
+    <>
+    <div ref={containerRef} className="cell-container">
       <article
         className={`mini-post ${isExpanded ? 'expanded' : ''}`}
         role="button"
@@ -55,6 +58,8 @@ const Cell = ({ data }) => {
         )}
       </article>
     </div>
+    <BackToTopButton containerRef={containerRef} />
+    </>
   );
 };
 
