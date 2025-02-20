@@ -23,25 +23,40 @@ const Index = () => (
           </div>
         </header>
         <p>
-          Welcome to my website! <br />
-          I am super excited to launch my blog here, where I&apos;ll be diving into the fascinating—and often misunderstood—world of mathematics.<br />
-          Let&apos;s face it: when most people think of math, the public image is… uninspiring. At best, it&apos;s seen as a mere tool for science; at worst,  
-          it&apos;s dismissed as a tedious exercise in number-crunching.<br />
-          Contrast this with physics. Many people, even without a deep background, are fascinated by concepts like relativity, quantum mechanics, or  
-          black holes. There are movies, documentaries, and endless discussions about these topics.<br />
-          This is unfortunate because mathematics is not just about numbers—it&apos;s the rigorous study of the nature of reality itself. And not just physical  
-          reality! One reason for its inaccessibility is that mathematics often defies natural language. Physics, at least, describes things we can experience—motion,  
-          gravity, time dilation. But mathematics ventures far beyond that, exploring spaces of arbitrary dimension, structures that don&apos;t exist in our physical  
-          world, and symmetries that cannot be visualized.<br />
-          Another reason, though, is that mathematicians tend to communicate in a language that is incredibly precise and expressive—but also extremely difficult  
-          to learn. In my opinion, many mathematicians overuse this language and forget how hard it was to master in the first place. They rarely make an effort  
-          to translate their insights into something more accessible for outsiders. This is part of why math students struggle so much in the early years of their  
-          studies. There are, of course, inspiring exceptions, but they are rare.<br />
-          This is why I want to start writing a blog about mathematics—especially the differential topology of four-manifolds. My goal is to make this fascinating  
-          world more accessible to outsiders, to bridge the gap between formal mathematics and intuitive understanding. Occasionally, this journey will lead us  
-          into the world of physics as an application of mathematics—reversing the usual.<br />
-          Let&apos;s embark on this journey together and uncover the hidden beauty of mathematics!  
+          <strong>Welcome to my website!</strong>  
+          <br /><br />
+          I am super excited to launch my blog here, where I’ll be diving into the fascinating—and often misunderstood—world of mathematics.  
+          <br /><br />
+          Let’s face it: when most people think of math, the public image is… uninspiring. At best, it’s seen as a mere tool for science; at worst,  
+          it’s dismissed as a tedious exercise in number-crunching.  
+          <br /><br />
+          Contrast this with physics. Many people, even without a deep background, are fascinated by concepts like relativity, quantum mechanics,  
+          or black holes. There are movies, documentaries, and endless discussions about these topics.  
+          <br /><br />
+          This is unfortunate because mathematics is not just about numbers—it’s the rigorous study of the nature of reality itself.  
+          And not just physical reality! One reason for its inaccessibility is that mathematics often defies natural language.  
+          Physics, at least, describes things we can experience—motion, gravity, time dilation. But mathematics ventures far beyond that,  
+          exploring spaces of arbitrary dimension, structures that don’t exist in our physical world, and symmetries that cannot be visualized.  
+          <br /><br />
+          Another reason, though, is that mathematicians tend to communicate in a language that is incredibly precise and expressive—but also  
+          extremely difficult to learn. In my opinion, many mathematicians overuse this language and forget how hard it was to master in the  
+          first place. They rarely make an effort to translate their insights into something more accessible for outsiders. This is part of why  
+          math students struggle so much in the early years of their studies. There are, of course, inspiring exceptions, but they are rare.  
+          <br /><br />
+          <strong>That’s where this blog comes in.</strong>  
+          <br /><br />
+          My goal is to break down complex mathematical ideas—especially ideas related to the differential topology of four-manifolds—into something more  
+          intuitive and accessible. I’ll try to use clear language and many self-created visuals to bridge the gap between  
+          formal mathematics and intuitive understanding.  
+          <br /><br />
+          And along the way, we’ll occasionally dive into physics as an application (reverting the usual order).
+          <br /><br />
+          If you’ve ever been curious about the structures that shape our understanding of space, symmetry, and higher dimensions,  
+          I invite you to join me on this journey.  
+          <br /><br />
+          <strong>Let’s explore the fascinating world of mathematics together.</strong>
         </p>
+
       </article>
     </div>
   </Main>

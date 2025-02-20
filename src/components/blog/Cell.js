@@ -2,7 +2,9 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import './cell.css';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import BackToTopButton from '../Template/BackToTopButton';
+
 
 const Cell = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -28,8 +30,11 @@ const Cell = ({ data }) => {
             <a href={data.link}>{data.title}</a>
           </h3>
           <time className="published">
-            {dayjs(data.date).format('MMMM, YYYY')}
+              {dayjs(data.date).format('MMMM, YYYY')}
           </time>
+          <span className="toggle-arrow">
+            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </span>
         </header>
 
         {/* Description (hidden when expanded) */}
