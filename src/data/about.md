@@ -1,6 +1,7 @@
-I am a highly curious student of Computer Science, Math, and Physics with a deep
-interest in Differential Geometry/Topology. Alongside my academic pursuits, I have a strong background in full-stack development and data science.
+I am a mathematician and software developer with a deep passion for the intersection of mathematics, physics, and technology. My academic journey has been shaped by a fascination with the beauty of mathematics, particularly the geometry and topology of higher-dimensional spaces. This passion led me to specialize in differential topology during my studies at Humboldt University of Berlin, where I recently completed my **bachelor’s thesis** on Seiberg-Witten theory and the Differential Topology of 4-manifolds. You can find it [here](https://grapentt.github.io/personal-website/thesis.pdf).
 
-I recently finished my bachelor thesis. You can find it here: https://grapentt.github.io/personal-website/thesis.pdf
+Alongside my academic pursuits, I have gained extensive experience in software development, integrating theoretical insights with practical implementation. My expertise spans backend and frontend development, with a strong foundation in **Java, Python and React**, as well as **data science and mathematical optimization**. I have applied these skills across various industries, from **aerospace consulting at KPMG** to **enterprise software development at SAP**, where I contribute to building composable process platforms.
 
-I am seeking to combine my passion for math and coding.
+Beyond my corporate experience, I have worked as a **freelance developer**, where I developed **a software solution for the vehicle routing problem**. As part of this project, I built a **Route Optimization Visualizer**, a website that demonstrates key algorithms for solving routing problems. You can explore it [here](https://grapentt.github.io/RouteOptimizationVisualizer/).
+
+I am always looking for opportunities to combine my passion for **mathematics and coding**—whether through research, software development, or innovative problem-solving at the intersection of theory and application. For more details on my work and experience, you can find my **Resume** [here](https://grapentt.github.io/personal-website/resume).
