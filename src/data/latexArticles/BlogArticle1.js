@@ -9,7 +9,7 @@ const BlogArticle1 = () => {
     <article style={{ maxWidth: '90%', margin: '0 auto', padding: '20px', lineHeight: '1.6' }}>
       <h1>Introduction</h1>
       <p>
-        Hello and welcome to my very first blog article! Today, we're going on a journey from the familiar 1D and 2D spaces to the wondrous world of 4-dimensional space. By the end of this post, you'll have a taste of how 4-dimensional numbers—known as quaternions—can describe rotations. And don't worry—no advanced prerequisites are needed! <strong>TODO</strong>
+        Hello and welcome to my very first blog article! Today, we're embarking on an exciting journey from the familiar realms of 1D, 2D and 3D spaces into the wondrous world of 4-dimensional space. By the end of this post, you'll not only understand how 4-dimensional numbers—known as quaternions—describe rotations, but you'll also unravel the mystery behind the mesmerizing GIF shown under the title. No advanced prerequisites are needed!
       </p>
 
       <h2>What is a dimension?</h2>
@@ -68,7 +68,10 @@ const BlogArticle1 = () => {
         <li>Keep parallel lines parallel.</li>
       </ul>
       <p>
-        This leads us to the realm of <strong>linear transformations</strong>. <strong>TODO: Insert an image of a linear transformation</strong>
+        This leads us to the realm of <strong>linear transformations</strong>. 
+        <div className="image-container">
+          <img src={`${PUBLIC_URL}/visuals/linear.gif`} alt="linearTransformations" className="gif" />
+        </div>
       </p>
       <p>
         Linear transformations are a vast subject on their own—after all, they form the core of linear algebra! We’ll explore them in more detail in a future post. But for now, let’s go one step further and impose even stricter conditions: we require that our transformations preserve <em>lengths, angles, and orientations</em>. These special transformations are known as <strong>rotations</strong>.
@@ -111,7 +114,7 @@ const BlogArticle1 = () => {
         </div>
         <div className="image-container">
           <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3dRotations" className="gif" />
-      </div>
+        </div>
         It is worth noting that every rotation in 3D fixes an entire line (the rotation axis), unlike in 2D where only the origin remains fixed.
       </p>
 
@@ -133,14 +136,22 @@ const BlogArticle1 = () => {
       </p>
       <ul>
         <li><strong>Single rotations:</strong> Rotations that affect only one plane while leaving the orthogonal plane unchanged.</li>
+        <div className="image-container">
+          <img src={`${PUBLIC_URL}/visuals/singleTesseract.gif`} alt="isoclinicTesseract" className="gif" />
+        </div>
         <li><strong>Double rotations:</strong> Rotations where both of two mutually orthogonal planes are rotated simultaneously.</li>
+        <div className="image-container">
+          <img src={`${PUBLIC_URL}/visuals/isoclinicTesseract.gif`} alt="isoclinicTesseract" className="gif" />
+        </div>
       </ul>
+      <p> 
+        The visualizations above show a 3D cube living in 4D—a tesseract—projected down to 3D and rotated. This projection allows us to glimpse the complex structure of a 4D object in a form we can more easily comprehend. We will delve deeper into these projections and visualizations in the next blog article. 
+      </p>
       <p>
         If the <InlineMath math="v_3"/>-<InlineMath math="v_4"/> plane is orthogonal to the <InlineMath math="v_1"/>-<InlineMath math="v_2"/> plane, a double rotation that rotates the <InlineMath math="v_1"/>-<InlineMath math="v_2"/> plane by <InlineMath math="\theta_1"/> and the <InlineMath math="v_3"/>-<InlineMath math="v_4"/> plane by <InlineMath math="\theta_2"/> is given by
         <div style={{ overflowX: 'auto', margin: '20px 0' }}>
           <BlockMath math="\text{Double Rotation:} \quad \exp\Big( (v_1 \wedge v_2) \theta_1 + (v_3 \wedge v_4) \theta_2 \Big)"/>
         </div>
-        <strong>TODO: Insert a GIF demonstrating single rotation of tesseract.</strong>
       </p>
 
       <h2>Isoclinic Rotations</h2>
@@ -149,12 +160,12 @@ const BlogArticle1 = () => {
         <div style={{ overflowX: 'auto', margin: '20px 0' }}>
           <BlockMath math="\text{Left isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 + v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 + v_3 \wedge v_4) \sin(\theta)"/>
         </div>
+        The double rotation we visualized above is in fact a left-isoclinic rotation of the tesseract.
         Analogously, a <em>right isoclinic rotation</em> rotates the orthogonal plane by the same angle but in the other direction (or equivalently by the negative angle):
         <div style={{ overflowX: 'auto', margin: '20px 0' }}>
           <BlockMath math="\text{Right isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 - v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 - v_3 \wedge v_4) \sin(\theta)"/>
         </div>
         Note that applying one left isoclinic rotation and one right isoclinic rotation to the same set of (orthogonal) planes by angle <InlineMath math="\theta"/> results in a single rotation of one of the planes by angle <InlineMath math="2\theta"/>. We can thus describe any rotation by a combination of left and right isoclinic rotations.
-        <strong>TODO: Insert a GIF demonstrating isoclinic rotation of tesseract. Maybe also show how this gives any rotation</strong>
       </p>
 
       <h2>Geometry of Isoclinic Rotations</h2>
@@ -249,7 +260,7 @@ const BlogArticle1 = () => {
         An interesting observation is that these left- and right-isoclinic actions are closely related:
       </p>
 
-      <div style={{ margin: '20px 0', backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
+      <div style={{ overflowX: 'auto', margin: '20px 0', backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
         <BlockMath math="\begin{aligned}
           &i_L(i) = -1 = i_R(i),\quad i_L(j) = -i_R(j),\quad i_L(k) = -i_R(k),\\[1mm]
           &j_L(i) = -j_R(i),\quad j_L(j) = -1 = j_R(j),\quad j_L(k) = -j_R(k),\\[1mm]
