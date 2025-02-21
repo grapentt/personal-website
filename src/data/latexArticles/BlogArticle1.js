@@ -158,11 +158,10 @@ const BlogArticle1 = () => {
       Rotate the Projection by 90 Degrees: Once you have the projection, the infinitesimal generator is like taking a "tiny step" in the direction of rotation. In 2D, this tiny step is a 90-degree rotation. Similarly, in 3D, the infinitesimal generator rotates the projected vector by 90 degrees within the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane. 
 
       This infinitesimal generator for the rotation in the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane is denoted by the wedge product <InlineMath math="v_1 \wedge v_2" />. This object encodes the idea of projecting and then rotating by 90 degrees in the plane. When you exponentiate this generator, you get the full rotation by an angle <InlineMath math="\theta" />:
-      <div style={{ overflowX: 'auto', margin: '20px 0' }}> <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big) = \cos(\theta) + (v_1 \wedge v_2) \sin(\theta)"/> </div>
-      </p>
-      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big)"/>
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}> 
+        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big) = \cos(\theta) + (v_1 \wedge v_2) \sin(\theta)"/> 
       </div>
+      </p>
       <div className="image-container">
         <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3D Rotations" className="gif" />
       </div>
