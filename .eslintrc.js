@@ -28,6 +28,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/button-has-type': 'off',
     'arrow-body-style': 'off',
+    'import/no-unresolved': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
