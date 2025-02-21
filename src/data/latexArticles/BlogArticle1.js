@@ -127,7 +127,7 @@ const BlogArticle1 = () => {
         <BlockMath math="\text{Rotation by } \theta: \quad g(\theta) = \exp\big( (e_1 \wedge e_2) \theta \big)"/>
       </div>
       <p>
-        When you work this out, it turns into:
+        In 2D one can actually quite easily see that an explicit formula is given by:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
         <BlockMath math="g(\theta) = \cos(\theta) + (e_1 \wedge e_2) \sin(\theta)"/>
@@ -144,7 +144,7 @@ const BlogArticle1 = () => {
       </div>
 
       <p>
-        So, in summary: the infinitesimal generator <InlineMath math="e_1 \wedge e_2" /> encodes the idea of a <InlineMath math="90^\circ" /> rotation, and exponentiating it gives you a smooth rotation by any angle <InlineMath math="\theta" />. This is a beautiful connection between algebra (the wedge product) and geometry (rotations)!
+        So, in summary: the infinitesimal generator <InlineMath math="e_1 \wedge e_2" /> encodes the idea of a <InlineMath math="90^\circ" /> rotation, and exponentiating it gives you a smooth rotation by any angle <InlineMath math="\theta" />. This is a beautiful connection between algebra (the wedge product) and geometry (rotations) that generalizes to more general symmetries (the infinitesimal generators are kwons as the Lie Algebra of a Lie Group)!
       </p>
 
       <h2>Rotations in 3D</h2>
@@ -152,7 +152,7 @@ const BlogArticle1 = () => {
         In three-dimensional space, rotations become more interesting because there isn’t just one plane to rotate in—there are infinitely many! To describe a rotation in 3D, you need to specify not only the angle <InlineMath math="\theta" /> but also the plane in which the rotation happens. For example, if you choose two orthogonal vectors <InlineMath math="v_1" /> and <InlineMath math="v_2" />, the infinitesimal generator for the rotation in the plane they span is <InlineMath math="v_1 \wedge v_2" />. The corresponding rotation is then given by:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big) = \cos(\theta) + (v_1 \wedge v_2) \sin(\theta)"/>
+        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big)"/>
       </div>
       <div className="image-container">
         <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3D Rotations" className="gif" />
