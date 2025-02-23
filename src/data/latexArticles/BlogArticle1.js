@@ -28,7 +28,7 @@ const BlogArticle1 = () => {
           This is our everyday world. Here, you can move in three independent directions left-right, up-down, and forward-backward. Each point is specified by three coordinates, for example, <InlineMath math="(x,y,z)"/>.
         </li>
       </ul>
-      <p>We call a space with <InlineMath math="n"/> dimensions simply <strong><InlineMath math="n"/>-space</strong>.</p>
+      <p>We call a space with <InlineMath math="n"/> dimensions simply <strong><InlineMath math="n"/>-space</strong> and denote it <InlineMath math="\mathbb{R}^n"/> because every point in n-space is specified by n real numbers. </p>
 
       <h2>Symmetries</h2>
       <p>
@@ -76,6 +76,7 @@ const BlogArticle1 = () => {
       <p>
         Linear transformations are a vast subject on their own—after all, they form the core of linear algebra! We’ll explore them in more detail in a future post. But for now, let’s go one step further and impose even stricter conditions: we require that our transformations preserve <em>lengths, angles, and orientations</em>. These special transformations are known as <strong>rotations</strong>.
       </p>
+
 
       <h2>Rotations in 2D and Infinitesimal Generators</h2>
       <p>
@@ -133,7 +134,7 @@ const BlogArticle1 = () => {
         <BlockMath math="g(\theta) = \cos(\theta) + (e_1 \wedge e_2) \sin(\theta)"/>
       </div>
       <p>
-        This is exactly the formula for a rotation in 2D! The cosine term handles the <InlineMath math="e_1" />-component, and the sine term handles the <InlineMath math="e_2" />-component.
+        This shows that rotations can be described by points on the unit circle <InlineMath math="S^1 \subset \mathbb{R}^2" />.
       </p>
       <p>
         To visualize this, imagine a vector smoothly rotating in the plane. At every step, the infinitesimal generator <InlineMath math="e_1 \wedge e_2" /> is nudging the vector in the direction of rotation. The exponential function "adds up" all these tiny nudges to give you the full rotation.
@@ -144,13 +145,41 @@ const BlogArticle1 = () => {
       </div>
 
       <p>
-        So, in summary: the infinitesimal generator <InlineMath math="e_1 \wedge e_2" /> encodes the idea of a <InlineMath math="90^\circ" /> rotation, and exponentiating it gives you a smooth rotation by any angle <InlineMath math="\theta" />. This is a beautiful connection between algebra (the wedge product) and geometry (rotations) that generalizes to more general symmetries (the infinitesimal generators are kwons as the Lie Algebra of a Lie Group)!
+        So, in summary: the infinitesimal generator <InlineMath math="e_1 \wedge e_2" /> encodes the idea of a <InlineMath math="90^\circ" /> rotation, and exponentiating it gives you a rotation by any angle <InlineMath math="\theta" />. This is a beautiful connection between algebra (the wedge product) and geometry (rotations) that generalizes to more general symmetries (the infinitesimal generators are kwons as the Lie Algebra of a Lie Group)!
       </p>
-
+      <h3>Complex numbers</h3>
+      We have seen that every rotation is described by a point on the unit cicle. We can use this to define multiplication of 2D vectors which then become numbers - complex numbers! 
+      <br/>
+      If <InlineMath math="v"/> has unit length, ie if <InlineMath math="v = (cos(\theta), sin(\theta)" /> for some angle <InlineMath math="\theta" /> we define multiplcation of w by v from the left:
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+        <BlockMath math="v \cdot w = exp \big( (e_1 \wedge e_2) \theta \big) w = \big(cos(\theta) + (e_1 \wedge e_2)sin(\theta) \big) w"/>
+      </div>
+      If <InlineMath math="v"/> does not have unit length, the multiplication also includes a stretch. More concretely, if if <InlineMath math="v = r (cos(\theta), sin(\theta)" />, then
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+        <BlockMath math="v \cdot w =r exp \big( (e_1 \wedge e_2) \theta \big)w =r \big(cos(\theta) + (e_1 \wedge e_2)sin(\theta) \big) w"/>
+      </div>
+      We can define multiplication by the right in the same way. In fact, we can just identify any 2D vector <InlineMath math="(a_1,a_2)"/> with a rotation (plus stretch) <InlineMath math="a_1 + (e_1 \wedge e_2) a_2"/> and use the distributive property to multiply
+      two numbers (remember <InlineMath math="(e_1 \wedge e_2)^2 = -1"/>)
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+        <BlockMath math="\big(a_1 + (e_1 \wedge e_2)a_2 \big) \big(b_1 + (e_1 \wedge e_2)b_2 \big) = (a_1 b_1 - a_2 b_2) + (e_1 \wedge e_2) (a_1 b_2 + a_2 b_1)  "/>
+      </div>
+      Which is more conveniently written as:
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+        <BlockMath math="r_1 exp\big((e_1 \wedge e_2) \theta_1 \big) r_2 exp\big((e_1 \wedge e_2) \theta_2 \big) = r_1 r_2 exp\big((e_1 \wedge e_2) (\theta_1 + \theta_2) \big)"/>
+      </div>
+      <p>
+      Ramark: f one is only interested in complex numbers, it more common to write i instead of <InlineMath math="e_1 \wedge e_2"/>. Our notation is not only more suggestive of what is happening behind the scenes
+      but also generalizes to higher dimensions!
+      </p>
       <h2>Rotations in 3D</h2>
       <p>
-      In three-dimensional space, rotations become more interesting because there isn’t just one plane to rotate in—there are infinitely many! To describe a rotation in 3D, you need to specify not only the angle <InlineMath math="\theta" /> but also the plane in which the rotation happens. For example, if you choose two orthogonal vectors <InlineMath math="v_1" /> and <InlineMath math="v_2" />, the rotation occurs in the plane they span.
-
+      In three-dimensional space, rotations become more interesting because there isn’t just one plane to rotate in—there are infinitely many! To describe a rotation in 3D, you need to specify not only the angle <InlineMath math="\theta" /> but also the plane in which the rotation happens. For example, if you choose two orthogonal unit vectors <InlineMath math="v_1" /> and <InlineMath math="v_2" />, the rotation occurs in the plane they span.
+      <div className="image-container">
+        <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3D Rotations" className="gif" />
+      </div>
+      <p>
+        Unlike in 2D, where only the origin stays fixed, every rotation in 3D leaves an entire line unchanged—this is called the <em>rotation axis</em>. This is the reason why it is not possible to multiply 3D vectors. 
+      </p>
       But how do we describe the infinitesimal generator of this rotation?
 
       Imagine you have a vector in 3D space. To understand how it rotates in the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane, you first project the vector onto that plane. This projection tells you how much of the vector lies in the plane and is therefore affected by the rotation.
@@ -159,14 +188,12 @@ const BlogArticle1 = () => {
 
       This infinitesimal generator for the rotation in the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane is denoted by the wedge product <InlineMath math="v_1 \wedge v_2" />. This object encodes the idea of projecting and then rotating by 90 degrees in the plane. When you exponentiate this generator, you get the full rotation by an angle <InlineMath math="\theta" />:
       <div style={{ overflowX: 'auto', margin: '20px 0' }}> 
-        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big) = \cos(\theta) + (v_1 \wedge v_2) \sin(\theta)"/> 
+        <BlockMath math="\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big)"/> 
       </div>
-      </p>
-      <div className="image-container">
-        <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3D Rotations" className="gif" />
+      Remark: The exponential is in this case not simply equal to <InlineMath math="cos(\theta) + (v_1 \wedge v_2) sin(\theta)"/>. Instead if you decompose a vector w into <InlineMath math="v_1"/>, <InlineMath math="v_2"/> and the third orthogonal component <InlineMath math="w = w_{v_1} + w_{v_2} + w_r"/> the rotation will rotate the <InlineMath math="v_1, v_2"/> component:
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}> 
+        <BlockMath math="\exp\big( (v_1 \wedge v_2) \theta \big)w = \big( cos(\theta) + (v_1 \wedge v_2) sin(\theta) \big) (w_{v_1} + w_{v_2}) + w_r "/> 
       </div>
-      <p>
-        Unlike in 2D, where only the origin stays fixed, every rotation in 3D leaves an entire line unchanged—this is called the <em>rotation axis</em>.
       </p>
 
       <h2>Rotations in 4D</h2>
@@ -198,14 +225,17 @@ const BlogArticle1 = () => {
         </div>
       </ul>
       <p>
-        The animations above show a projection of a cube living in 4D called a <em>tesseract</em>. By projecting it into 3D, we can better visualize its structure. We’ll explore these projections in more detail in the next article. 
+        The animations above show a projection of a 4D cube called a <em>tesseract</em>. By projecting it into 3D, we can better visualize its structure. We’ll explore these projections in more detail in the next article. 
       </p>
       <p>
-        If the <InlineMath math="v_3" />-<InlineMath math="v_4" /> plane is orthogonal to the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane, a double rotation that rotates the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane by <InlineMath math="\theta_1" /> and the <InlineMath math="v_3" />-<InlineMath math="v_4" /> plane by <InlineMath math="\theta_2" /> is given by:
+        If the <InlineMath math="v_3" />-<InlineMath math="v_4" /> plane is orthogonal to the <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane (and all of them are unit vectors), any rotation will rotate <InlineMath math="v_1" />-<InlineMath math="v_2" /> plane by some angle <InlineMath math="\theta_1" /> and the <InlineMath math="v_3" />-<InlineMath math="v_4" /> plane by some other angle <InlineMath math="\theta_2" />:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\text{Double Rotation:} \quad \exp\Big( (v_1 \wedge v_2) \theta_1 + (v_3 \wedge v_4) \theta_2 \Big)"/>
+        <BlockMath math="\text{General rotation in 4D:} \quad \exp\Big( (v_1 \wedge v_2) \theta_1 + (v_3 \wedge v_4) \theta_2 \Big)"/>
       </div>
+      <p>
+        where <InlineMath math="v_i \wedge v_j" /> again denotes a projection into the <InlineMath math="v_i"/>-<InlineMath math="v_j" />-plane followed by <InlineMath math="90 \degree" /> rotation of that plane.
+      </p>
 
       <h2>Isoclinic Rotations</h2>
       <p>
@@ -214,6 +244,7 @@ const BlogArticle1 = () => {
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
         <BlockMath math="\text{Left isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 + v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 + v_3 \wedge v_4) \sin(\theta)"/>
       </div>
+      The last equality can be seen to be true by decomposing a vector w into its <InlineMath math="v_1, v_2, v_3, v_4" /> components and apply the rotation to its components.
       <p>
         The double rotation shown in the animation above is a left-isoclinic rotation of the tesseract. Similarly, a <em>right isoclinic rotation</em> rotates the orthogonal plane by the same angle but in the opposite direction:
       </p>
@@ -226,22 +257,25 @@ const BlogArticle1 = () => {
 
       <h2>Geometry of Isoclinic Rotations</h2>
       <p>
-        Isoclinic rotations have a beautiful geometric interpretation. If <InlineMath math="v_1, v_2, v_3, v_4" /> are orthogonal and positively oriented, the generator of a left isoclinic rotation can be written as:
+        We have seen above that 2D rotations can be represented by points on the unit circle (which is the same as a 1D sphere) <InlineMath math="S^1 \subset \mathbb{R}^2"/>. We will now see that isoclinic rotations can be interpreted as 
+        points on the 3D sphere living in 4-space <InlineMath math="S^3 = \{ v=(a,b,c,d) \in \mathbb{R}^4 \big| |v|^2 = a^2+b^2+c^2+d^2 = 1 \} \subset \mathbb{R}^4" />.
+        <br />
+        If <InlineMath math="v_1, v_2, v_3, v_4" /> are orthogonal and positively oriented, the generator of a left isoclinic rotation can be written as:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
         <BlockMath math="v_1 \wedge v_2 + v_3 \wedge v_4 = a \underbrace{\big( e_1 \wedge e_2 + e_3 \wedge e_4\big)}_{:=i_L} + b \underbrace{\big( e_1 \wedge e_3 + e_4 \wedge e_2\big)}_{:= j_L} + c \underbrace{\big( e_1 \wedge e_4 + e_2 \wedge e_3 \big)}_{:=k_L}"/>
       </div>
       <p>
-        If the vectors <InlineMath math="v_i" /> are unit length, then <InlineMath math="a^2 + b^2 + c^2 = 1" />, meaning the generators of isoclinic rotations correspond to points on a 2-sphere <InlineMath math="S^2 \subset \mathbb{R}^3" />. A general left-isoclinic rotation is obtained by exponentiating the generator:
+        If the vectors <InlineMath math="v_i" /> are unit length, then <InlineMath math="a^2 + b^2 + c^2 = 1" />, meaning the generators of isoclinic rotations correspond to points on a 2-sphere <InlineMath math="S^2 = \{ (a,b,c) \in \mathbb{R}^3 \big| a^2 + b^2 +c^2 = 1 \} \subset \mathbb{R}^3" />. A general left-isoclinic rotation is obtained by exponentiating the generator:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
         <BlockMath math="\exp \big( (a i_L + b j_L + c k_L) \theta \big) = \cos(\theta) + (a i_L + b j_L + c k_L) \sin(\theta)"/>
       </div>
       <p>
-        If we think of the scalar part (<InlineMath math="\cos(\theta)" />) and the components <InlineMath math="i_L, j_L, k_L" /> as basis vectors of <InlineMath math="\mathbb{R}^4" />, then left-isoclinic rotations correspond to points on a 3-sphere <InlineMath math="S^3 \subset \mathbb{R}^4" />:
+        If we think of the scalar part (<InlineMath math="\cos(\theta)" />) and the components <InlineMath math="i_L, j_L, k_L" /> as basis vectors of 4-space <InlineMath math="\mathbb{R}^4" />, then left-isoclinic rotations correspond to points on a 3-sphere <InlineMath math="S^3 \subset \mathbb{R}^4" />:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\{\text{left-isoclinic rotations} \} = \{ (d, a, b, c) | d^2 + a^2 + b^2 + c^2 = 1\} = S_L^3 \subset \mathbb{R}^4"/>
+        <BlockMath math="\{\text{left-isoclinic rotations} \} = \{ \big((cos(\theta), sin(\theta)a, sin(\theta)b, sin(\theta) c \big) = (d, \tilde{a}, \tilde{b}, \tilde{c})\in \mathbb{R}^4 \big| d^2 + \tilde{a}^2 + \tilde{b}^2 + \tilde{c}^2 = 1\} = S_L^3 \subset \mathbb{R}^4"/>
       </div>
       <p>
         The same is true for right-isoclinic rotations. If <InlineMath math="v_1, v_2, v_3, v_4" /> are orthogonal and positively oriented, a right isoclinic rotation is generated by:
@@ -253,95 +287,46 @@ const BlogArticle1 = () => {
         And again:
       </p>
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\{\text{right-isoclinic rotations} \} = \{ (d, a, b, c) | d^2 + a^2 + b^2 + c^2 = 1\} = S_R^3 \subset \mathbb{R}^4"/>
+        <BlockMath math="\exp \big( (a i_R + b j_R + c k_R) \theta \big) = \cos(\theta) + (a i_R + b j_R + c k_R) \sin(\theta)"/>
+      </div>
+      <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+        <BlockMath math="\{\text{right-isoclinic rotations} \} = \{ \big((cos(\theta), sin(\theta)a, sin(\theta)b, sin(\theta) c \big) = \{ (d, \tilde{a}, \tilde{b}, \tilde{c}) \in \mathbb{R}^4 \big| d^2 + \tilde{a}^2 + \tilde{b}^2 + \tilde{c}^2 = 1\} = S_R^3 \subset \mathbb{R}^4"/>
       </div>
 
       <h2>Quaternions: 4-Dimensional Numbers</h2>
       <p>
-        In our exploration of 4D rotations, we’ve stumbled upon a fascinating set of numbers called <em>quaternions</em>. Quaternions are 4-dimensional numbers that support both addition and multiplication. If you’re not interested in the algebraic details, you can skip to the <a href="#LabelA">key relationship</a>.
-      </p>
-      <p>
-        Let’s start by identifying the standard basis for 4D space:
-      </p>
+        Because rotations of 2-space correspond to points on the unit circle, we were able to define left and right multiplication of 2D vectors by just interpreting one vector as a rotation + stretch acting on the other.
+        We can now do the same for 4D vectors making them into 4D numbers - called quaternions! 
+      <br/>
+        If <InlineMath math="v"/> has unit length ie if <InlineMath math="v = (cos(\theta), sin(\theta) a, sin(\theta) b, sin(\theta) c)"/> for an an angle <InlineMath math="\theta"/> and numbers <InlineMath math="a^2 + b^2 + c^2 = 1"/>
+        we define left multiplcation by left-isoclinic rotation:
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="(e_1, e_2, e_3, e_4) \equiv (1, i, j, k)."/>
+        <BlockMath math="v \cdot w = exp \big( (a i_L + b j_L + c k_L) \theta \big) w = \big( cos(\theta) + (a i_L + bj_L + c k_L) sin(\theta) \big) w"/>
       </div>
-      <p>
-        By studying how left-isoclinic rotations act on these basis elements, we find:
-      </p>
+      and right-multiplcation by right-isoclinic rotation:
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
-          <thead>
-            <tr>
-              <th style={{ borderBottom: '2px solid #ddd', padding: '10px' }}>Left-Isoclinic Rotations</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{i_L}{\longmapsto}& i, \\ i &\stackrel{i_L}{\longmapsto}& -1, \\ j &\stackrel{i_L}{\longmapsto}& k, \\ k &\stackrel{i_L}{\longmapsto}& -j, \end{array}"/>
-              </td>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{j_L}{\longmapsto}& j, \\ i &\stackrel{j_L}{\longmapsto}& -k, \\ j &\stackrel{j_L}{\longmapsto}& -1, \\ k &\stackrel{j_L}{\longmapsto}& i, \end{array}"/>
-              </td>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{k_L}{\longmapsto}& k, \\ i &\stackrel{k_L}{\longmapsto}& j, \\ j &\stackrel{k_L}{\longmapsto}& -i, \\ k &\stackrel{k_L}{\longmapsto}& -1. \end{array}"/>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <BlockMath math="w \cdot v = exp \big( (a i_R + b j_R + c k_R) \theta \big) w= \big( cos(\theta) + (a i_R + bj_R + c k_R) sin(\theta) \big) w"/>
       </div>
-      <p>
-        Similarly, right-isoclinic rotations transform the basis as:
-      </p>
+      To get left- and right-multiplications of general 4D vectors, we just add a stretch factor as before. Explicitly for left-multiplication if <InlineMath math="v = r (cos(\theta), sin(\theta) a, sin(\theta) b, sin(\theta) c)"/> we define
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
-          <thead>
-            <tr>
-              <th style={{ borderBottom: '2px solid #ddd', padding: '10px' }}>Right-Isoclinic Rotations</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{i_R}{\longmapsto}& i, \\ i &\stackrel{i_R}{\longmapsto}& -1, \\ j &\stackrel{i_R}{\longmapsto}& -k, \\ k &\stackrel{i_R}{\longmapsto}& j, \end{array}"/>
-              </td>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{j_R}{\longmapsto}& j, \\ i &\stackrel{j_R}{\longmapsto}& k, \\ j &\stackrel{j_R}{\longmapsto}& -1, \\ k &\stackrel{j_R}{\longmapsto}& -i, \end{array}"/>
-              </td>
-              <td style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <BlockMath math="\begin{array}{rcl} 1 &\stackrel{k_R}{\longmapsto}& k, \\ i &\stackrel{k_R}{\longmapsto}& -j, \\ j &\stackrel{k_R}{\longmapsto}& i, \\ k &\stackrel{k_R}{\longmapsto}& -1. \end{array}"/>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        These transformations reveal a key relationship:
-      </p>
-      <div style={{ overflowX: 'auto', margin: '20px 0', backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px' }}>
-        <BlockMath math="\begin{aligned}
-          &i_L(i) = -1 = i_R(i),\quad i_L(j) = -i_R(j),\quad i_L(k) = -i_R(k),\\[1mm]
-          &j_L(i) = -j_R(i),\quad j_L(j) = -1 = j_R(j),\quad j_L(k) = -j_R(k),\\[1mm]
-          &k_L(i) = -k_R(i),\quad k_L(j) = -k_R(j),\quad k_L(k) = -1 = k_R(k).
-        \end{aligned}"/>
-      </div>
-      <h3 id="LabelA">Key Relationship</h3>
-      <p>
-        This relationship motivates the idea of interpreting left-isoclinic rotations as <em>left multiplication</em> and right-isoclinic rotations as <em>right multiplication</em> by quaternions. For a quaternion <InlineMath math="v = a + bi + cj + dk" />, this means:
-      </p>
+        <BlockMath math="v \cdot w = r exp \big( (a i_L + b j_L + c k_L) \theta \big) w"/>
+      </div> 
+      In fact, if we introduce i,j,k that satisfy the multiplication rules:
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="\begin{aligned}
-          i_L(v) &= iv,\quad &j_L(v) &= jv,\quad &k_L(v) &= kv,\\[1mm]
-          i_R(v) &= vi,\quad &j_R(v) &= vj,\quad &k_R(v) &= vk.
-        \end{aligned}"/>
+        <BlockMath math="i^2 = j^2 = k^2 = -1"/>
+        <BlockMath math="ij = k = -ji"/>
       </div>
-      <p>
-        These definitions align with the familiar quaternion multiplication rules:
-      </p>
+      and identify <InlineMath math="(e_1, e_2, e_3, e_4) = (1, i, j, k)"/> one can easily check (through simple computation) that:
       <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-        <BlockMath math="i^2 = j^2 = k^2 = -1,\quad ij = k = -ji."/>
+        <BlockMath math="i_L(v) = iv, \quad i_R(v) = vi"/>
+        <BlockMath math="j_L(v) = jv, \quad j_R(v) = vj"/>
+        <BlockMath math="k_L(v) = kv, \quad k_R(v) = vk"/>
       </div>
+      and then define the multiplication of 4D numbers by the normal distributive property.
+      </p>
+      <p> 
+        Remark: Unlike multiplication of complex numbers, this multiplication is not commutative!
+      </p>
       <div style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px', margin: '20px 0' }}>
         <h3>Key Takeaway</h3>
         <p>
