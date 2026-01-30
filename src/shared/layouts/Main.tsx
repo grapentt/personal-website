@@ -14,7 +14,7 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({
   children = null,
   title = null,
-  description = "Thomas Grapentin's personal website.",
+  description = "Thomas Grapentin's personal website exploring mathematics, physics, and machine learning. Topics include differential geometry, manifold theory, Lie groups and algebras, geometric algebra, fiber bundles, gauge theory, spinor geometry, topological quantum field theory, and applications to particle physics and machine learning.",
 }) => (
   <HelmetProvider>
     <Analytics />
