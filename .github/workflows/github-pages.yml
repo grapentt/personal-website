@@ -35,32 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and Render
-        shell: bash
-        run: |
-          # Retry function to handle transient failures during the build
-          function retry {
-            local n=1
-            local max=5
-            local delay=1
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                fi
-              }
-            done
-          }
-          retry npm run predeploy
+      - name: Build with Vite
+        run: npm run build
         env:
-          NODE_ENV: production
-          # Update or remove if you don't need Google Analytics tracking
-          REACT_APP_GA_TRACKING_ID: UA-68649021-1
+          # Vite environment variables (must be prefixed with VITE_)
+          VITE_GA_TRACKING_ID: UA-68649021-1
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5

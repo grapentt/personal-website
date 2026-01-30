@@ -1,0 +1,317 @@
+import { VideoPlayer } from '@/shared/components';
+
+export const title = "A geometric introduction to quaternions - A first glimpse into the 4th dimension";
+export const date = "2025-02-13";
+export const description = "This article offers a first glimpse into the fascinating world of 4-dimensional space through the lens of symmetry/rotations. We'll unravel the structure of 4D space, where rotations and transformations defy our 3D intuition, and discover how quaternions—a remarkable 4D number system—naturally emerge as the key to understanding these higher-dimensional symmetries.";
+export const image = "/personal-website/visuals/isoclinicTesseract.gif";
+
+# Introduction
+
+Hello and welcome to my very first blog article! Today, we're embarking on an exciting journey from the familiar realms of 1D, 2D and 3D spaces into the wondrous world of 4-dimensional space. By the end of this post, you'll not only understand how 4-dimensional numbers—known as quaternions—describe rotations, but you'll also unravel the mystery behind the mesmerizing GIF shown under the title. No advanced prerequisites are needed!
+
+## What is a dimension?
+
+A **dimension** is simply the number of independent directions in which you can move:
+
+- **1-Dimensional Space (Lineland):**
+  Imagine a world that is just a straight line. In Lineland, every point is described by a single number/coordinate (its position on the line).
+
+- **2-Dimensional Space (Flatland):**
+  Now think of a flat sheet of paper. An inhabitant of Flatland can only move left-right or up-down. Each point is given by two coordinates, like $(x,y)$.
+
+- **3-Dimensional Space (Our universe):**
+  This is our everyday world. Here, you can move in three independent directions left-right, up-down, and forward-backward. Each point is specified by three coordinates, for example, $(x,y,z)$.
+
+We call a space with $n$ dimensions simply **$n$-space** and denote it $\mathbb{R}^n$ because every point in n-space is specified by n real numbers.
+
+## Symmetries
+
+A good way to understand "space" is to understand its symmetries. What is a symmetry? We all have an intuitive understanding of the word, but at least I had a very poor idea of what symmetry was until quite recently. For example, consider a square:
+
+- **Reflection:**
+  If you mirror a square across its centerline, the shape looks identical—even though the order of the corners might be reversed.
+
+- **Rotation:**
+  Rotating the square by $90^\circ$, $180^\circ$, or $270^\circ$ and of course $360^\circ$ also leaves the square unchanged.
+
+In general, a **symmetry** is a transformation that does not change the object. But, wait a second, what do we mean exactly by "does not change"? Any numbering of the corners certainly changed through all of the described transformations! The reflection changed something even more fundamental: If you number the corners of the original square clockwise and then mirror it along the axis, the new ordering will be anti-clockwise, meaning we changed the orientation! The answer to what "does not change" means is hence a question of perspective. We get to choose and study symmetry transformations that preserve our favorite structure of the object (like orientation of the square).
+
+## Symmetries of Space
+
+What do we mean by the symmetries of space? Let's start by considering the simplest case: the two-dimensional plane, also known as Flatland. The most straightforward transformation we can apply is a *translation*, shifting the entire plane without changing its shape.
+
+But we can also twist or stretch the plane in many different ways.
+
+<VideoPlayer src="/personal-website/visuals/nonlinear_isomorphism" alt="2D Rotations" className="gif" />
+
+Such transformations drastically alter the appearance of the plane, making it feel unnatural to call them "symmetries." In fact, allowing completely arbitrary transformations seems too general to be useful—there's little structure to study. So, we impose some restrictions and consider only transformations that:
+
+- Fix the origin,
+- Preserve straight lines, and
+- Keep parallel lines parallel.
+
+This leads us to the realm of **linear transformations**.
+
+<VideoPlayer src="/personal-website/visuals/linear" alt="Linear Transformations" className="gif" />
+
+Linear transformations are a vast subject on their own—after all, they form the core of linear algebra! We'll explore them in more detail in a future post. But for now, let's go one step further and impose even stricter conditions: we require that our transformations preserve *lengths, angles, and orientations*. These special transformations are known as **rotations**.
+
+## Rotations in 2D and Infinitesimal Generators
+
+Rotations in two dimensions are pretty simple because there's only one plane to rotate in—the plane spanned by the basis vectors $e_1$ and $e_2$. A rotation is fully described by a single angle $\theta$, but there's a deeper and more elegant way to understand rotations using something called *infinitesimal generators*. Let's unpack this step by step.
+
+### What's an Infinitesimal Generator?
+
+Imagine you're rotating a vector in the plane. At every moment, the vector is changing direction, and the rate at which it changes is described by its derivative. The *infinitesimal generator* is the mathematical object that tells you how the vector is changing at any given point. Specifically, it's the thing you apply to the current vector to get its derivative.
+
+For rotations in 2D, the infinitesimal generator is related to a $90^\circ$ rotation. Why $90^\circ$? Because rotating by $90^\circ$ is like taking a "tiny step" in the direction of rotation. If you keep applying this tiny step over and over, you get a smooth rotation. This is where the connection to the exponential function comes in—more on that in a moment.
+
+### The Wedge Product and Rotation Generators
+
+To describe this mathematically, we use something called the *wedge product*, denoted by $\wedge$. The wedge product $e_1 \wedge e_2$ represents a rotation in the $e_1$-$e_2$ plane. It has a special property:
+
+$$
+e_1 \wedge e_2 = -e_2 \wedge e_1
+$$
+
+This means that rotating $e_1$ to $e_2$ is the opposite of rotating $e_2$ to $e_1$. In fact, applying $e_1 \wedge e_2$ to $e_1$ gives $e_2$, and applying it to $e_2$ gives $-e_1$. This is exactly what a $90^\circ$ rotation does!
+
+If you apply this $90^\circ$ rotation twice, you get a $180^\circ$ rotation, which is the same as flipping the vector (multiplying it by $-1$):
+
+$$
+(e_1 \wedge e_2)^2 = -1
+$$
+
+This is a key property that connects rotations to complex numbers and the exponential function.
+
+### From Generators to Rotations: The Exponential Map
+
+Now, how do we go from this infinitesimal generator to an actual rotation by an angle $\theta$? This is where the exponential function comes in. The exponential function is special because it turns "tiny changes" (like the infinitesimal generator) into "full transformations" (like a rotation).
+
+If $g(\theta)$ represents a rotation by $\theta$, its derivative—the rate at which it changes—is given by:
+
+$$
+g'(\theta) = (e_1 \wedge e_2) \, g(\theta)
+$$
+
+This says that the tangent vector (the direction of change) at any point is just the infinitesimal generator $e_1 \wedge e_2$ applied to the current position. To recover the full rotation, we "exponentiate" the generator:
+
+$$
+\text{Rotation by } \theta: \quad g(\theta) = \exp\big( (e_1 \wedge e_2) \theta \big)
+$$
+
+In 2D one can actually quite easily see that an explicit formula is given by:
+
+$$
+g(\theta) = \cos(\theta) + (e_1 \wedge e_2) \sin(\theta)
+$$
+
+This shows that rotations can be described by points on the unit circle $S^1 \subset \mathbb{R}^2$.
+
+To visualize this, imagine a vector smoothly rotating in the plane. At every step, the infinitesimal generator $e_1 \wedge e_2$ is nudging the vector in the direction of rotation. The exponential function "adds up" all these tiny nudges to give you the full rotation.
+
+<VideoPlayer src="/personal-website/visuals/2drotation_animation" alt="2D Rotation Animation" className="gif" />
+
+So, in summary: the infinitesimal generator $e_1 \wedge e_2$ encodes the idea of a $90^\circ$ rotation, and exponentiating it gives you a rotation by any angle $\theta$. This is a beautiful connection between algebra (the wedge product) and geometry (rotations) that generalizes to more general symmetries (the infinitesimal generators are known as the Lie Algebra of a Lie Group)!
+
+### Complex numbers
+
+We have seen that every rotation is described by a point on the unit circle. We can use this to define multiplication of 2D vectors which then become numbers - complex numbers!
+
+If $v$ has unit length, ie if $v = (\cos(\theta), \sin(\theta))$ for some angle $\theta$ we define multiplication of w by v from the left:
+
+$$
+v \cdot w = \exp \big( (e_1 \wedge e_2) \theta \big) w = \big(\cos(\theta) + (e_1 \wedge e_2)\sin(\theta) \big) w
+$$
+
+If $v$ does not have unit length, the multiplication also includes a stretch. More concretely, if $v = r (\cos(\theta), \sin(\theta))$, then
+
+$$
+v \cdot w =r \exp \big( (e_1 \wedge e_2) \theta \big)w =r \big(\cos(\theta) + (e_1 \wedge e_2)\sin(\theta) \big) w
+$$
+
+We can define multiplication by the right in the same way. In fact, we can just identify any 2D vector $(a_1,a_2)$ with a rotation (plus stretch) $a_1 + (e_1 \wedge e_2) a_2$ and use the distributive property to multiply two numbers (remember $(e_1 \wedge e_2)^2 = -1$)
+
+$$
+\big(a_1 + (e_1 \wedge e_2)a_2 \big) \big(b_1 + (e_1 \wedge e_2)b_2 \big) = (a_1 b_1 - a_2 b_2) + (e_1 \wedge e_2) (a_1 b_2 + a_2 b_1)
+$$
+
+Which is more conveniently written as:
+
+$$
+r_1 \exp\big((e_1 \wedge e_2) \theta_1 \big) r_2 \exp\big((e_1 \wedge e_2) \theta_2 \big) = r_1 r_2 \exp\big((e_1 \wedge e_2) (\theta_1 + \theta_2) \big)
+$$
+
+Remark: If one is only interested in complex numbers, it is more common to write i instead of $e_1 \wedge e_2$. Our notation is not only more suggestive of what is happening behind the scenes but also generalizes to higher dimensions!
+
+## Rotations in 3D
+
+In three-dimensional space, rotations become more interesting because there isn't just one plane to rotate in—there are infinitely many! To describe a rotation in 3D, you need to specify not only the angle $\theta$ but also the plane in which the rotation happens. For example, if you choose two orthogonal unit vectors $v_1$ and $v_2$, the rotation occurs in the plane they span.
+
+<VideoPlayer src="/personal-website/visuals/rotating_sphere" alt="3D Rotations - Rotating Sphere" className="gif" />
+
+Unlike in 2D, where only the origin stays fixed, every rotation in 3D leaves an entire line unchanged—this is called the *rotation axis*. This is the reason why it is not possible to multiply 3D vectors.
+
+But how do we describe the infinitesimal generator of this rotation?
+
+Imagine you have a vector in 3D space. To understand how it rotates in the $v_1$-$v_2$ plane, you first project the vector onto that plane. This projection tells you how much of the vector lies in the plane and is therefore affected by the rotation.
+
+Rotate the Projection by 90 Degrees: Once you have the projection, the infinitesimal generator is like taking a "tiny step" in the direction of rotation. In 2D, this tiny step is a 90-degree rotation. Similarly, in 3D, the infinitesimal generator rotates the projected vector by 90 degrees within the $v_1$-$v_2$ plane.
+
+This infinitesimal generator for the rotation in the $v_1$-$v_2$ plane is denoted by the wedge product $v_1 \wedge v_2$. This object encodes the idea of projecting and then rotating by 90 degrees in the plane. When you exponentiate this generator, you get the full rotation by an angle $\theta$:
+
+$$
+\text{Rotation in the } v_1\text{-}v_2 \text{ plane by } \theta: \quad \exp\big( (v_1 \wedge v_2) \theta \big)
+$$
+
+Remark: The exponential is in this case not simply equal to $\cos(\theta) + (v_1 \wedge v_2) \sin(\theta)$. Instead if you decompose a vector w into $v_1$, $v_2$ and the third orthogonal component $w = w_{v_1} + w_{v_2} + w_r$ the rotation will rotate the $v_1, v_2$ component:
+
+$$
+\exp\big( (v_1 \wedge v_2) \theta \big)w = \big( \cos(\theta) + (v_1 \wedge v_2) \sin(\theta) \big) (w_{v_1} + w_{v_2}) + w_r
+$$
+
+## Rotations in 4D
+
+Now let's move to four dimensions! In 4D, things get even more fascinating. Just like in 3D, you can rotate a two-dimensional plane, but in 4D, every plane has an entirely orthogonal plane. For example, consider a rotation in the $e_1$-$e_2$ plane:
+
+$$
+\begin{pmatrix}
+    x^1 \\ x^2 \\ x^3 \\ x^4
+\end{pmatrix}
+\longrightarrow
+\begin{pmatrix}
+  R \begin{pmatrix} x^1 \\ x^2 \end{pmatrix} \\ x^3 \\ x^4
+\end{pmatrix}
+$$
+
+Here, $R$ is the rotation matrix for the $e_1$-$e_2$ plane. In this case, the entire $e_3$-$e_4$ plane remains fixed. In 4D, we distinguish between two types of rotations:
+
+- **Single rotations:** These affect only one plane while leaving the orthogonal plane unchanged.
+
+<VideoPlayer src="/personal-website/visuals/singleTesseract" alt="Single Rotation in 4D Space" className="gif" />
+
+- **Double rotations:** These rotate two mutually orthogonal planes simultaneously.
+
+<VideoPlayer src="/personal-website/visuals/isoclinicTesseract" alt="Double Rotation in 4D Space (Isoclinic)" className="gif" />
+
+The animations above show a projection of a 4D cube called a *tesseract*. By projecting it into 3D, we can better visualize its structure. We'll explore these projections in more detail in the next article.
+
+If the $v_3$-$v_4$ plane is orthogonal to the $v_1$-$v_2$ plane (and all of them are unit vectors), any rotation will rotate $v_1$-$v_2$ plane by some angle $\theta_1$ and the $v_3$-$v_4$ plane by some other angle $\theta_2$:
+
+$$
+\text{General rotation in 4D:} \quad \exp\Big( (v_1 \wedge v_2) \theta_1 + (v_3 \wedge v_4) \theta_2 \Big)
+$$
+
+where $v_i \wedge v_j$ again denotes a projection into the $v_i$-$v_j$-plane followed by $90°$ rotation of that plane.
+
+## Isoclinic Rotations
+
+A special type of double rotation is called an *isoclinic rotation*. These are rotations where the two orthogonal planes are rotated by the same angle, either in the same direction (left isoclinic) or in opposite directions (right isoclinic). For example:
+
+$$
+\text{Left isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 + v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 + v_3 \wedge v_4) \sin(\theta)
+$$
+
+The last equality can be seen to be true by decomposing a vector w into its $v_1, v_2, v_3, v_4$ components and apply the rotation to its components.
+
+The double rotation shown in the animation above is a left-isoclinic rotation of the tesseract. Similarly, a *right isoclinic rotation* rotates the orthogonal plane by the same angle but in the opposite direction:
+
+$$
+\text{Right isoclinic double rotation by } \theta = \exp\big( (v_1 \wedge v_2 - v_3 \wedge v_4) \theta \big) = \cos(\theta) + (v_1 \wedge v_2 - v_3 \wedge v_4) \sin(\theta)
+$$
+
+Combining a left and right isoclinic rotation by the same angle results in a single rotation of one of the planes by $2\theta$. This means we can describe any rotation in 4D using combinations of left and right isoclinic rotations.
+
+## Geometry of Isoclinic Rotations
+
+We have seen above that 2D rotations can be represented by points on the unit circle (which is the same as a 1D sphere) $S^1 \subset \mathbb{R}^2$. We will now see that isoclinic rotations can be interpreted as points on the 3D sphere living in 4-space $S^3 = \{ v=(a,b,c,d) \in \mathbb{R}^4 \big| |v|^2 = a^2+b^2+c^2+d^2 = 1 \} \subset \mathbb{R}^4$.
+
+If $v_1, v_2, v_3, v_4$ are orthogonal and positively oriented, the generator of a left isoclinic rotation can be written as:
+
+$$
+v_1 \wedge v_2 + v_3 \wedge v_4 = a \underbrace{\big( e_1 \wedge e_2 + e_3 \wedge e_4\big)}_{:=i_L} + b \underbrace{\big( e_1 \wedge e_3 + e_4 \wedge e_2\big)}_{:= j_L} + c \underbrace{\big( e_1 \wedge e_4 + e_2 \wedge e_3 \big)}_{:=k_L}
+$$
+
+If the vectors $v_i$ are unit length, then $a^2 + b^2 + c^2 = 1$, meaning the generators of isoclinic rotations correspond to points on a 2-sphere $S^2 = \{ (a,b,c) \in \mathbb{R}^3 \big| a^2 + b^2 +c^2 = 1 \} \subset \mathbb{R}^3$. A general left-isoclinic rotation is obtained by exponentiating the generator:
+
+$$
+\exp \big( (a i_L + b j_L + c k_L) \theta \big) = \cos(\theta) + (a i_L + b j_L + c k_L) \sin(\theta)
+$$
+
+If we think of the scalar part ($\cos(\theta)$) and the components $i_L, j_L, k_L$ as basis vectors of 4-space $\mathbb{R}^4$, then left-isoclinic rotations correspond to points on a 3-sphere $S^3 \subset \mathbb{R}^4$:
+
+$$
+\{\text{left-isoclinic rotations} \} = \{ \big((\cos(\theta), \sin(\theta)a, \sin(\theta)b, \sin(\theta) c \big) = (d, \tilde{a}, \tilde{b}, \tilde{c})\in \mathbb{R}^4 \big| d^2 + \tilde{a}^2 + \tilde{b}^2 + \tilde{c}^2 = 1\} = S_L^3 \subset \mathbb{R}^4
+$$
+
+The same is true for right-isoclinic rotations. If $v_1, v_2, v_3, v_4$ are orthogonal and positively oriented, a right isoclinic rotation is generated by:
+
+$$
+v_1 \wedge v_2 - v_3 \wedge v_4 = a \underbrace{\big( e_1 \wedge e_2 - e_3 \wedge e_4\big)}_{:=i_R} + b \underbrace{\big( e_1 \wedge e_3 - e_4 \wedge e_2\big)}_{:= j_R} + c \underbrace{\big( e_1 \wedge e_4 - e_2 \wedge e_3 \big)}_{:=k_R}
+$$
+
+And again:
+
+$$
+\exp \big( (a i_R + b j_R + c k_R) \theta \big) = \cos(\theta) + (a i_R + b j_R + c k_R) \sin(\theta)
+$$
+
+$$
+\{\text{right-isoclinic rotations} \} = \{ \big((\cos(\theta), \sin(\theta)a, \sin(\theta)b, \sin(\theta) c \big) = \{ (d, \tilde{a}, \tilde{b}, \tilde{c}) \in \mathbb{R}^4 \big| d^2 + \tilde{a}^2 + \tilde{b}^2 + \tilde{c}^2 = 1\} = S_R^3 \subset \mathbb{R}^4
+$$
+
+## Quaternions: 4-Dimensional Numbers
+
+Because rotations of 2-space correspond to points on the unit circle, we were able to define left and right multiplication of 2D vectors by just interpreting one vector as a rotation + stretch acting on the other. We can now do the same for 4D vectors making them into 4D numbers - called quaternions!
+
+If $v$ has unit length ie if $v = (\cos(\theta), \sin(\theta) a, \sin(\theta) b, \sin(\theta) c)$ for an angle $\theta$ and numbers $a^2 + b^2 + c^2 = 1$ we define left multiplication by left-isoclinic rotation:
+
+$$
+v \cdot w = \exp \big( (a i_L + b j_L + c k_L) \theta \big) w = \big( \cos(\theta) + (a i_L + bj_L + c k_L) \sin(\theta) \big) w
+$$
+
+and right-multiplication by right-isoclinic rotation:
+
+$$
+w \cdot v = \exp \big( (a i_R + b j_R + c k_R) \theta \big) w= \big( \cos(\theta) + (a i_R + bj_R + c k_R) \sin(\theta) \big) w
+$$
+
+To get left- and right-multiplications of general 4D vectors, we just add a stretch factor as before. Explicitly for left-multiplication if $v = r (\cos(\theta), \sin(\theta) a, \sin(\theta) b, \sin(\theta) c)$ we define
+
+$$
+v \cdot w = r \exp \big( (a i_L + b j_L + c k_L) \theta \big) w
+$$
+
+In fact, if we introduce i,j,k that satisfy the multiplication rules:
+
+$$
+i^2 = j^2 = k^2 = -1
+$$
+
+$$
+ij = k = -ji
+$$
+
+and identify $(e_1, e_2, e_3, e_4) = (1, i, j, k)$ one can easily check (through simple computation) that:
+
+$$
+i_L(v) = iv, \quad i_R(v) = vi
+$$
+
+$$
+j_L(v) = jv, \quad j_R(v) = vj
+$$
+
+$$
+k_L(v) = kv, \quad k_R(v) = vk
+$$
+
+and then define the multiplication of 4D numbers by the normal distributive property.
+
+Remark: Unlike multiplication of complex numbers, this multiplication is not commutative!
+
+### Key Takeaway
+
+Quaternions are 4-dimensional numbers that support both addition and multiplication. Multiplying a quaternion from the left by a unit quaternion (a point on the 3-sphere $S^3 \subset \mathbb{R}^4$) corresponds to applying a left-isoclinic rotation, while multiplying from the right implements a right-isoclinic rotation.
+
+In the next post, we'll explore the geometry of the 3-sphere $S^3$ in more detail, including its visualization via stereographic projection and the *Hopf fibration*.

@@ -1,0 +1,42 @@
+/* Wrapper to hold both Sidebar and Main Content */
+.content-wrapper {
+  display: flex;  /* Flexbox to arrange items in a row */
+  flex-direction: row; /* Default direction is horizontal (left to right) */
+  margin-top: 20px;  /* Add some margin for better spacing */
+  width: 100%;  /* Ensure container takes up full width */
+}
+
+/* Sidebar Styling */
+#sidebar {
+  width: 250px;  /* Set sidebar width */
+  margin-right: 20px;  /* Space between sidebar and content */
+  position: sticky;
+  top: 20px;  /* Keep sidebar sticky on scroll */
+}
+
+/* Main Content Styling */
+.post {
+  flex: 1;  /* Allow main content to take up remaining space */
+  padding: 20px;
+  max-width: none;  /* Allow the content to take up all available width */
+  background-color: white;  /* Ensure a solid background */
+  opacity: 1;  /* Ensure the article is fully opaque */
+}
+
+@media (max-width: 768px) {
+  /* On small screens (mobile), stack Sidebar above the content */
+  .content-wrapper {
+    flex-direction: column;  /* Change layout to vertical */
+  }
+
+  #sidebar {
+    margin-bottom: 20px;  /* Add space below sidebar on small screens */
+    width: 100%;  /* Make sidebar full width */
+  }
+
+  /* Ensure that on mobile, the article has no transparency */
+  .post {
+    opacity: 1;  /* Full opacity */
+    background-color: white;  /* Ensure background is solid */
+  }
+}
