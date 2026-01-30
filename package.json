@@ -17,6 +17,7 @@
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet. Run 'npm run lint' and 'npm run typecheck' to validate code.\" && npm run lint && npm run typecheck",
     "predeploy": "npm run build"
   },
   "dependencies": {
