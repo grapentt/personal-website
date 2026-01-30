@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './BackToTopButton.css';
 
 const BackToTopButton = ({ containerRef }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const throttleTimeout = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,10 +13,25 @@ const BackToTopButton = ({ containerRef }) => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Throttled scroll handler - limits execution to once every 100ms
+    const throttledHandleScroll = () => {
+      if (throttleTimeout.current === null) {
+        handleScroll();
+        throttleTimeout.current = setTimeout(() => {
+          throttleTimeout.current = null;
+        }, 100); // 100ms throttle
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Check initial position
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+      if (throttleTimeout.current) {
+        clearTimeout(throttleTimeout.current);
+      }
+    };
   }, [containerRef]);
 
   const scrollToTop = () => {
