@@ -1,6 +1,7 @@
 {
   "name": "personal-site",
   "version": "4.0.0",
+  "type": "module",
   "homepage": "https://grapentt.github.io/personal-website",
   "license": "MIT",
   "repository": {
@@ -11,11 +12,11 @@
     "node": ">=16.x"
   },
   "scripts": {
-    "analyze": "npm run build && source-map-explorer build/static/js/*.chunk.js",
-    "build": "rimraf ./build && react-scripts build",
-    "lint": "eslint \"**/*.js\"",
-    "predeploy": "npm run build",
-    "start": "react-scripts start"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
@@ -33,13 +34,13 @@
     "react-ga": "^3.3.1",
     "react-helmet-async": "^2.0.5",
     "react-katex": "^3.0.1",
-    "react-router-dom": "^6.28.0",
-    "react-scripts": "^5.0.1"
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-react": "^7.25.9",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.31.0",
@@ -49,7 +50,8 @@
     "react-snap": "^1.23.0",
     "rimraf": "^6.0.1",
     "sass": "^1.81.0",
-    "source-map-explorer": "^2.5.3"
+    "source-map-explorer": "^2.5.3",
+    "vite": "^7.3.1"
   },
   "reactSnap": {
     "puppeteerArgs": [

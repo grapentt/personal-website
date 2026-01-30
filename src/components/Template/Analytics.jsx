@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
-const { NODE_ENV, REACT_APP_GA_TRACKING_ID } = process.env;
+const NODE_ENV = import.meta.env.MODE;
+const REACT_APP_GA_TRACKING_ID = import.meta.env.VITE_GA_TRACKING_ID;
 
 if (NODE_ENV === 'production') {
   ReactGA.initialize(REACT_APP_GA_TRACKING_ID);

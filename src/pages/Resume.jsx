@@ -9,7 +9,7 @@ const Resume = () => (
     <div className="resume-container">
       <h1>My Resume</h1>
       <iframe
-        src={`${process.env.PUBLIC_URL}/Resume.pdf`}
+        src={`${import.meta.env.BASE_URL}Resume.pdf`}
         width="100%"
         height="1000px"
         title="My Resume"

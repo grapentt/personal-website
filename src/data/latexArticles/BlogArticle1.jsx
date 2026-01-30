@@ -3,7 +3,7 @@ import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import VideoPlayer from '../../components/Template/VideoPlayer';
 
-const { PUBLIC_URL } = process.env; 
+const PUBLIC_URL = import.meta.env.BASE_URL; 
 
 const BlogArticle1 = () => {
   return (
