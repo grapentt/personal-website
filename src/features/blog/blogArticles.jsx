@@ -1,4 +1,4 @@
-import BlogArticle1 from './latexArticles/BlogArticle1';
+import BlogArticle1 from './articles/BlogArticle1';
 
 const PUBLIC_URL = import.meta.env.BASE_URL;
 // TODO Add a couple lines about each project

@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
-import Analytics from '../components/Template/Analytics';
-import Navigation from '../components/Template/Navigation';
-// import SideBar from '../components/Template/SideBar';
-import ScrollToTop from '../components/Template/ScrollToTop';
-import ContactIcons from '../components/Contact/ContactIcons';
+import { Analytics, Navigation, ScrollToTop } from '@/shared/components';
+import { ContactIcons } from '@/features/contact';
 
 const Main = (props) => (
   <HelmetProvider>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Hamburger from './Hamburger';
-import routes from '../../data/routes';
+import { routes } from '@/config';
 
 // Websites Navbar, displays routes defined in 'src/data/routes'
 const Navigation = () => (

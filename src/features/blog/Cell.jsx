@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import './cell.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import BackToTopButton from '../Template/BackToTopButton';
-import VideoPlayer from '../Template/VideoPlayer';
+import { BackToTopButton, VideoPlayer } from '@/shared/components';
 
 
 const Cell = ({ data }) => {

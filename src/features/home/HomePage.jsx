@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import Main from '../layouts/Main';
-import SideBar from '../components/Template/SideBar';
+import { Main } from '@/shared/layouts';
+import { SideBar } from '@/shared/components';
 import './index.css';
 
 const Index = () => (

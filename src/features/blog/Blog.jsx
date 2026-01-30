@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Main from '../layouts/Main';
-
-import Cell from '../components/blog/Cell';
-import data from '../data/blogArticles';
+import { Main } from '@/shared/layouts';
+import Cell from './Cell';
+import data from './blogArticles';
 
 const Blog = () => (
   <Main title="Blog" description="Read my blog.">

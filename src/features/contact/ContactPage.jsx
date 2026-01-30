@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Main from '../layouts/Main';
-import ContactIcons from '../components/Contact/ContactIcons';
+import { Main } from '@/shared/layouts';
+import ContactIcons from './ContactIcons';
 
 const Contact = () => (
   <Main

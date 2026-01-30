@@ -1,19 +1,18 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Main from './layouts/Main'; // fallback for lazy pages
-import './static/css/main.scss'; // All of our styles
-
+import { Main } from '@/shared/layouts';
+import '@/styles/css/main.scss';
 
 // Every route - we lazy load so that each page can be chunked
 // NOTE that some of these chunks are very small. We should optimize
 // which pages are lazy loaded in the future.
-const About = lazy(() => import('./pages/About'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Index = lazy(() => import('./pages/Index'));
-const NotFound = lazy(() => import('./pages/NotFound'));
-const Blog = lazy(() => import('./pages/Blog'));
-const Resume = lazy(() => import('./pages/Resume'));
-const Thesis = lazy(() => import('./pages/Thesis'));
+const About = lazy(() => import('@/features/about').then((m) => ({ default: m.About })));
+const Contact = lazy(() => import('@/features/contact').then((m) => ({ default: m.Contact })));
+const Index = lazy(() => import('@/features/home').then((m) => ({ default: m.Index })));
+const NotFound = lazy(() => import('@/shared/components').then((m) => ({ default: m.NotFound })));
+const Blog = lazy(() => import('@/features/blog').then((m) => ({ default: m.Blog })));
+const Resume = lazy(() => import('@/features/resume').then((m) => ({ default: m.Resume })));
+const Thesis = lazy(() => import('@/features/thesis').then((m) => ({ default: m.Thesis })));
 
 const App = () => (
   <BrowserRouter basename="/personal-website">

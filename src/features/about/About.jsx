@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Markdown from 'markdown-to-jsx';
-
-import Main from '../layouts/Main';
+import { Main } from '@/shared/layouts';
 
 const About = () => {
   const [markdown, setMarkdown] = useState('');
