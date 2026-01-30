@@ -14,7 +14,7 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({
   children = null,
   title = null,
-  description = "Thomas Grapentin's personal website."
+  description = "Thomas Grapentin's personal website.",
 }) => (
   <HelmetProvider>
     <Analytics />

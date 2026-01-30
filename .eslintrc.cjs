@@ -4,11 +4,24 @@ module.exports = {
   env: {
     browser: true,
     node: true,
+    es2021: true,
   },
-  extends: 'airbnb',
-  ignorePatterns: ['node_modules/', 'build/', '*.config.js', '*.config.cjs'],
-  parser: '@babel/eslint-parser',
-  plugins: ['react'],
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+  ],
+  ignorePatterns: ['node_modules/', 'build/', '*.config.js', '*.config.cjs', 'vite.config.js'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: './tsconfig.json',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'max-len': 'off',
     'no-trailing-spaces': 'off',
@@ -29,6 +42,10 @@ module.exports = {
     'react/button-has-type': 'off',
     'arrow-body-style': 'off',
     'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
+    'react/require-default-props': 'off',
+    'react/react-in-jsx-scope': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
@@ -56,7 +73,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       1,
       {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
     'react/jsx-no-useless-fragment': 0,
