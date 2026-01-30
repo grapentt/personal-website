@@ -55,4 +55,17 @@ export default defineConfig({
   preview: {
     port: 3000,
   },
+
+  // CSS configuration
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Suppress deprecation warnings for legacy SASS
+        // These warn about Dart Sass 3.0 features (future version)
+        // Can be addressed in future SASS modernization milestone
+        silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
+        api: 'modern-compiler',
+      },
+    },
+  },
 });

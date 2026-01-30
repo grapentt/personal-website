@@ -18,12 +18,14 @@ This is my personal website to host my blog, where I write about mathematics, di
 
 ## Prerequisites
 
-- **Node.js:** 16.x or higher (recommended: 20.x)
+- **Node.js:** 20.19+ or 22.12+ (Vite requirement)
+  - If you have Node 20.16.x, the project will still work but show a version warning
+  - Upgrade recommended: `nvm install 20.19` or `nvm install 22`
 - **npm:** 8.x or higher
 
 Check your versions:
 ```bash
-node --version
+node --version  # Should be 20.19+ or 22.12+
 npm --version
 ```
 
