@@ -7,8 +7,8 @@ import './index.css';
 const Index: React.FC = () => (
   <Main
     description={
-      'I am a very curious CS, Math & Physics student at HU Berlin with deep passion for differential geometry, '
-      + 'data science & coding. Currently working at SAP'
+      'I am a very curious mathematics student at HU Berlin with background in physics and computer science exploring the mathematical '
+      + 'foundations of physics and machine learning.'
     }
   >
     <div className="content-wrapper">

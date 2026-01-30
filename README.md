@@ -6,7 +6,42 @@ Personal website and blog featuring mathematical content with LaTeX rendering.
 
 ## About
 
-This is my personal website to host my blog, where I write about mathematics (mainly differential geometry + topology), physics and machine learning. The project is forked from [mldangelo/personal-site](https://github.com/mldangelo/personal-site) and extensively customized to host blog articles written with LaTeX using react-katex.
+This is my personal website to host my blog, where I write about mathematics, physics, and machine learning. The project is forked from [mldangelo/personal-site](https://github.com/mldangelo/personal-site) and extensively customized to host blog articles written with LaTeX using KaTeX.
+
+### Topics I plan to cover
+
+**Foundational Mathematics:**
+- Linear algebra and multilinear algebra
+- Group theory, Lie groups and Lie algebras
+- Exterior algebra and Clifford/Geometric algebra
+- Quaternions and Hopf fibration
+
+**Differential Geometry & Topology:**
+- Manifolds and what "space" really means
+- Riemannian and pseudo-Riemannian geometry
+- Bundles (tangent, cotangent, exterior, Clifford, spinor)
+- Connections, curvature, and holonomy
+- Homology, cohomology, Poincare duality, Hodge duality
+- Morse theory and intersection forms
+- Characteristic classes and h-cobordisms
+- Grassmannians
+
+**Mathematical Physics:**
+- Pseudo-Riemannian spaces and applications to relativity
+- Gauge theory: Maxwell's equations on U(1) bundles, Yang-Mills theory
+- Spin groups, spinor bundles, and Dirac operators
+- Atiyah-Singer index theorem
+- Spin^c structures and self-duality
+- Twistor theory and Chern-Simons theory
+- Standard Model of particle physics
+- Topological quantum computing
+
+**Machine Learning Applications:**
+- Applications of geometric and topological methods to ML
+- Current research in geometric deep learning
+- Mathematical foundations of neural networks
+
+The blog aims to make these advanced topics accessible through clear explanations, geometric intuition, and custom visualizations.
 
 ## Tech Stack
 
