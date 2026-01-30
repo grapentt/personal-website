@@ -11,6 +11,7 @@ const Contact = lazy(() => import('@/features/contact').then((m) => ({ default: 
 const Index = lazy(() => import('@/features/home').then((m) => ({ default: m.Index })));
 const NotFound = lazy(() => import('@/shared/components').then((m) => ({ default: m.NotFound })));
 const Blog = lazy(() => import('@/features/blog').then((m) => ({ default: m.Blog })));
+const BlogArticle = lazy(() => import('@/features/blog').then((m) => ({ default: m.BlogArticle })));
 const Resume = lazy(() => import('@/features/resume').then((m) => ({ default: m.Resume })));
 const Thesis = lazy(() => import('@/features/thesis').then((m) => ({ default: m.Thesis })));
 
@@ -21,6 +22,7 @@ const App = () => (
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogArticle />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/thesis" element={<Thesis />} />
