@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import './cell.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import BackToTopButton from '../Template/BackToTopButton';
+import VideoPlayer from '../Template/VideoPlayer';
 
 
 const Cell = ({ data }) => {
@@ -44,11 +45,15 @@ const Cell = ({ data }) => {
           </div>
         )}
 
-        {/* Display image or GIF (hidden when expanded) */}
+        {/* Display image or video (hidden when expanded) */}
         {!isExpanded && data.image && (
           <div className="image-container">
             {data.image.endsWith('.gif') ? (
-              <img src={data.image} alt={data.title} className="gif" />
+              <VideoPlayer
+                src={data.image.replace(/\.gif$/, '')}
+                alt={data.title}
+                className="gif"
+              />
             ) : (
               <img src={data.image} alt={data.title} className="image" />
             )}

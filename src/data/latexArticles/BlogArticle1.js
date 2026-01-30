@@ -1,6 +1,7 @@
 import React from 'react';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import VideoPlayer from '../../components/Template/VideoPlayer';
 
 const { PUBLIC_URL } = process.env; 
 
@@ -57,7 +58,7 @@ const BlogArticle1 = () => {
         But we can also twist or stretch the plane in many different ways.
       </p>
       <div className="image-container">
-        <img src={`${PUBLIC_URL}/visuals/nonlinear_isomorphism.gif`} alt="2dRotations" className="gif" />
+        <VideoPlayer src={`${PUBLIC_URL}/visuals/nonlinear_isomorphism`} alt="2D Rotations" className="gif" />
       </div>
       <p>
         Such transformations drastically alter the appearance of the plane, making it feel unnatural to call them "symmetries." In fact, allowing completely arbitrary transformations seems too general to be useful—there’s little structure to study. So, we impose some restrictions and consider only transformations that:
@@ -70,7 +71,7 @@ const BlogArticle1 = () => {
       <p>
         This leads us to the realm of <strong>linear transformations</strong>. 
         <div className="image-container">
-          <img src={`${PUBLIC_URL}/visuals/linear.gif`} alt="linearTransformations" className="gif" />
+          <VideoPlayer src={`${PUBLIC_URL}/visuals/linear`} alt="Linear Transformations" className="gif" />
         </div>
       </p>
       <p>
@@ -141,7 +142,7 @@ const BlogArticle1 = () => {
       </p>
 
       <div className="image-container">
-        <img src={`${PUBLIC_URL}/visuals/2drotation_animation.gif`} alt="2D Rotations" className="gif" />
+        <VideoPlayer src={`${PUBLIC_URL}/visuals/2drotation_animation`} alt="2D Rotation Animation" className="gif" />
       </div>
 
       <p>
@@ -175,7 +176,7 @@ const BlogArticle1 = () => {
       <p>
       In three-dimensional space, rotations become more interesting because there isn’t just one plane to rotate in—there are infinitely many! To describe a rotation in 3D, you need to specify not only the angle <InlineMath math="\theta" /> but also the plane in which the rotation happens. For example, if you choose two orthogonal unit vectors <InlineMath math="v_1" /> and <InlineMath math="v_2" />, the rotation occurs in the plane they span.
       <div className="image-container">
-        <img src={`${PUBLIC_URL}/visuals/rotating_sphere.gif`} alt="3D Rotations" className="gif" />
+        <VideoPlayer src={`${PUBLIC_URL}/visuals/rotating_sphere`} alt="3D Rotations - Rotating Sphere" className="gif" />
       </div>
       <p>
         Unlike in 2D, where only the origin stays fixed, every rotation in 3D leaves an entire line unchanged—this is called the <em>rotation axis</em>. This is the reason why it is not possible to multiply 3D vectors. 
@@ -217,11 +218,11 @@ const BlogArticle1 = () => {
       <ul>
         <li><strong>Single rotations:</strong> These affect only one plane while leaving the orthogonal plane unchanged.</li>
         <div className="image-container">
-          <img src={`${PUBLIC_URL}/visuals/singleTesseract.gif`} alt="Single Rotation in 4D" className="gif" />
+          <VideoPlayer src={`${PUBLIC_URL}/visuals/singleTesseract`} alt="Single Rotation in 4D Space" className="gif" />
         </div>
         <li><strong>Double rotations:</strong> These rotate two mutually orthogonal planes simultaneously.</li>
         <div className="image-container">
-          <img src={`${PUBLIC_URL}/visuals/isoclinicTesseract.gif`} alt="Double Rotation in 4D" className="gif" />
+          <VideoPlayer src={`${PUBLIC_URL}/visuals/isoclinicTesseract`} alt="Double Rotation in 4D Space (Isoclinic)" className="gif" />
         </div>
       </ul>
       <p>

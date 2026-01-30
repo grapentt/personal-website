@@ -40,23 +40,3 @@
     background-color: white;  /* Ensure background is solid */
   }
 }
-
-
-
-@media (max-width: 768px) {
-  /* On small screens (mobile), stack Sidebar above the content */
-  .content-wrapper {
-    flex-direction: column;  /* Change layout to vertical */
-  }
-
-  #sidebar {
-    margin-bottom: 20px;  /* Add space below sidebar on small screens */
-    width: 100%;  /* Make sidebar full width */
-  }
-
-  /* Ensure that on mobile, the article has no transparency */
-  .post {
-    opacity: 1;  /* Full opacity */
-    background-color: white;  /* Ensure background is solid */
-  }
-}
