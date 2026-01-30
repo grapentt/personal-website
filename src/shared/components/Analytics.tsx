@@ -9,7 +9,7 @@ if (NODE_ENV === 'production') {
   ReactGA.initialize(REACT_APP_GA_TRACKING_ID);
 }
 
-const Analytics = () => {
+const Analytics: React.FC = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {

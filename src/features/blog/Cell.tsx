@@ -1,14 +1,25 @@
 import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import './cell.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { BackToTopButton, VideoPlayer } from '@/shared/components';
 
+export interface CellData {
+  title: string;
+  link?: string;
+  image: string;
+  date: string;
+  desc: string;
+  content: React.FC;
+}
 
-const Cell = ({ data }) => {
+interface CellProps {
+  data: CellData;
+}
+
+const Cell: React.FC<CellProps> = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => setIsExpanded(!isExpanded);
   const Content = data.content;
@@ -19,7 +30,7 @@ const Cell = ({ data }) => {
       <article
         className={`mini-post ${isExpanded ? 'expanded' : ''}`}
         role="button"
-        tabIndex="0"
+        tabIndex={0}
         onClick={handleClick}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') handleClick();
@@ -70,17 +81,6 @@ const Cell = ({ data }) => {
     <BackToTopButton containerRef={containerRef} />
     </>
   );
-};
-
-Cell.propTypes = {
-  data: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    link: PropTypes.string,
-    image: PropTypes.string.isRequired, // Path to the image or GIF
-    date: PropTypes.string.isRequired,
-    desc: PropTypes.string.isRequired, // Short description
-    content: PropTypes.func.isRequired, // Full article content (LaTeX)
-  }).isRequired,
 };
 
 export default Cell;

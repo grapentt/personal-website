@@ -1,12 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 import { Analytics, Navigation, ScrollToTop } from '@/shared/components';
 import { ContactIcons } from '@/features/contact';
 
-const Main = (props) => (
+interface MainProps {
+  children?: React.ReactNode;
+  title?: string | null;
+  description?: string;
+}
+
+const Main: React.FC<MainProps> = ({
+  children = null,
+  title = null,
+  description = "Thomas Grapentin's personal website."
+}) => (
   <HelmetProvider>
     <Analytics />
     <ScrollToTop />
@@ -15,14 +24,14 @@ const Main = (props) => (
       defaultTitle="Thomas Grapentin"
       defer={false}
     >
-      {props.title && <title>{props.title}</title>}
-      <meta name="description" content={props.description} />
+      {title && <title>{title}</title>}
+      <meta name="description" content={description} />
     </Helmet>
     <div id="wrapper">
       <Navigation />
-      <div id="main">{props.children}</div>
+      <div id="main">{children}</div>
       {/* {!props.fullPage && <SideBar />}  */}
-    </div>  
+    </div>
     <section id="footer">
       <ContactIcons />
       <p className="copyright">
@@ -31,22 +40,5 @@ const Main = (props) => (
     </section>
   </HelmetProvider>
 );
-
-Main.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  // fullPage: PropTypes.bool,
-  title: PropTypes.string,
-  description: PropTypes.string,
-};
-
-Main.defaultProps = {
-  children: null,
-  // fullPage: false,
-  title: null,
-  description: "Thomas Grapentin's personal website.",
-};
 
 export default Main;

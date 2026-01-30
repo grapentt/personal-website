@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Thesis = () => (
   <div className="thesis-container">
     <h1>My Thesis</h1>

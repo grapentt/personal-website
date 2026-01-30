@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './BackToTopButton.css';
 
-const BackToTopButton = ({ containerRef }) => {
+interface BackToTopButtonProps {
+  containerRef: React.RefObject<HTMLElement | null>;
+}
+
+const BackToTopButton: React.FC<BackToTopButtonProps> = ({ containerRef }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const throttleTimeout = useRef(null);
+  const throttleTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +45,9 @@ const BackToTopButton = ({ containerRef }) => {
   };
 
   return (
-    <button 
-      className="back-to-top" 
-      onClick={scrollToTop} 
+    <button
+      className="back-to-top"
+      onClick={scrollToTop}
       style={{ display: isVisible ? 'block' : 'none' }}
     >
       ↑ Back to Top

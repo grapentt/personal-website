@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 // Validates the first half of an email address.
-const validateText = (text) => {
+const validateText = (text: string): boolean => {
   // NOTE: Passes RFC 5322 but not tested on google's standard.
   // eslint-disable-next-line no-useless-escape
   const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))$/;
@@ -27,15 +26,15 @@ const messages = [
   'thanks',
 ];
 
-const useInterval = (callback, delay) => {
-  const savedCallback = useRef();
+const useInterval = (callback: () => void, delay: number | null): void => {
+  const savedCallback = useRef<() => void>(callback);
 
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   useEffect(() => {
-    if (delay) {
+    if (delay !== null) {
       const id = setInterval(() => {
         savedCallback.current();
       }, delay);
@@ -45,7 +44,11 @@ const useInterval = (callback, delay) => {
   }, [delay]);
 };
 
-const EmailLink = ({ loopMessage }) => {
+interface EmailLinkProps {
+  loopMessage?: boolean;
+}
+
+const EmailLink: React.FC<EmailLinkProps> = ({ loopMessage = false }) => {
   const hold = 50; // ticks to wait after message is complete before rendering next message
   const delay = 50; // tick length in mS
 
@@ -58,7 +61,7 @@ const EmailLink = ({ loopMessage }) => {
     () => {
       let newIdx = idx;
       let newChar = char;
-      if (char - hold >= messages[idx].length) {
+      if (char - hold >= (messages[idx]?.length || 0)) {
         newIdx += 1;
         newChar = 0;
       }
@@ -70,7 +73,10 @@ const EmailLink = ({ loopMessage }) => {
           setIsActive(false);
         }
       } else {
-        updateMessage(messages[newIdx].slice(0, newChar));
+        const currentMessage = messages[newIdx];
+        if (currentMessage) {
+          updateMessage(currentMessage.slice(0, newChar));
+        }
         updateIter(newIdx);
         updateChar(newChar + 1);
       }
@@ -78,27 +84,21 @@ const EmailLink = ({ loopMessage }) => {
     isActive ? delay : null,
   );
 
+  const isValid = message ? validateText(message) : false;
+
   return (
     <div
       className="inline-container"
-      style={validateText(message) ? {} : { color: 'red' }}
+      style={isValid ? {} : { color: 'red' }}
       onMouseEnter={() => setIsActive(false)}
-      onMouseLeave={() => idx < messages.length && setIsActive(true)}
+      onMouseLeave={() => { if (idx < messages.length) setIsActive(true); }}
     >
-      <a href={validateText(message) ? `mailto:${message}@mldangelo.com` : ''}>
+      <a href={isValid ? `mailto:${message}@mldangelo.com` : undefined}>
         <span>{message}</span>
         <span>@mldangelo.com</span>
       </a>
     </div>
   );
-};
-
-EmailLink.defaultProps = {
-  loopMessage: false,
-};
-
-EmailLink.propTypes = {
-  loopMessage: PropTypes.bool,
 };
 
 export default EmailLink;

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const PUBLIC_URL = import.meta.env.BASE_URL; // Vite sets this from vite.config.js base
 
-const SideBar = () => (
+const SideBar: React.FC = () => (
   <section id="sidebar">
     <section id="intro">
       <Link to="/" className="logo">
@@ -22,7 +22,7 @@ const SideBar = () => (
     <section className="blurb">
       <h2>About</h2>
       <p>
-        Hi, I&apos;m Thomas. I am a highly curious student of Computer Science, Math, and Physics with a deep interest in Differential 
+        Hi, I&apos;m Thomas. I am a highly curious student of Computer Science, Math, and Physics with a deep interest in Differential
         Topology of 4-manifolds. Alongside my academic pursuits, I have a strong background in full-stack development and data science.
       </p>
       <ul className="actions">

@@ -1,5 +1,5 @@
 // Legacy blog components (kept for reference)
-export { default as BlogLegacy } from './Blog';
+export { default as BlogLegacy } from './BlogLegacy';
 export { default as Cell } from './Cell';
 export { default as blogArticles } from './blogArticles';
 

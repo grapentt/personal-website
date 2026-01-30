@@ -4,7 +4,7 @@ import { Main } from '@/shared/layouts';
 import { SideBar } from '@/shared/components';
 import './index.css';
 
-const Index = () => (
+const Index: React.FC = () => (
   <Main
     description={
       'I am a very curious CS, Math & Physics student at HU Berlin with deep passion for differential geometry, '
@@ -12,7 +12,7 @@ const Index = () => (
     }
   >
     <div className="content-wrapper">
-      <SideBar id="sidebar" />
+      <SideBar />
       <article className="post" id="index">
         <header>
           <div className="title">

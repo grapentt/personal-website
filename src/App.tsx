@@ -15,7 +15,7 @@ const BlogArticle = lazy(() => import('@/features/blog').then((m) => ({ default:
 const Resume = lazy(() => import('@/features/resume').then((m) => ({ default: m.Resume })));
 const Thesis = lazy(() => import('@/features/thesis').then((m) => ({ default: m.Thesis })));
 
-const App = () => (
+const App: React.FC = () => (
   <BrowserRouter basename="/personal-website">
     <Suspense fallback={<Main />}>
       <Routes>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-const PageNotFound = () => (
+const PageNotFound: React.FC = () => (
   <HelmetProvider>
     <div className="not-found">
       <Helmet title="404 Not Found">

@@ -5,7 +5,7 @@ import { Main } from '@/shared/layouts';
 import Cell from './Cell';
 import data from './blogArticles';
 
-const Blog = () => (
+const BlogLegacy: React.FC = () => (
   <Main title="Blog" description="Read my blog.">
     <article className="post" id="blog">
       <header>
@@ -22,4 +22,4 @@ const Blog = () => (
   </Main>
 );
 
-export default Blog;
+export default BlogLegacy;

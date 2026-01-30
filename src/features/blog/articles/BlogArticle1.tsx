@@ -3,9 +3,9 @@ import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import { VideoPlayer } from '@/shared/components';
 
-const PUBLIC_URL = import.meta.env.BASE_URL; 
+const PUBLIC_URL = import.meta.env.BASE_URL;
 
-const BlogArticle1 = () => {
+const BlogArticle1: React.FC = () => {
   return (
     <article style={{ maxWidth: '90%', margin: '0 auto', padding: '20px', lineHeight: '1.6' }}>
       <h1>Introduction</h1>
