@@ -7,20 +7,30 @@ const Stats = () => {
   const [data, setResponseData] = useState(initialData);
   // TODO think about persisting this somewhere
   const fetchData = useCallback(async () => {
-    // request must be authenticated if private
-    const res = await fetch(
-      'https://api.github.com/repos/mldangelo/personal-site',
-    );
-    const resData = await res.json();
-    setResponseData(
-      initialData.map((field) => ({
-        ...field,
-        // update value if value was returned by call to github
-        value: Object.keys(resData).includes(field.key)
-          ? resData[field.key]
-          : field.value,
-      })),
-    );
+    try {
+      // Fetch data from correct repository
+      const res = await fetch(
+        'https://api.github.com/repos/grapentt/personal-website',
+      );
+
+      if (!res.ok) {
+        throw new Error(`GitHub API error: ${res.status}`);
+      }
+
+      const resData = await res.json();
+      setResponseData(
+        initialData.map((field) => ({
+          ...field,
+          // update value if value was returned by call to github
+          value: Object.keys(resData).includes(field.key)
+            ? resData[field.key]
+            : field.value,
+        })),
+      );
+    } catch (error) {
+      console.error('Failed to fetch GitHub stats:', error);
+      // Keep initial data on error
+    }
   }, []);
 
   useEffect(() => {

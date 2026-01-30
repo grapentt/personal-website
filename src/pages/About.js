@@ -8,12 +8,15 @@ const About = () => {
   const [markdown, setMarkdown] = useState('');
 
   useEffect(() => {
-    import('../data/about.md').then((res) => {
-      fetch(res.default)
-        .then((r) => r.text())
-        .then(setMarkdown);
-    });
-  });
+    import('../data/about.md')
+      .then((res) => fetch(res.default))
+      .then((r) => r.text())
+      .then(setMarkdown)
+      .catch((error) => {
+        console.error('Failed to load about page:', error);
+        setMarkdown('# Error\n\nFailed to load content. Please try again later.');
+      });
+  }, []); // Run only once on mount
   
   return (
     <Main title="About" description="Learn about Thomas Grapentin">
