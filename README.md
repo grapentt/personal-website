@@ -6,7 +6,7 @@ Personal website and blog featuring mathematical content with LaTeX rendering.
 
 ## About
 
-This is my personal website to host my blog, where I write about mathematics, differential geometry, and physics. The project is forked from [mldangelo/personal-site](https://github.com/mldangelo/personal-site) and extensively customized to host blog articles written with LaTeX using react-katex.
+This is my personal website to host my blog, where I write about mathematics (mainly differential geometry + topology), physics and machine learning. The project is forked from [mldangelo/personal-site](https://github.com/mldangelo/personal-site) and extensively customized to host blog articles written with LaTeX using react-katex.
 
 ## Tech Stack
 
