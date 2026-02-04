@@ -88,10 +88,10 @@ This is a key property that connects rotations to complex numbers and the expone
 
 Now, how do we go from this infinitesimal generator to an actual rotation by an angle $\theta$? This is where the exponential function comes in. The exponential function is special because it turns "tiny changes" (like the infinitesimal generator) into "full transformations" (like a rotation).
 
-If $g(\theta)$ represents a rotation by $\theta$, its derivative—the rate at which it changes—is given by:
+If $g(\theta)$ represents a rotation by $\theta$, ie $g(\theta)v$ is the vector v rotated by $\theta$, its derivative—the rate at which it changes—is given by:
 
 $$
-g'(\theta) = (e_1 \wedge e_2) \, g(\theta)
+(g(\theta)v)' = (e_1 \wedge e_2) (g(\theta)v)
 $$
 
 This says that the tangent vector (the direction of change) at any point is just the infinitesimal generator $e_1 \wedge e_2$ applied to the current position. To recover the full rotation, we "exponentiate" the generator:
@@ -103,8 +103,18 @@ $$
 In 2D one can actually quite easily see that an explicit formula is given by:
 
 $$
-g(\theta) = \cos(\theta) + (e_1 \wedge e_2) \sin(\theta)
+g(\theta)v = \cos(\theta) v + \sin(\theta) (e_1 \wedge e_2)(v)
 $$
+
+becuase 
+
+$$
+(g(\theta)v)' = cos(\theta) (e_1 \wedge e_2)(v) - sin(\theta) v = cos(\theta) (e_1 \wedge e_2)(v) + (e_1 \wedge e_2)^2 sin(\theta) v 
+$$
+
+$$
+ = (e_1 \wedge e_2)(cos(\theta) v + sin(\theta) v) = (e_1 \wedge e_2) (g(\theta)v)
+ $$ 
 
 This shows that rotations can be described by points on the unit circle $S^1 \subset \mathbb{R}^2$.
 
