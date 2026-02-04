@@ -10,36 +10,46 @@ This is my personal website to host my blog, where I write about mathematics, ph
 
 ### Topics I plan to cover
 
-**Foundational Mathematics:**
-- Linear algebra and multilinear algebra
-- Group theory, Lie groups and Lie algebras
-- Exterior algebra and Clifford/Geometric algebra
-- Quaternions and Hopf fibration
-
 **Differential Geometry & Topology:**
-- Manifolds and what "space" really means
-- Riemannian and pseudo-Riemannian geometry
-- Bundles (tangent, cotangent, exterior, Clifford, spinor)
+- The atoms of space: Cell and Handle decompositions
+- Topological Manifolds
+- The metric tensor: Riemannian Geometry
+- Lie groups and Lie algebras
+- My favourite manifolds: Projective spaces, Lie groups and Grassmannians
+- Homology
+- Cohomology and Poincaré duality
+- Differential forms and Hodge duality
+- Intersection forms of 4-manifolds
+- Bundles
 - Connections, curvature, and holonomy
-- Homology, cohomology, Poincare duality, Hodge duality
-- Morse theory and intersection forms
-- Characteristic classes and h-cobordisms
-- Grassmannians
+- Characteristic classes
+- Morse Theory
+- h-cobordism theorem
+- Self-duality and Donaldson Theory
+- Spin groups, Spin structures and Spinors
+- Dirac Operator on Spin-manifolds
+- Spin^c structures and Seiberg-Witten Theory
 
 **Mathematical Physics:**
 - Pseudo-Riemannian spaces and applications to relativity
-- Gauge theory: Maxwell's equations on U(1) bundles, Yang-Mills theory
-- Spin groups, spinor bundles, and Dirac operators
-- Atiyah-Singer index theorem
-- Spin^c structures and self-duality
-- Twistor theory and Chern-Simons theory
+- Gauge theory in physics: Maxwell's equations
+- Gauge theory in physics: Yang-Mills equations
+- Gauge theory in physics: Minimal Coupling and Matter Fields
 - Standard Model of particle physics
+- Topological Quantum Field Theory
+- Twistor theory
 - Topological quantum computing
 
 **Machine Learning Applications:**
-- Applications of geometric and topological methods to ML
-- Current research in geometric deep learning
-- Mathematical foundations of neural networks
+- Mathematical foundations of Machine learning
+- Topological Data Analysis
+- Topological Deep Learning
+- Geometric Deep Learning
+- Category Theory: A unifying framework?
+- Embedding Spaces
+- Representation Learning
+- Geometric approaches to explainable AI
+- ... This list will certainly expand with time ...
 
 The blog aims to make these advanced topics accessible through clear explanations, geometric intuition, and custom visualizations.
 
@@ -94,21 +104,8 @@ The development server will start at [http://localhost:3000](http://localhost:30
 - 🔄 Instant updates on file changes
 - 🐛 Better error messages in the browser
 
-### 4. Build for Production
 
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `build/` directory.
-
-**Build Output:**
-- Minified and optimized JavaScript bundles
-- Optimized CSS
-- Static assets (videos, PDFs, images)
-- Total JS bundle size: ~200 KB (gzipped)
-
-### 5. Preview Production Build
+### 4. Preview Production Build
 
 ```bash
 npm run preview
@@ -130,26 +127,30 @@ This serves the production build locally at [http://localhost:3000](http://local
 
 ```
 personal-website/
-├── public/              # Static assets (served as-is)
-│   ├── visuals/         # Optimized videos (MP4/WebM)
-│   ├── Resume.pdf       # Resume document
-│   └── about.md         # About page content
+├── public/                    # Static assets (served as-is)
+│   ├── visuals/              # Optimized videos (MP4/WebM)
+│   ├── images/               # Images and icons
+│   └── about.md              # About page content
 ├── src/
-│   ├── components/      # React components
-│   │   ├── blog/        # Blog-specific components
-│   │   ├── Contact/     # Contact page components
-│   │   └── Template/    # Shared UI components
-│   ├── data/            # Data and content
-│   │   ├── blogArticles.jsx      # Blog metadata
-│   │   └── latexArticles/        # Blog article content
-│   ├── layouts/         # Page layouts
-│   ├── pages/           # Page components (routes)
-│   ├── static/          # Styles (SCSS)
-│   ├── App.jsx          # Main app component
-│   └── index.jsx        # Entry point
-├── vite.config.js       # Vite configuration
-├── package.json         # Dependencies and scripts
-└── index.html           # HTML template
+│   ├── features/             # Feature modules (pages + components + data)
+│   │   ├── home/            # Landing page
+│   │   ├── about/           # About page
+│   │   ├── blog/            # Blog feature
+│   │   │   ├── articles/    # MDX blog articles (*.mdx)
+│   │   │   └── utils/       # Blog utilities (mdxUtils.ts)
+│   │   ├── contact/         # Contact page
+│   ├── shared/              # Shared/reusable code
+│   │   ├── components/      # Shared UI components (Navigation, SideBar)
+│   │   ├── layouts/         # Layout components (Main)
+│   │   └── types/           # TypeScript type definitions
+│   ├── config/              # App configuration (routes)
+│   ├── styles/              # Global styles (SCSS)
+│   ├── App.jsx              # Root app component with routing
+│   └── index.tsx            # Entry point
+├── vite.config.js           # Vite configuration
+├── tsconfig.json            # TypeScript configuration
+├── package.json             # Dependencies and scripts
+└── index.html               # HTML template
 ```
 
 ## Development Workflow
@@ -163,26 +164,43 @@ personal-website/
 
 ### Adding a Blog Article
 
-1. Create new article file in `src/data/latexArticles/BlogArticleN.jsx`
-2. Add article metadata to `src/data/blogArticles.jsx`
-3. Use `<InlineMath math="..." />` for inline LaTeX
-4. Use `<BlockMath math="..." />` for display equations
-5. Reference videos via `<VideoPlayer src="..." />`
+Blog articles are written in **MDX format** (Markdown + JSX), making them easy to write while supporting React components and LaTeX math.
 
-**Example:**
-```jsx
-import { InlineMath, BlockMath } from 'react-katex';
+1. Create new article file in `src/features/blog/articles/your-article-slug.mdx`
+2. Add frontmatter metadata (title, date, description, image)
+3. Write content in Markdown with math notation
+4. Update `src/features/blog/utils/mdxUtils.ts` to import and register the article
+5. Article automatically appears at `/blog/your-article-slug`
 
-const BlogArticle2 = () => (
-  <article>
-    <h1>My New Article</h1>
-    <p>
-      The famous equation is <InlineMath math="E = mc^2" />
-    </p>
-    <BlockMath math="\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}" />
-  </article>
-);
+**Example MDX article:**
+```mdx
+---
+title: "Understanding the Euler Identity"
+date: "2026-02-04"
+description: "A beautiful equation connecting five fundamental constants"
+image: "/personal-website/images/euler.png"
+---
+
+import { VideoPlayer } from '@/shared/components';
+
+# Understanding the Euler Identity
+
+Regular markdown text with **bold** and *italic*.
+
+Inline math: $e^{i\pi} + 1 = 0$
+
+Block math:
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+<VideoPlayer src="/personal-website/visuals/animation" alt="Demo" />
 ```
+
+**Math syntax:**
+- Inline: `$...$` (e.g., `$x^2$`)
+- Block: `$$...$$` (e.g., `$$\int_0^1 x dx$$`)
+- Powered by remark-math + rehype-katex
 
 ### Adding Visual Assets
 
@@ -195,41 +213,11 @@ Reference in code:
 src={`${import.meta.env.BASE_URL}visuals/animation.mp4`}
 ```
 
-## Environment Variables
-
-Vite uses `VITE_` prefix for environment variables exposed to the client.
-
-Create `.env` file (optional):
-```bash
-# Google Analytics (optional)
-VITE_GA_TRACKING_ID=UA-XXXXXXXXX-X
-```
-
-Built-in variables:
-- `import.meta.env.BASE_URL` - Base path (`/personal-website/`)
-- `import.meta.env.MODE` - Current mode (`development` or `production`)
-- `import.meta.env.DEV` - Boolean, true in dev mode
-- `import.meta.env.PROD` - Boolean, true in production
-
 ## Deployment
 
 The site is automatically deployed to GitHub Pages via GitHub Actions when you push to the `main` branch.
 
-**Manual Deployment:**
-```bash
-npm run build
-# Upload the build/ directory to your hosting provider
-```
-
 **GitHub Actions:** Configured in `.github/workflows/github-pages.yml`
-
-## Performance Features
-
-- ⚡ **Vite:** Lightning-fast dev server and builds
-- 📦 **Optimized Assets:** Videos converted from GIF (85% smaller)
-- 🎯 **Code Splitting:** Lazy-loaded routes and vendor chunks
-- 🔄 **HMR:** Instant hot module replacement
-- 📊 **Bundle Analysis:** Optimized chunk splitting
 
 ## Troubleshooting
 
@@ -269,23 +257,6 @@ lsof -ti:3000 | xargs kill -9
 npm run lint -- --fix
 ```
 
-## Browser Support
-
-- Chrome/Edge (last 2 versions)
-- Firefox (last 2 versions)
-- Safari (last 2 versions)
-- Modern mobile browsers
-
-## Contributing
-
-This is a personal website, but suggestions are welcome! Feel free to:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
-
-## License
-
-MIT License - See [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
@@ -295,8 +266,6 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## Contact
 
-Thomas Grapentin - thomas.grapentin@gmx.de
+Thomas Grapentin - grapentthomas@gmail.com
 
 ---
-
-**Note:** This project uses optimized video formats (MP4/WebM) instead of GIFs for better performance. Original GIF files are backed up in `public/visuals/originals/`.
