@@ -1,0 +1,214 @@
+import film from './film';
+import dials from './explorables/dials';
+import circles from './explorables/circles';
+import painter from './explorables/painter';
+import holonomyLab from './explorables/holonomy';
+
+The [previous article](/personal-website/blog/quaternions-4d-rotations) ended on a promise. We had found that the unit quaternions form a 3-sphere $S^3$ in four-dimensional space, and that multiplying by a unit quaternion from the left is a *left-isoclinic rotation*: two orthogonal planes turning by the same angle at once. The promise was to look at $S^3$ itself.
+
+This article keeps it. Take one of those isoclinic rotations and follow what it does to every single point of $S^3$. Each point travels around a circle. No two circles meet, together they fill the whole 3-sphere, and every two of them are linked like the links of a chain. Labelling each circle by a point of an ordinary sphere gives the **Hopf fibration**, found by Heinz Hopf in 1931. It is the simplest interesting example of a fibre bundle, and the same structure that decides a qubit's phase, a magnetic monopole's field and, in the [next article](/personal-website/blog/shape-space), how a falling cat lands on its feet.
+
+The film tells the whole story in about eight minutes. The sections after it go through it again, slowly, with the formulas and four explorables you can play with.
+
+<Film film={film} />
+
+## Where we left off
+
+A quaternion $q = w + x\,i + y\,j + z\,k$ is a point of $\mathbb{R}^4$, and the unit quaternions, those with $w^2 + x^2 + y^2 + z^2 = 1$, form the 3-sphere $S^3$. In the previous article we saw that left multiplication by the unit quaternion $e^{i\theta} = \cos\theta + i \sin\theta$ is the left-isoclinic rotation $\exp(\theta\, i_L)$ with $i_L = e_1 \wedge e_2 + e_3 \wedge e_4$: it turns the plane spanned by $1, i$ and the plane spanned by $j, k$ by the same angle $\theta$, at the same time.
+
+That suggests grouping the four coordinates into two complex numbers, one for each plane:
+
+$$
+z_1 = w + x\,i, \qquad z_2 = y + z\,i, \qquad q = z_1 + z_2\, j .
+$$
+
+(Check: $z_2 j = y j + z\, ij = yj + zk$.) The unit sphere becomes $|z_1|^2 + |z_2|^2 = 1$, and because $e^{i\theta}$ commutes with complex numbers, the isoclinic rotation simply multiplies both of them:
+
+$$
+e^{i\theta} q = (e^{i\theta} z_1) + (e^{i\theta} z_2)\, j .
+$$
+
+As $\theta$ runs from $0$ to $2\pi$, every point $q$ travels once around the circle
+
+$$
+F_q = \{\, e^{i\theta} q \;:\; \theta \in [0, 2\pi) \,\} = \{\, \cos\theta \; q + \sin\theta \; iq \,\},
+$$
+
+a *great* circle of $S^3$: it lies in the plane through the origin spanned by $q$ and $iq$, which are orthogonal unit vectors. Two such circles are either equal or disjoint, since $e^{i\theta} q = e^{i\varphi} q'$ forces $q' = e^{i(\theta - \varphi)} q$. So these circles cut $S^3$ into pieces, like the lines of longitude cut a globe, except that here there are no poles where they bunch up: every point lies on exactly one of them. We call them the **fibres**.
+
+The rest of the article is about what these circles look like, and how they fit together.
+
+## Two dials
+
+It helps to think of a point of $S^3$ as a pair of dials. Write each complex number in polar form,
+
+$$
+z_1 = \cos\tfrac{\vartheta}{2}\, e^{i\alpha}, \qquad z_2 = \sin\tfrac{\vartheta}{2}\, e^{i\beta}, \qquad \vartheta \in [0, \pi].
+$$
+
+The two hands share one unit of length between them, $\cos^2 + \sin^2 = 1$: the angle $\vartheta$ says how the length is split, which I will call the **balance**. The angles $\alpha$ and $\beta$ say where the hands point. Three numbers for a three-dimensional space, as it should be.
+
+Moving along a fibre turns both hands by the same amount, $\alpha \mapsto \alpha + \theta$ and $\beta \mapsto \beta + \theta$. Two things do not change: the balance $\vartheta$, and the *angle between the hands* $\lambda = \alpha - \beta$. A fibre is exactly the set of dial pairs with a given balance and a given angle between the hands. And a pair of numbers $(\vartheta, \lambda)$ with $\vartheta \in [0, \pi]$ and $\lambda$ an angle is nothing but a point on an ordinary sphere, in polar coordinates: $\vartheta$ from the north pole, $\lambda$ around. When $\vartheta = 0$ or $\pi$ one hand has length zero, its angle means nothing, and so does $\lambda$: those are the poles.
+
+So we already know the punchline: *the fibres of $S^3$ are labelled by the points of a 2-sphere.* Try it below. Change the balance and the dial angles, and watch the labelling point on the sphere; then switch on the turning, and notice that it does not move.
+
+<Explorable scene={dials} title="Two dials, one point" caption="A point of S³ as two dials z₁, z₂. Turning both dials moves the point along its fibre (right) while its label on the sphere (bottom left) stays put. Only the balance and the angle between the hands matter." />
+
+## A keyhole into the fourth dimension
+
+To *see* the fibres we need a picture of $S^3$ in our three-dimensional room. The tool is stereographic projection, and it is easiest to understand one dimension down first.
+
+Put a lamp at the north pole $N = (0, 0, 1)$ of the ordinary unit sphere $S^2$ and let every other point cast a shadow on the equatorial plane $z = 0$. The ray from $N$ through $(x, y, z)$ hits the plane at
+
+$$
+\sigma(x, y, z) = \frac{(x, y)}{1 - z}.
+$$
+
+The equator stays where it is, the southern hemisphere lands inside the unit circle and the northern hemisphere outside, and the closer a point is to the lamp, the farther away its shadow. The lamp itself has no shadow: the plane together with one extra "point at infinity" is the sphere.
+
+Stereographic projection has two properties that make it the right keyhole. It is **conformal**: it preserves angles between curves. And it sends **circles to circles**: a circle on the sphere casts a circular shadow, except when the circle runs through the lamp, in which case the shadow is a straight line. A line, from this point of view, is just a circle through the point at infinity.
+
+<Explorable scene={circles} title="Circles to circles" caption="A circle on the sphere and its shadow on the equatorial plane. Tilt it, turn it, and raise it towards the lamp: the shadow stays a circle until the circle runs through the lamp, when it becomes a straight line." />
+
+One dimension up the recipe is identical. Put the lamp at the north pole $N = (0, 0, 0, 1)$ of $S^3$ (the quaternion $k$) and project onto the equatorial space $x_3 = 0$, which we identify with our room:
+
+$$
+\sigma(x_0, x_1, x_2, x_3) = \frac{(x_0,\, x_1,\, x_2)}{1 - x_3}, \qquad \sigma^{-1}(\mathbf{x}) = \frac{\big(2\mathbf{x},\; |\mathbf{x}|^2 - 1\big)}{1 + |\mathbf{x}|^2}.
+$$
+
+The equator of $S^3$, a 2-sphere, becomes the unit sphere. The southern half of $S^3$ fills the ball inside it, with the south pole at the origin; the northern half fills everything outside, and the lamp sits at infinity. More generally the 2-sphere at height $x_3 = h$ becomes the sphere about the origin of radius $\sqrt{(1+h)/(1-h)}$. And again circles of $S^3$ become circles in the room, or lines if they pass through the lamp. Since every fibre is a circle, every fibre will appear as a circle (or a line) in our pictures.
+
+## One circle, two circles
+
+Two fibres are easy to find. The points with $z_2 = 0$ are $(e^{i\theta}, 0)$, that is $x_0 + x_1 i = e^{i\theta}$ with $x_2 = x_3 = 0$; they project to the **unit circle in the floor** $z = 0$. The points with $z_1 = 0$ are $(0, e^{i\theta})$; this fibre passes through the lamp $(0, 0, 0, 1)$, and its image is the whole **vertical axis**, closed up through the point at infinity. In the dial picture these are the two extremes of the balance, the north and the south pole of the label sphere.
+
+Every other fibre is an honest circle in the room, tilted and off-centre. The film computes them simply by projecting points $e^{i\theta} q$; three of them determine the circle.
+
+Now take two fibres. Span the first one by a flat disc, like a soap film. The second fibre passes through that disc **exactly once**: the two circles are *linked*. You cannot separate them without cutting one. For the unit circle and the vertical axis this is plain to see. That it holds for *every* pair is the first surprise of the Hopf fibration, and there is a neat argument for it. The linking number of two disjoint closed curves is an integer, and it cannot change as the curves move continuously without touching. Any pair of fibres can be moved to any other pair through pairs of fibres (just move their labels on the sphere without letting them collide), and fibres never touch. So all pairs have the same linking number as the unit circle and the vertical axis: one. The film backs this up by computing Gauss's linking integral for one pair numerically; it comes out as $1.000$.
+
+## Tori all the way down
+
+Fix the balance $\vartheta$ strictly between $0$ and $\pi$ and let both dial angles range freely. The points
+
+$$
+T_\vartheta = \big\{ \big(\cos\tfrac{\vartheta}{2}\, e^{i\alpha},\; \sin\tfrac{\vartheta}{2}\, e^{i\beta}\big) \big\}
+$$
+
+form a torus: two independent angles. Turning the dials keeps the balance, so this torus is made of whole fibres: the fibres over the circle of latitude $\vartheta$ on the label sphere. Inside $S^3$ it is a perfectly flat torus (a *Clifford torus*), and in the room it becomes a torus of revolution around the vertical axis. A short computation with the projection formula gives its shape:
+
+$$
+\text{core radius } \sec\tfrac{\vartheta}{2}, \qquad \text{tube radius } \tan\tfrac{\vartheta}{2}, \qquad \text{so} \qquad \sec^2\tfrac{\vartheta}{2} - \tan^2\tfrac{\vartheta}{2} = 1 .
+$$
+
+The fibres lying on it wind around it once the long way and once the short way. Circles on a torus that do that are called **Villarceau circles**: they are what you get when you slice a torus of revolution with a plane that touches it in two points.
+
+Now let the balance vary. As $\vartheta \to 0$ the tube radius shrinks to zero and the torus collapses onto the unit circle in the floor. As $\vartheta \to \pi$ the torus swells, its hole closing in on the vertical axis, and in $S^3$ it collapses onto the fibre through the lamp. In between, the tori are nested inside each other. So the whole room, together with the point at infinity, is filled with nested tori, each woven from linked circles, around two special circles: the unit circle and the vertical axis. That is the picture behind the title of the film, and it is the whole of $S^3$.
+
+<Callout tag="An aside">
+
+The torus $T_{\pi/2}$, where the dials have equal length, cuts $S^3$ into two halves: the points with $|z_1| > |z_2|$, a solid torus around the unit circle, and the points with $|z_1| < |z_2|$, a solid torus around the vertical axis. So $S^3$ is two solid tori glued along their boundary, with the meridian of each glued to the longitude of the other. This decomposition (a *Heegaard splitting* of genus one) is another way of seeing why the two core circles are linked.
+
+</Callout>
+
+## The map, at last
+
+We can now write down the labelling. The **Hopf map** $h : S^3 \to S^2$ is
+
+$$
+h(z_1, z_2) = \big(2\,\mathrm{Re}\, z_1 \bar z_2,\;\; 2\,\mathrm{Im}\, z_1 \bar z_2,\;\; |z_1|^2 - |z_2|^2\big).
+$$
+
+In terms of the dials, $z_1 \bar z_2 = \tfrac12 \sin\vartheta\; e^{i(\alpha - \beta)}$ and $|z_1|^2 - |z_2|^2 = \cos\vartheta$, so
+
+$$
+h = \big(\sin\vartheta \cos\lambda,\; \sin\vartheta \sin\lambda,\; \cos\vartheta\big), \qquad \lambda = \alpha - \beta,
+$$
+
+exactly the point with polar angle $\vartheta$ and longitude $\lambda$. It lands on the unit sphere because $|h|^2 = 4|z_1|^2|z_2|^2 + (|z_1|^2 - |z_2|^2)^2 = (|z_1|^2 + |z_2|^2)^2 = 1$. The fibres are precisely the preimages $h^{-1}(p)$ of single points: the map keeps the balance and the angle between the hands and forgets their common turn. The unit circle in the floor lies over the north pole, the vertical axis over the south pole.
+
+In the language of the previous article there is an even shorter description. The unit quaternion $\bar q$ rotates $\mathbb{R}^3$ by $v \mapsto \bar q\, v\, q$, and $h(q)$ is (after relabelling the axes $i, j, k$ as $z, y, x$) the image $\bar q\, i\, q$ of the axis $i$. Multiplying $q$ by $e^{i\theta}$ on the left composes that rotation with a rotation about $i$ itself, which does not move $i$: that is why the whole fibre has the same image.
+
+All of this fits into one line,
+
+$$
+S^1 \hookrightarrow S^3 \xrightarrow{\;h\;} S^2 ,
+$$
+
+read as "a circle's worth of points over every point of a sphere". It is a **principal $U(1)$-bundle**: the circle group $U(1) = \{e^{i\theta}\}$ acts on $S^3$, every orbit is a fibre, and the space of orbits is $S^2$. Over any small patch of the sphere the bundle looks like a product of the patch with a circle. Globally it does not: $S^3$ is *not* $S^2 \times S^1$. In a product the circles $\{p\} \times S^1$ would sit side by side and could be pulled apart; here every two of them are linked. (A cleaner obstruction: a loop going once around one fibre cannot be contracted in $S^2 \times S^1$, but every loop in $S^3$ can.)
+
+<Explorable scene={painter} title="The fibre painter" caption="Click the sphere to add fibres, drag the picture to turn it. Points on one latitude give fibres on one torus; switch on the torus and sweep its latitude. The read-out computes the linking number of the last two fibres you added." />
+
+## A connection: perpendicular to the fibre
+
+So far we have only used the fibres. The round 3-sphere also has a *metric*, and with it the bundle acquires a **connection**: a rule for moving from fibre to fibre without moving along them.
+
+At a point $q$ of $S^3$, the tangent space $T_q S^3$ consists of the vectors orthogonal to $q$; it is three-dimensional. One direction is special: $iq$, the velocity of the fibre through $q$. We call it **vertical**. The other two directions, the vectors orthogonal to both $q$ and $iq$, form the **horizontal** plane
+
+$$
+H_q = \{\, v \in T_q S^3 : \langle v, iq \rangle = 0 \,\}.
+$$
+
+(In complex terms, $H_q$ is the complex line orthogonal to $q$ for the Hermitian inner product of $\mathbb{C}^2$.) The **connection form** measures how much of a velocity is motion along the fibre,
+
+$$
+A_q(v) = \langle iq, v\rangle = \mathrm{Im}\big(\bar z_1\, dz_1 + \bar z_2\, dz_2\big)(v),
+$$
+
+and the horizontal plane is its kernel. Because multiplication by $e^{i\theta}$ preserves inner products, this choice of horizontal planes is the same along each fibre, which is what makes it a connection on a principal bundle.
+
+Here the conformality of stereographic projection pays off. Since angles are preserved, the horizontal planes in the room are simply **the planes at right angles to the projected circles**. You can see them in the film as small discs threaded on a fibre.
+
+Given a curve on the label sphere and a starting point $q_0$ over its beginning, there is exactly one curve in $S^3$ that lies over it, starts at $q_0$, and is horizontal at every moment: its **horizontal lift**. In the room it crosses every fibre it meets at a right angle. Concretely, pick for every label $p$ a point $s(p)$ of its fibre (a *section*; the film uses $s = \big(\cos\tfrac{\vartheta}{2},\ \sin\tfrac{\vartheta}{2}\, e^{-i\lambda}\big)$, which works everywhere except at the south pole) and look for the lift in the form $q(t) = e^{i\theta(t)} s(p(t))$. Horizontality, $\langle iq, \dot q \rangle = 0$, becomes a one-line equation for the phase:
+
+$$
+\dot\theta = -\big\langle i s,\ \tfrac{d}{dt}\, s(p(t)) \big\rangle = -(s^*A)(\dot p).
+$$
+
+## Holonomy is half the solid angle
+
+Now walk around a *closed* loop on the sphere and lift it. When you are back at the start downstairs, the lift is back on the same fibre, but in general not at the same point: it ends at $e^{i\gamma} q_0$. The angle $\gamma$ is the **holonomy** of the loop.
+
+For our section, $s^*A = \mathrm{Im}(\bar z_2\, dz_2) = -\sin^2\tfrac{\vartheta}{2}\, d\lambda = -\tfrac12(1 - \cos\vartheta)\, d\lambda$. For the circle of latitude $\vartheta$, walked once in the direction of increasing $\lambda$ (anticlockwise seen from above the north pole), the phase gains
+
+$$
+\gamma = -\oint s^*A = \pi\,(1 - \cos\vartheta) = \tfrac12\cdot 2\pi(1 - \cos\vartheta) = \tfrac12\,\Omega,
+$$
+
+where $\Omega = 2\pi(1 - \cos\vartheta)$ is the **solid angle** of the polar cap the loop encloses, the area of the cap on the unit sphere. For any other loop Stokes' theorem gives the same answer: with $F = d(s^*A) = -\tfrac12 \sin\vartheta\; d\vartheta \wedge d\lambda$, half the area form of the sphere with a minus sign,
+
+$$
+\gamma \;=\; -\oint_{\partial D} s^*A \;=\; -\int_D F \;=\; \tfrac12\, \Omega(D) \pmod{2\pi},
+$$
+
+with $\Omega(D)$ the solid angle of the region $D$ on the *left* of the loop. (If $D$ contains the south pole, where our section breaks down, use the region on the other side instead; the two answers differ by $\tfrac12 \cdot 4\pi = 2\pi$, which is no difference at all.)
+
+The film lifts two loops. The 60° latitude encloses $\Omega = \pi$, and its lift ends a quarter of the way around the fibre, $\gamma = 90°$. The equator encloses half the sphere, $\Omega = 2\pi$, and its lift ends *half-way* around, at $-q_0$, the antipodal point of $S^3$; walk around twice and it closes. A table of other loops (a triangle with three right angles, small circles anywhere on the sphere) always gives $\gamma / \Omega = 0.5000$.
+
+$F$ is the **curvature** of the connection: holonomy per unit area, here the same everywhere on the sphere. Integrated over the whole sphere it gives $|\int_{S^2} F| = \tfrac12 \cdot 4\pi = 2\pi$, one full turn, and $\tfrac{1}{2\pi}|\int F| = 1$ is the **Chern number** of the Hopf bundle (its sign is a matter of convention). It is no accident that this is the same $1$ by which any two fibres are linked: both count how badly the bundle fails to be a product.
+
+<Explorable scene={holonomyLab} title="Holonomy lab" caption="Choose a loop on the sphere, or click corners to make your own polygon. The cyan curve is its horizontal lift; the gold arc on the starting fibre is the holonomy. Compare the measured holonomy γ with half the enclosed solid angle." />
+
+<Callout tag="Where the numbers come from">
+
+Every number in the film and the explorables is computed, not typed in: lifts are integrated numerically from the formula above (with a midpoint rule over several hundred steps), solid angles are summed from the loop with the Van Oosterom–Strackee formula, and the linking number is Gauss's double integral over two sampled fibres.
+
+</Callout>
+
+## Two bridges
+
+**Berry's phase.** A qubit, or a spin-½, is described by two complex amplitudes $z_1|{\uparrow}\rangle + z_2|{\downarrow}\rangle$ with $|z_1|^2 + |z_2|^2 = 1$: a point of $S^3$. An overall phase $e^{i\theta}$ changes the point but nothing you can measure, so the physical states are the fibres, the points of $S^2$. This sphere is the Bloch sphere of spin directions (our $h$ is the usual Bloch vector reflected in one axis, which changes nothing below). When a spin is turned slowly around a loop of directions, the state follows a curve in $S^3$, and the condition that it picks up no "unnecessary" phase along the way, $\mathrm{Im}\langle\psi, \dot\psi\rangle = 0$, is exactly our horizontality. So Berry's geometric phase is the holonomy of the Hopf connection: half the solid angle swept by the spin, up to a sign that depends on conventions. For a spin turned about an axis at right angles to it, the state traces exactly the horizontal lift of the equator, and returns as $-\psi$ after one full turn: the famous minus sign of a spin-½ under a rotation by $360°$ is this holonomy.
+
+**Shape space.** Everything here has the general shape of a fibre bundle: a total space, fibres given by a symmetry, a base of orbits, a connection chosen by a metric, and holonomy measured by curvature. Replace the circle by the group of rigid motions, $S^3$ by the configurations of a molecule, and the label sphere by the space of its shapes. The metric becomes kinetic energy, "horizontal" becomes *zero angular momentum*, and the holonomy of a loop of shapes is a rotation of the whole molecule. That is how a falling cat turns itself over, and it is the subject of the [next article, on the geometry of shape space](/personal-website/blog/shape-space).
+
+## Notes and references
+
+**Conventions used throughout.** Quaternions $q = z_1 + z_2 j$ with $z_1 = x_0 + x_1 i$, $z_2 = x_2 + x_3 i$. Fibres are the orbits of left multiplication by $e^{i\theta}$. The Hopf map is $h = (2\,\mathrm{Re}\, z_1\bar z_2,\ 2\,\mathrm{Im}\, z_1 \bar z_2,\ |z_1|^2 - |z_2|^2)$, so the fibre $z_2 = 0$ lies over the north pole. Stereographic projection is from $(0,0,0,1)$ onto $x_3 = 0$. The connection form is $A = \langle iq, \cdot\, \rangle$, the holonomy $\gamma$ is defined by "the lift ends at $e^{i\gamma}$ times its start", and with these choices $\gamma = +\tfrac12\Omega$ for the solid angle on the left of the loop. Other texts make other choices and get the same results up to signs.
+
+**Further reading.**
+
+- Heinz Hopf, *Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche*, Mathematische Annalen 104 (1931). The original paper.
+- David W. Lyons, *An Elementary Introduction to the Hopf Fibration*, Mathematics Magazine 76 (2003). A gentle, careful account with the quaternion point of view.
+- Michael V. Berry, *Quantal phase factors accompanying adiabatic changes*, Proceedings of the Royal Society A 392 (1984). Where the geometric phase was found.
+- Heinz Urbantke, *The Hopf fibration: seven times in physics*, Journal of Geometry and Physics 46 (2003). The Hopf fibration in the qubit, the monopole, the Kepler problem and more.
+- Mikio Nakahara, *Geometry, Topology and Physics*. Bundles, connections and curvature, with the Hopf bundle and the Dirac monopole worked out.
+- Jos Leys, Étienne Ghys and Aurélien Alvarez, *Dimensions*, chapters 7 and 8 (2008). A beautiful film about the Hopf fibration, freely available online.

@@ -1,0 +1,310 @@
+import film from './film';
+import fallingCat from './explorables/fallingCat';
+import moleculeLoop from './explorables/moleculeLoop';
+import torusConnection from './explorables/torusConnection';
+import curvatureTiles from './explorables/curvatureTiles';
+
+Drop a cat upside down, with no spin at all, and it lands on its feet. That sounds harmless until you remember that angular momentum is conserved: the cat starts with none, it has none all the way down, and there is nothing in the air to push against. Yet it ends up turned by $180^\circ$. The resolution is a statement about *curvature*, and, to my continued delight, it is exactly the same statement that decides how we should think about the shapes of molecules. In this article and the film below I want to build that statement from scratch: three ideas from geometry, *bundles*, *connections* and *curvature*, each introduced on a picture you can hold in your hand, then put to work on a small molecule and, at the very end, on the cat.
+
+<Film film={film} />
+
+The film takes about eight minutes; you can pause it, scrub it and jump between chapters, and in the live scenes you can take over the controls. The text below follows the same route a little more slowly, fills in the details the film glosses over, and adds four explorables to play with. I assume calculus and linear algebra and nothing else; everything beyond that is introduced as we go.
+
+## A configuration is a point
+
+For our purposes a molecule is a list of numbered atoms. Each atom sits at a point of ordinary three-dimensional space, so it carries three coordinates, and stacking all of them gives one long vector
+
+$$
+x = (x_1, y_1, z_1, \dots, x_N, y_N, z_N) \in \mathbb{R}^{3N}.
+$$
+
+The molecule in the film has five atoms, two carbons, an oxygen, a nitrogen and a hydrogen, with bonds C–C, C–O, C–N and O–H. A configuration of it is therefore a single point of $\mathbb{R}^{15}$. This is the *configuration space*: a plain vector space, which is both its charm and, as we will see, its problem.
+
+Every configuration has a potential energy $U(x)$. In the film it comes from springs: a stiff spring along every bond and a weak one between every other pair of atoms, each pulling its interatomic distance towards the value it has in the rest geometry. Real force fields and quantum chemistry are far more elaborate, but they share the one property that matters here: the energy depends only on the *relative* positions of the atoms. Sampling configurations and recording one number for each, the film fills in a function
+
+$$
+U : \mathbb{R}^{3N} \to \mathbb{R}.
+$$
+
+## Symmetry, and the space we actually work on
+
+Translate every atom by the same vector $a$: no distance changes, so the energy does not change. Rotate every atom by the same rotation $R$: again nothing changes. In formulas,
+
+$$
+U(x_1 + a, \dots, x_N + a) = U(x_1, \dots, x_N), \qquad U(R x_1, \dots, R x_N) = U(x_1, \dots, x_N)
+$$
+
+for every $a \in \mathbb{R}^3$ and every rotation $R \in SO(3)$. Rotations and translations together form the group $SE(3)$ of rigid motions; an element $g = (R, a)$ acts on a configuration by $x_i \mapsto R x_i + a$ on every atom at once, and the two statements combine into $U(g \cdot x) = U(x)$. (Rotating about the centre of the molecule instead of the origin is the same statement, since the two differ by a translation, which is already a symmetry.) In [the quaternion article](/personal-website/blog/quaternions-4d-rotations) rotations acted on single vectors; here one rotation acts on all $N$ atoms simultaneously.
+
+So the description $x \in \mathbb{R}^{3N}$ carries six numbers too many: three that say *where* the molecule is and three that say *how it is turned*. The energy does not care about them. All rigidly moved copies of $x$ form its *orbit* $SE(3) \cdot x$, and since $U$ is constant on every orbit, it is really a function of the orbit. The set of orbits is the quotient
+
+$$
+M = \mathbb{R}^{3N} / SE(3),
+$$
+
+which I will call *shape space*. One point $[x] \in M$ is a whole orbit: a shape, with position and orientation forgotten. This is the space we actually want to work on.
+
+How big is it? $SE(3)$ is six-dimensional, and as long as the atoms do not all lie on one line, the only rigid motion that fixes a configuration is the identity: the action is *free*. On a collinear configuration the rotations about that line do nothing, and the quotient develops a singularity there. Away from such degenerate configurations, $M$ is a smooth manifold of dimension $3N - 6$; for our five atoms that is $9$. This is the small print at the bottom of the film's symmetry chapter.
+
+One remark about mirrors. The spring energy is also unchanged by reflections, but we deliberately quotient only by $SE(3)$, so a configuration and its mirror image are, in general, different shapes. That is the right choice for chemistry, where a molecule and its mirror image can be genuinely different (chiral) molecules.
+
+The catch is that $M$ is not a vector space. You cannot add two shapes, and there is no single preferred way to put coordinates on all of it. Rather than attacking $M$ head-on, we will look at how the big, simple space $\mathbb{R}^{3N}$ sits *over* it. That is what a bundle is, and the first step is to look at a single point.
+
+## The tangent space splits
+
+A small change of a configuration $x$ is a tangent vector at $x$: one small arrow on every atom, so one vector in $T_x \mathbb{R}^{3N}$, a copy of $\mathbb{R}^{3N}$ attached at $x$. Some of these arrows only move the molecule rigidly. If all arrows are equal, the molecule translates; if the arrow on atom $i$ is $\omega \times (x_i - c)$ for a fixed vector $\omega$ and centre $c$, it starts to rotate about the axis $\omega$. These are the *vertical* vectors:
+
+$$
+V_x = \big\{ \big(v + \omega \times (x_i - c)\big)_{i=1}^N \; : \; v, \omega \in \mathbb{R}^3 \big\}.
+$$
+
+$V_x$ is the tangent space of the orbit through $x$: the infinitesimal rigid motions, or in the language of the quaternion article, the Lie algebra $\mathfrak{se}(3)$ acting at $x$. For a non-collinear configuration different pairs $(v, \omega)$ give different vectors, so $V_x$ is six-dimensional. Moving in a vertical direction changes neither the energy nor the shape.
+
+Everything else changes the shape. Choose any complement $H_x$ of $V_x$, a subspace with $V_x \cap H_x = 0$ and the right dimension, and you get a direct sum
+
+$$
+T_x \mathbb{R}^{3N} = V_x \oplus H_x, \qquad 3N = 6 + (3N - 6),
+$$
+
+which for our molecule reads $15 = 6 + 9$. The vectors in $H_x$ are called *horizontal*, and they correspond one to one to the directions in which you can move in shape space: the derivative of the projection $x \mapsto [x]$ maps $H_x$ isomorphically onto the tangent space of $M$ at $[x]$.
+
+But *which* complement? Linear algebra offers infinitely many. Take a pure twist of one group of atoms and add a little bit of rotation of the whole molecule to it: the result still changes the shape by exactly the same amount, and a complement containing it is just as good as one containing the pure twist. Nothing we have said so far singles out one choice. A smooth choice of $H_x$ at every point, made consistently along each orbit (moving $x$ rigidly carries $H_x$ along with it: $H_{g\cdot x} = dg(H_x)$ for every rigid motion $g$), is called a *connection*, and before making it for molecules I want to make it somewhere everything can be drawn.
+
+## A bundle you can hold: the torus
+
+Take a torus $T^2$ with an angle $\theta$ around the big circle and an angle $\varphi$ around the small one. Put an energy on it that depends on $\theta$ only. Then shifting $\varphi \mapsto \varphi + \text{const}$ is a symmetry, and the symmetry group is the circle $S^1$, also written $U(1)$, the unit complex numbers under multiplication. The orbits are the small circles, and the quotient $T^2 / S^1$ is the circle of $\theta$ values. This is the general structure in its simplest instance, and it comes with a vocabulary:
+
+- the *total space* $P = T^2$, where everything happens;
+- the *fibres*, the small circles $\theta = \text{const}$, each a copy of the group;
+- the *base* $M = T^2/S^1 \cong S^1$, on which the energy really lives;
+- the *projection* $\pi : P \to M$, $(\theta, \varphi) \mapsto \theta$.
+
+Because the group acts freely and moves every point of a fibre to every other point of the same fibre, this is a *principal $S^1$-bundle*, also called a principal $U(1)$-bundle. The molecule is the same structure in more dimensions: total space the non-collinear configurations in $\mathbb{R}^{3N}$, group $SE(3)$, fibres the orbits, base the shape space $M$.
+
+The torus bundle is *trivial*: it is literally the product $S^1 \times S^1$. In fact every principal $U(1)$-bundle over a circle is trivial. Not every bundle is. The [Hopf fibration](/personal-website/blog/hopf-fibration) $S^1 \hookrightarrow S^3 \to S^2$ is a principal $U(1)$-bundle of exactly the same kind, but its fibres are great circles of the 3-sphere, its base is the ordinary 2-sphere, and there is no way to choose one point on every fibre continuously: it has no global section, so it is not a product.
+
+Now pick a point $p$ on the torus and look at its tangent plane. One direction runs along the fibre: that is the vertical space $V_p$, spanned by $\partial_\varphi$. In any bundle the vertical space is the tangent space of the fibre, equivalently the kernel of the derivative of $\pi$. A horizontal space $H_p$ is any line in the tangent plane that is not vertical, and the derivative of $\pi$ maps it isomorphically onto the tangent line of the base. The obvious candidate is the $\partial_\theta$ direction, but a tilted line is just as valid. Which one we take is, again, the choice of a connection.
+
+## Connections
+
+Cut the torus open along a fibre and along a big circle and you get a rectangle, with $\theta$ running to the right and $\varphi$ upwards, opposite edges glued. The fibres are vertical lines, the base sits underneath. Now draw the horizontal space at each point as a short dash. Dashes pointing straight along $\theta$ are one connection; tilting them gives another. The film tilts them with slope
+
+$$
+\frac{d\varphi}{d\theta} = \lambda\, c(\theta), \qquad c(\theta) = 0.8 \sin\theta,
+$$
+
+where $\lambda$ sets the amount of tilt. Notice that the slope depends on $\theta$ but not on $\varphi$: a connection on a principal bundle must be invariant under the group, here the shift in $\varphi$, so all the dashes along one fibre are parallel.
+
+Start at a point on the fibre over $\theta_s$ and walk along the base, always following the dashes. You trace out the *horizontal lift*
+
+$$
+\varphi(\theta) = \varphi_s + 0.8\,\lambda\,(\cos\theta_s - \cos\theta),
+$$
+
+and when you reach the fibre over $\theta_1$ you arrive at one definite point of it. Doing this for every starting point gives a map from one fibre to the other, called *parallel transport*. So a connection is a rule for transporting points from fibre to fibre *along curves in the base*. In general the result depends on the curve taken, and that dependence, the holonomy, is what the rest of this article is about.
+
+There is a second, equivalent way to say the same thing. With a horizontal space chosen, every tangent vector splits uniquely into a horizontal and a vertical part, $v = v^H + v^V$, and the *connection one-form* $A$ is the map that sends $v$ to its vertical part. On the torus,
+
+$$
+A = d\varphi - \lambda\, c(\theta)\, d\theta :
+$$
+
+it gives $1$ on the fibre direction $\partial_\varphi$ and $0$ on the dashes, and the horizontal space is its kernel. Subspaces or projection, it is the same information.
+
+### A metric picks a connection
+
+If the total space carries a metric, and the metric is invariant under the group, there is a natural choice: take the horizontal space to be the orthogonal complement of the vertical one, $H_p = V_p^\perp$. On the rectangle with its flat metric $d\theta^2 + d\varphi^2$, that gives the untilted dashes, $\lambda = 0$. (The torus of revolution sitting in $\mathbb{R}^3$ would be the wrong picture here: its outer equator is longer than its inner one, so its metric is not invariant under shifting $\varphi$.)
+
+For molecules there is a metric that physics hands us: the kinetic-energy metric
+
+$$
+\langle u, v \rangle_x = \sum_{i=1}^N m_i \, u_i \cdot v_i,
+$$
+
+where $m_i$ is the mass of atom $i$; with $u = v$ equal to the velocity it is twice the kinetic energy. It is invariant under rigid motions. A vector $u$ is orthogonal to all translations exactly when $\sum_i m_i u_i \cdot v = 0$ for every $v$, that is, when $\sum_i m_i u_i = 0$: zero total linear momentum. It is orthogonal to all rotations exactly when $\sum_i m_i u_i \cdot (\omega \times (x_i - c)) = \omega \cdot \sum_i m_i (x_i - c) \times u_i = 0$ for every $\omega$, which with $c$ the centre of mass says that the total angular momentum vanishes. So
+
+$$
+H_x = \Big\{ u \; : \; \sum_i m_i u_i = 0, \;\; \sum_i m_i (x_i - c) \times u_i = 0 \Big\}.
+$$
+
+This is the *mechanical connection*: horizontal motions are exactly those with zero total linear and angular momentum. It is worth pausing on what this means. An isolated molecule that starts with zero momentum keeps zero momentum forever, so every motion it can make is horizontal. The connection is not a convention we impose; it is chosen for us by conservation laws. Throughout the rest of the article, and in the film, we take that momentum to be zero.
+
+### Integrable, and therefore flat
+
+Collect the horizontal spaces at all points: they form the *horizontal distribution* $H$. On the torus we can integrate it, in the sense that there are curves tangent to $H$ everywhere: the horizontal lifts. For the film's $c(\theta) = 0.8 \sin\theta$ they close up into circles, one through every point. This is automatic for a field of lines, which you can always follow by solving an ordinary differential equation. It is also automatic for a deeper reason: the curvature of a connection, which we meet in the next section, eats two independent horizontal directions at a time, and over a one-dimensional base there is only one horizontal direction at each point. So the curvature vanishes: every connection on a bundle over a circle is *flat*.
+
+Flat, however, does not mean "nothing happens", and this is a point the film skips. Add a constant to the tilt, $c(\theta) = 0.8 \sin\theta + \mu$. The connection is still flat. But after one full turn around the base the lift arrives at
+
+$$
+\varphi_s + \lambda \int_0^{2\pi} c(\theta)\, d\theta = \varphi_s + 2\pi\lambda\mu,
+$$
+
+so it comes back to its own fibre rotated by $2\pi\lambda\mu$. After one turn it is back at its starting point exactly when $\lambda\mu$ is a whole number; if $\lambda\mu = p/q$ is a fraction it closes after $q$ turns, and otherwise never. That rotation is the *holonomy* of the loop. For an abelian group like $U(1)$, Stokes' theorem lets the curvature determine the holonomy of every loop that bounds a surface in the base; the base circle bounds nothing, so its holonomy is left free. With the film's choice $\mu = 0$ the holonomy vanishes and every lift closes; the bundle itself is the product $S^1 \times S^1$ either way.
+
+<Explorable scene={torusConnection} title="Tilt the connection" caption="Tilt the dashes with λ, click to choose where the lift starts, and walk once around the base. With the offset μ at zero the lift always closes; with an offset it comes back rotated by 2πλμ, although the curvature is zero." />
+
+<Callout tag="Maxwell's circle">
+
+The same $U(1)$ runs all of electromagnetism. The phase of a charged particle's wavefunction lives in the fibre, the electromagnetic potential is a connection, and the field strength is its curvature, $F = dA$. The Aharonov–Bohm effect is the offset slider above, made physical: electrons pass on either side of a long, shielded solenoid, through a region where the magnetic field is zero, so the connection there is flat. Yet the interference pattern shifts, by the phase $q\Phi/\hbar$, where $\Phi$ is the magnetic flux inside the solenoid. A flat connection with holonomy around a loop that cannot be shrunk.
+
+</Callout>
+
+## Curvature is holonomy around tiny loops
+
+To see real curvature we need one more dimension. Let the base be the plane with coordinates $(x, y)$ and let the fibres be vertical lines with coordinate $z$; the group is the real line, acting by shifting $z$. At every point there is a horizontal plane, drawn in the film as a small tile.
+
+If all tiles are level, they fit together into sheets $z = \text{const}$: surfaces tangent to $H$ everywhere, so $H$ is integrable and the connection is flat. Now tilt them, more the further out they are. The film uses
+
+$$
+A = dz - \frac{\lambda}{2}\,(x\,dy - y\,dx),
+$$
+
+whose horizontal plane at $(x, y)$ is spanned by $e_1 = (1, 0, -\lambda y / 2)$ and $e_2 = (0, 1, \lambda x / 2)$. The planes do not depend on $z$ (invariance under the group again), and their slope $\lambda r / 2$ grows with the distance $r$ from the origin. For $\lambda \neq 0$ no surface fits all the tiles. The precise statement is Frobenius' theorem: the field of planes $\ker A$ has a surface tangent to it through every point exactly when $A \wedge dA = 0$, and here $A \wedge dA = -\lambda\, dz \wedge dx \wedge dy \neq 0$.
+
+Walk around a closed loop $\gamma$ in the base, always horizontally. Along the lifted path $dz = \frac{\lambda}{2}(x\,dy - y\,dx)$, so after one round, by Green's theorem,
+
+$$
+\Delta z = \frac{\lambda}{2} \oint_\gamma (x\,dy - y\,dx) = \lambda \cdot \operatorname{Area}(\gamma),
+$$
+
+with the area counted positive for a counterclockwise loop. You come back to the same fibre, but at a different height. That mismatch is the holonomy, and it depends only on the enclosed area: not on the shape of the loop, not on how fast you walk, not on the height you start at. For the film's unit circle and $\lambda = 0.5$ it is $\pi/2 \approx 1.57$. (The film computes the lift step by step along a polygon, and for a polygon the steps add up to exactly $\lambda$ times its area, so the ratio on screen is $\lambda$ to rounding error.)
+
+Now shrink the loop. The holonomy shrinks with the area and the ratio holonomy / area stays put. That ratio is the *curvature*: curvature is holonomy around infinitesimally small loops. In general, take two horizontal vectors $u, v$ at a point and the small parallelogram in the base spanned by their projections $\varepsilon\, d\pi(u)$ and $\varepsilon\, d\pi(v)$. The vertical displacement of its horizontal lift is, to leading order,
+
+$$
+\operatorname{hol}(\varepsilon u, \varepsilon v) = \varepsilon^2\, \Omega(u, v) + O(\varepsilon^3).
+$$
+
+$\Omega(u, v)$ is bilinear, and it is antisymmetric, $\Omega(v, u) = -\Omega(u, v)$, because going around the parallelogram the other way undoes the holonomy. A bilinear antisymmetric map is a *two-form*; that is why curvature is a two-form, with values in the vertical directions, that is in the Lie algebra of the group. (For an abelian group like the shifts here it can be pushed down to an ordinary two-form on the base; for $SO(3)$ it lives upstairs and changes along each fibre by the adjoint action.) For the tilted tiles $|\Omega| = \lambda$ at every point. Sign conventions differ between books: with $\Omega = dA + \tfrac12[A\wedge A]$ as below, the small loop actually returns displaced by $-\varepsilon^2\Omega(u, v)$.
+
+<Explorable scene={curvatureTiles} title="Holonomy is twist times area" caption="Change the twist λ and the size and shape of the loop. The horizontal lift misses its start by λ times the enclosed area, whatever the shape; at λ = 0 the tiles stack into flat sheets and the lift closes." />
+
+<Callout tag="In formulas">
+
+For a connection one-form $A$ on a principal bundle with structure group $G$, the curvature is the exterior covariant derivative
+
+$$
+\Omega = dA + \tfrac{1}{2}[A \wedge A].
+$$
+
+When $G$ is abelian, like $U(1)$ or the shifts of the real line above, the bracket vanishes and $\Omega = dA$. For the tiles $dA = -\lambda\, dx \wedge dy$; the minus sign is bookkeeping (the lift of a counterclockwise loop rises by $+\lambda$ per unit area), and its size is $\lambda$. Three conditions are equivalent: $\Omega = 0$; the horizontal distribution is integrable; and every loop that can be shrunk to a point has trivial holonomy. (More generally, the Ambrose–Singer theorem says the curvature determines the holonomy of all contractible loops.) On the [Hopf bundle](/personal-website/blog/hopf-fibration), with horizontal meaning orthogonal to the fibres in the round metric, the same computation gives a holonomy phase equal to half the solid angle the loop encloses on the sphere (up to a sign convention): this is the Berry phase of a spin-½.
+
+</Callout>
+
+## Back to molecules: shape space is curved
+
+Now we can assemble the picture for molecules. The non-collinear configurations $\mathbb{R}^{3N}_{\mathrm{nc}}$, an open dense subset of $\mathbb{R}^{3N}$, form the total space of a principal $SE(3)$-bundle
+
+$$
+SE(3) \hookrightarrow \mathbb{R}^{3N}_{\mathrm{nc}} \xrightarrow{\;\pi\;} M = \mathbb{R}^{3N}_{\mathrm{nc}} / SE(3),
+$$
+
+with the rigid motions as fibres and shape space as the base. The vertical vectors at $x$ are the infinitesimal translations and rotations, and the mechanical connection makes the zero-momentum motions horizontal. Unlike on the torus, the base is nine-dimensional, so nothing forces the curvature to vanish, and it does not.
+
+The translations are harmless. A configuration is the same as its centre of mass together with a configuration centred at the origin, and with zero linear momentum the centre of mass simply stays where it is: that factor is a trivial bundle with a flat connection. (Strictly, $SE(3)$ is not a product of rotations and translations, which is why one splits off the centre of mass rather than "the translational part of the connection"; the holonomies that remain are rotations about the fixed centre of mass.) All the interesting geometry is in the rotations. There, the connection form is $A = I(x)^{-1} L$, where $L$ is the angular momentum about the centre of mass and $I(x)$ is the *locked inertia tensor*, the inertia tensor of the molecule frozen in its current shape. It is invertible exactly when the atoms are not collinear. In words: $A$ returns the angular velocity a rigid body of that shape would need to carry the same angular momentum. Its curvature, evaluated on two horizontal vectors $u$ and $v$, is
+
+$$
+\Omega_x(u, v) = 2\, I(x)^{-1} \sum_i m_i\, u_i \times v_i
+$$
+
+up to an overall sign that depends on conventions. (Taking $d$ of $\sum_i m_i (x_i - c) \times dx_i$ produces the factor $2 \sum_i m_i u_i \times v_i$; every other term contains $L(u)$, $L(v)$ or a total momentum and vanishes on horizontal vectors.)
+
+The film runs the experiment that makes this visible. It uses two shape coordinates around the rest geometry: a *twist* $a$, which rotates the O–H group (but not the nitrogen) about the C–C bond, swinging it relative to the nitrogen, and a *bend* $b$, which swings the nitrogen about the central carbon within the plane of the two carbons and the nitrogen. It drives the shape around the ellipse
+
+$$
+(a, b)(\tau) = s\,\big(1.5 \cos 2\pi\tau,\; 0.5 \sin 2\pi\tau\big), \qquad 0 \le \tau \le 1,
+$$
+
+in radians, which encloses a coordinate area of $\pi \cdot 1.5 \cdot 0.5 \cdot s^2 \approx 2.356\, s^2$ square radians. The masses are the rounded atomic masses $12, 12, 16, 14, 1$ (C, C, O, N, H). The shape is prescribed; the orientation is not. It is whatever zero angular momentum forces it to be: with $q_i$ the positions relative to the centre of mass in the molecule's own frame, the orientation $R$ obeys
+
+$$
+\omega = -I(q)^{-1} \sum_i m_i\, q_i \times \dot q_i, \qquad \dot R = R\, [\omega]_\times,
+$$
+
+where $[\omega]_\times$ is the matrix of $v \mapsto \omega \times v$. The film integrates this numerically.
+
+The result: after one loop at $s = 1$ the shape is exactly what it was, but the molecule has turned by $12.50^\circ$; after two loops by $25.01^\circ$. That rotation is the holonomy of the loop. It depends only on the loop as an oriented curve in shape space, not on how fast it is traversed; running the loop backwards gives the inverse rotation. Shrinking the loop shows the curvature, exactly as with the tiles:
+
+| loop size $s$ | rotation per loop | enclosed area | rotation / area |
+| --- | --- | --- | --- |
+| $1$ | $12.50^\circ$ | $2.356$ rad² | $5.31^\circ$/rad² |
+| $1/2$ | $3.09^\circ$ | $0.589$ rad² | $5.24^\circ$/rad² |
+| $1/4$ | $0.78^\circ$ | $0.147$ rad² | $5.28^\circ$/rad² |
+| $1/8$ | $0.195^\circ$ | $0.0368$ rad² | $5.30^\circ$/rad² |
+
+The ratio settles near $5.3^\circ$ per square radian: the size of the curvature of the shape-space bundle at the rest shape, in the plane of these two coordinates. (The number depends on the coordinates, since a square radian of twist-and-bend is not a canonical unit of area in $M$; that it is not zero does not.) Because the curvature is not zero, the horizontal distribution of the molecule is not integrable: there is no way to choose an orientation for every shape such that zero angular momentum keeps you on that choice.
+
+<Explorable scene={moleculeLoop} title="A loop of shapes" caption="Twist and bend the molecule around a loop with zero angular momentum and watch it turn relative to its ghost. Change the size and aspect of the loop, reverse it, and run the shrink test: rotation divided by area settles near 5.3° per square radian." />
+
+## The falling cat
+
+Here is the cat, reduced to a toy. Model it as two rigid halves, front and back, that can twist relative to each other about the shared long axis of the body, with legs that can be tucked in or stretched out. Tucked legs give a small moment of inertia about the long axis, stretched legs a large one; in the film $I_\text{tucked} = 1$ and $I_\text{extended} = 4$. Zero angular momentum about the long axis means
+
+$$
+L = I_\text{front}\, \dot\theta_\text{front} + I_\text{back}\, \dot\theta_\text{back} = 0
+$$
+
+at every instant. Write $\delta = \theta_\text{front} - \theta_\text{back}$ for the relative twist. While the halves twist, the constraint splits the twist between them in inverse proportion to their inertia:
+
+$$
+\dot\theta_\text{front} = \frac{I_\text{back}}{I_\text{front} + I_\text{back}}\, \dot\delta, \qquad \dot\theta_\text{back} = -\frac{I_\text{front}}{I_\text{front} + I_\text{back}}\, \dot\delta.
+$$
+
+As a modelling assumption of the toy, changing the legs at fixed twist turns neither half. Now run a loop of shapes:
+
+1. Tuck the front legs, stretch the back ones: $I_\text{front} = 1$, $I_\text{back} = 4$.
+2. Twist by $150^\circ$. The light front half turns by $\tfrac45 \cdot 150^\circ = 120^\circ$, the heavy back half by $-\tfrac15 \cdot 150^\circ = -30^\circ$.
+3. Swap: stretch the front legs, tuck the back ones.
+4. Twist back by $150^\circ$. Now the front turns by $-30^\circ$ and the back by $+120^\circ$.
+5. Relax the legs.
+
+The shape is exactly where it started, and both halves have turned by $90^\circ$. With $I_\text{out}$ and $I_\text{in}$ the inertia of a stretched and a tucked half and $\Delta\delta$ the twist,
+
+$$
+\Delta\theta = \frac{I_\text{out} - I_\text{in}}{I_\text{out} + I_\text{in}}\, \Delta\delta = \frac{3}{5} \cdot 150^\circ = 90^\circ.
+$$
+
+Two loops give $180^\circ$: dropped upside down, the cat lands feet first, without ever rotating as a rigid body and with zero angular momentum the whole way down. With equal inertias the formula gives zero, which is why the legs matter.
+
+This is not merely an analogy for the previous sections; it is a literal instance of them. The fibre is the overall orientation, say $\theta_\text{back}$; the base is the space of shapes. In general that is three-dimensional (the twist $\delta$ and the two leg extensions), but the film's leg moves always keep the two extensions adding up to one, so on the loop the shape is the twist $\delta$ and the leg pose $p = e_\text{back} - e_\text{front}$, and the pose fixes both inertias: $I_\text{front} = (5 - 3p)/2$ and $I_\text{back} = (5 + 3p)/2$. With $w(p) = I_\text{front} / (I_\text{front} + I_\text{back}) = (5 - 3p)/10$, the constraint says that the one-form
+
+$$
+A = d\theta_\text{back} + w(p)\, d\delta
+$$
+
+vanishes on every allowed motion: it is the connection form, and the allowed motions are its horizontal lifts. Its curvature is $dA = w'(p)\, dp \wedge d\delta$, which is nonzero precisely because the way the inertia is split between the halves depends on the legs. Around a closed loop $\gamma$ in the shape plane, $\Delta\theta_\text{back} = -\oint_\gamma w(p)\, d\delta$, which by Stokes' theorem is minus the integral of the curvature over the enclosed region. For the film's rectangle only the two twisting sides contribute, and they give $150^\circ \cdot (\tfrac45 - \tfrac15) = 90^\circ$. The mechanism is the one of the tilted tiles: the holonomy of a loop is the curvature integrated over the area it encloses.
+
+<Explorable scene={fallingCat} title="Land on your feet" caption="Change the inertia ratio r and the twist per loop, and scrub through the loops. Each loop turns the cat by Δδ (r − 1)/(r + 1); at the defaults that is 90°, so two loops take it from upside down to feet first." />
+
+Real cats are less tidy than the toy: they also bend at the waist and swing their tails. Kane and Scher modelled the cat as two cylinders joined at the waist, and Montgomery recast the problem as a gauge theory on shape space; the reference list has both. The geometric mechanism is the one above: zero angular momentum fixes the connection, and a curved connection turns a loop of shapes into a rotation.
+
+## Where this leads
+
+Three ideas carried the whole story. A *bundle*: a space made of fibres over a base, here configurations over shapes, circles over a circle. A *connection*: a rule for which directions count as horizontal, in mechanics fixed by zero momentum. And *curvature*: what a loop of horizontal steps leaves behind, measured per unit area. Over a circle the curvature must vanish. Over the plane of tiles, over shape space and over the cat's shapes it does not, and non-zero curvature is exactly what allows holonomy around loops that can be shrunk to a point: a height for the tiles, a rotation for the molecule and the cat.
+
+The [Hopf fibration](/personal-website/blog/hopf-fibration) is the same structure one step further: a circle as the fibre over the ordinary sphere, curved everywhere, with a phase of half the enclosed solid angle as its holonomy, and with the extra twist that the bundle itself is not a product. That article picks up where this one ends.
+
+<Callout tag="Why it matters for generative models">
+
+A model that generates molecular structures should, one way or another, not care where a molecule is or how it is turned: what it produces is really a distribution on $M$. One way to respect that is to work on shape space directly, with its metric and its connection, and then the geometry of this article is not decoration but the stage the model lives on. Curvature is the reason this needs care: it rules out a single choice of orientation that is compatible with zero-momentum motion for all shapes. This is the setting of my master's thesis, which I am writing in Frank Noé's AI4Science group at Freie Universität Berlin.
+
+</Callout>
+
+## Notes and references
+
+**Numerics.** The molecule loop is integrated with a midpoint rule in 800 to 2000 steps; the numbers in the table do not change in the digits shown when the step count is raised further. I recomputed the table for this article with the same code that draws the film.
+
+**Conventions.** Rigid motions act by $x_i \mapsto R x_i + a$; shape space is $M = \mathbb{R}^{3N}/SE(3)$ restricted to non-collinear configurations; the kinetic-energy metric is $\sum_i m_i u_i \cdot v_i$; signed areas are positive for counterclockwise loops. Signs of curvature forms vary between books, and I have only quoted magnitudes where the sign is a matter of convention.
+
+**References.**
+
+- R. Montgomery, *Gauge theory of the falling cat*, in *Dynamics and Control of Mechanical Systems*, Fields Institute Communications 1 (1993).
+- T. R. Kane and M. P. Scher, *A dynamical explanation of the falling cat phenomenon*, International Journal of Solids and Structures 5 (1969).
+- R. G. Littlejohn and M. Reinsch, *Gauge fields in the separation of rotations and internal motions in the n-body problem*, Reviews of Modern Physics 69 (1997).
+- A. Shapere and F. Wilczek, *Gauge kinematics of deformable bodies*, American Journal of Physics 57 (1989), and *Geometry of self-propulsion at low Reynolds number*, Journal of Fluid Mechanics 198 (1989).
+- A. Guichardet, *On rotation and vibration motions of molecules*, Annales de l'Institut Henri Poincaré, Physique théorique 40 (1984).
+- J. E. Marsden, *Lectures on Mechanics*, London Mathematical Society Lecture Note Series 174, Cambridge University Press (1992).
+- J. E. Marsden and T. S. Ratiu, *Introduction to Mechanics and Symmetry*, Springer (1994).
+- M. V. Berry, *Quantal phase factors accompanying adiabatic changes*, Proceedings of the Royal Society A 392 (1984).
+- S. Kobayashi and K. Nomizu, *Foundations of Differential Geometry*, Volume I, Wiley (1963).
+- M. Nakahara, *Geometry, Topology and Physics*, 2nd edition, Institute of Physics Publishing (2003).

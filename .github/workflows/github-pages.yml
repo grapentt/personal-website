@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
@@ -37,9 +37,6 @@ jobs:
 
       - name: Build with Vite
         run: npm run build
-        env:
-          # Vite environment variables (must be prefixed with VITE_)
-          VITE_GA_TRACKING_ID: UA-68649021-1
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5

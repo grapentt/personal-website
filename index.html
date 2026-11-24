@@ -1,37 +1,35 @@
-<!DOCTYPE html>
-<html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      id="viewport"
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f5ef" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0f1a" />
+    <meta name="description" content="Thomas Grapentin — mathematics, physics and machine learning, explained with interactive visualisations." />
+    <link rel="icon" href="/personal-website/images/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="/personal-website/images/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/personal-website/images/favicon/apple-icon-180x180.png" />
     <title>Thomas Grapentin</title>
+    <script>
+      // Apply the saved theme before the first paint, so there is no flash.
+      (function () {
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+      // GitHub Pages single-page-app redirect (see public/404.html).
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function (s) { return s.replace(/~and~/g, '&'); }).join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
   </head>
-
   <body>
     <div id="root"></div>
-    <!-- Vite entry point -->
-    <script type="module" src="/src/index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
-  <script type="text/javascript">
-    (function (l) {
-      if (l.search[1] === "/") {
-        var decoded = l.search
-          .slice(1)
-          .split("&")
-          .map(function (s) {
-            return s.replace(/~and~/g, "&");
-          })
-          .join("?");
-        window.history.replaceState(
-          null,
-          null,
-          l.pathname.slice(0, -1) + decoded + l.hash
-        );
-      }
-    })(window.location);
-  </script>
 </html>
