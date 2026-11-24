@@ -13,6 +13,7 @@ const ArticlePage = lazy(() => import('./pages/ArticlePage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const DocumentPage = lazy(() => import('./pages/DocumentPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const StatsPage = lazy(() => import('./pages/StatsPage'));
 
 const App = () => (
   <HelmetProvider>
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/resume" element={<DocumentPage kind="resume" />} />
               <Route path="/thesis" element={<DocumentPage kind="thesis" />} />
+              <Route path="/stats" element={<StatsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

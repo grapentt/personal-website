@@ -5,6 +5,7 @@ import { site } from '../app/site';
 import TableOfContents from '../components/TableOfContents';
 import { articleBySlug, formatDate, neighbours } from '../content/articles';
 import NotFoundPage from './NotFoundPage';
+import { countEvent } from '../app/analytics';
 
 const ArticlePage = () => {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -12,6 +13,21 @@ const ArticlePage = () => {
   const [Content, setContent] = useState<ComponentType | null>(null);
   const [failed, setFailed] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLElement>(null);
+
+  // count "read to the end" once the end of the article scrolls into view
+  useEffect(() => {
+    const end = endRef.current;
+    if (!end || !Content) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        countEvent(`read/${slug}`);
+        observer.disconnect();
+      }
+    });
+    observer.observe(end);
+    return () => observer.disconnect();
+  }, [Content, slug]);
 
   useEffect(() => {
     setContent(null);
@@ -60,7 +76,7 @@ const ArticlePage = () => {
             {!Content && !failed && <p className="smallprint" aria-busy="true">Loading…</p>}
             {failed && <p className="smallprint">This article could not be loaded. Please reload the page.</p>}
           </div>
-          <footer className="article-footer">
+          <footer className="article-footer" ref={endRef}>
             <p className="smallprint">
               Found a mistake, or something that could be clearer? I would be glad to hear it:{' '}
               <a href={`mailto:${site.email}`}>{site.email}</a>.

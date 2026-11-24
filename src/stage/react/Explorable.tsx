@@ -2,6 +2,7 @@ import { ReactNode, useRef } from 'react';
 import type { Scene } from '../engine/timeline';
 import { STAGE } from '../engine/timeline';
 import { usePlayer } from './useStage';
+import { countEvent } from '../../app/analytics';
 
 interface ExplorableProps {
   scene: Scene;
@@ -42,7 +43,14 @@ const Explorable = ({ scene, title, caption, loop = true }: ExplorableProps) => 
             fullscreen: fullscreen.current,
           }
         : null,
-    { mode: 'explorable', loop },
+    {
+      mode: 'explorable',
+      loop,
+      onEvent: (event) => {
+        const article = window.location.pathname.match(/\/blog\/([^/]+)/)?.[1];
+        if (event === 'interact' && article) countEvent(`explorable/${article}`);
+      },
+    },
     [scene],
   );
 

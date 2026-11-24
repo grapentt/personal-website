@@ -19,7 +19,7 @@ visualisations.
 ## Stack
 
 React 18 · Vite 7 · TypeScript · MDX with KaTeX · a 2D-canvas film engine (`src/stage/`) · GitHub Pages.
-Fonts (Spectral, IBM Plex Sans, IBM Plex Mono) are self-hosted. No analytics, no cookies.
+Fonts (Spectral, IBM Plex Sans, IBM Plex Mono) are self-hosted. No cookies; anonymous view counts through [hits.sh](https://hits.sh), shown on the unlisted page `/stats` (counter names in `src/app/counters.ts`, snapshot fetched by `npm run stats` at every deploy).
 
 ## Developing
 

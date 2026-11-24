@@ -5,6 +5,7 @@ import { Sun, Moon } from 'lucide-react';
 import { site, navigation } from './site';
 import { useTheme } from './theme';
 import Mark from '../components/Mark';
+import { countEvent, countPage, linkEvent } from './analytics';
 
 const ScrollManager = () => {
   const { pathname, hash } = useLocation();
@@ -27,6 +28,22 @@ const ScrollManager = () => {
   return null;
 };
 
+/** Counts every page view and the clicks on downloads and contact links. */
+const Counting = () => {
+  const { pathname } = useLocation();
+  useEffect(() => countPage(pathname), [pathname]);
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.('a');
+      const event = link ? linkEvent(link.href) : null;
+      if (event) countEvent(event);
+    };
+    document.addEventListener('click', onClick, true);
+    return () => document.removeEventListener('click', onClick, true);
+  }, []);
+  return null;
+};
+
 const Layout = ({ children }: { children: ReactNode }) => {
   const [theme, toggleTheme] = useTheme();
   return (
@@ -37,6 +54,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <meta property="og:type" content="website" />
       </Helmet>
       <ScrollManager />
+      <Counting />
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header">
         <div className="container site-header__inner">
@@ -72,7 +90,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <footer className="site-footer">
         <div className="container site-footer__inner">
           <div>
-            © {new Date().getFullYear()} {site.name}. Written and drawn by hand; the interactive films run on a 2D canvas.
+            © {new Date().getFullYear()} {site.name}. Written and drawn by hand; the interactive films run on a 2D canvas. Anonymous view counts via hits.sh, no cookies.
           </div>
           <div className="site-footer__links">
             <a href={site.github}>GitHub</a>

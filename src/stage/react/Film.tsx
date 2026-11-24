@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import type { Film as FilmSpec } from '../engine/timeline';
 import { usePlayer } from './useStage';
 import { STAGE } from '../engine/timeline';
+import { countEvent } from '../../app/analytics';
 
 interface FilmProps {
   film: FilmSpec;
@@ -45,7 +46,7 @@ const Film = ({ film, caption }: FilmProps) => {
   usePlayer(
     film,
     () => (refs.canvas.current ? { ...Object.fromEntries(Object.entries(refs).map(([k, r]) => [k, r.current])), canvas: refs.canvas.current } as never : null),
-    { posterTime: film.posterTime ?? 0, mode: 'film' },
+    { posterTime: film.posterTime ?? 0, mode: 'film', onEvent: (event) => countEvent(`film/${film.id}/${event}`) },
     [film],
   );
 
