@@ -47,3 +47,7 @@ build/
 
 # Nohup
 nohup.out
+
+# generated
+public/stats.json
+scripts/.fetch-stats.mjs

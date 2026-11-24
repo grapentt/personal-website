@@ -69,7 +69,11 @@ export interface PlayerOptions {
   mode?: 'film' | 'explorable';
   /** Explorable mode: restart time at the scene's end (default) or stop. */
   loop?: boolean;
+  /** Told when the viewer starts the film, reaches its end, takes over a live scene, or uses an explorable. */
+  onEvent?: (event: PlayerEvent) => void;
 }
+
+export type PlayerEvent = 'play' | 'finish' | 'explore' | 'interact';
 
 interface ControlEntry {
   c: Control;
@@ -114,9 +118,11 @@ export class Player {
   overlayNodes = new Map<string, HTMLElement>();
   destroyed = false;
   private unbind: (() => void)[] = [];
+  private onEvent: (event: PlayerEvent) => void;
   private frame = 0;
 
-  constructor(timeline: Timeline, ui: PlayerUi, { posterTime = 0, mode = 'film', loop = true }: PlayerOptions = {}) {
+  constructor(timeline: Timeline, ui: PlayerUi, { posterTime = 0, mode = 'film', loop = true, onEvent = () => {} }: PlayerOptions = {}) {
+    this.onEvent = onEvent;
     this.timeline = timeline;
     this.ui = ui;
     this.mode = mode;
@@ -156,6 +162,7 @@ export class Player {
     this.leaveExplore();
     if (this.time >= this.timeline.duration - 0.01) this.time = 0;
     this.playing = true;
+    this.onEvent('play');
     this.hidePoster();
     this.startWarmUp();
     this.syncPlayButton();
@@ -216,6 +223,7 @@ export class Player {
     this.view.startExplore(scene, t0);
     this.syncExplore();
     this.invalidate();
+    this.onEvent('explore');
   }
 
   /** Leave explore mode and play the narrated version on from the moment where exploring began. */
@@ -287,6 +295,7 @@ export class Player {
       if (this.time >= this.timeline.duration) {
         this.time = this.timeline.duration - 0.001;
         this.pause();
+        this.onEvent('finish');
       }
       this.dirty = true;
     }
@@ -519,6 +528,7 @@ export class Player {
     const scene = this.scene();
     const c = scene.controls?.[name];
     if (!c) return;
+    if (this.mode === 'explorable') this.onEvent('interact');
     if (c.lens) this.view.setLens(scene, name, value);
     else {
       if (this.mode === 'film') this.explore();
@@ -584,6 +594,7 @@ export class Player {
       }
       canvas.setPointerCapture(e.pointerId);
       e.preventDefault();
+      if (this.mode === 'explorable') this.onEvent('interact');
     };
     const move = (e: PointerEvent) => {
       const p = this.stagePoint(e);

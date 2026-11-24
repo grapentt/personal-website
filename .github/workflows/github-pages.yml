@@ -5,6 +5,9 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # redeploy daily so the unlisted /stats page shows fresh view counts
+  schedule:
+    - cron: "23 4 * * *"
 
 permissions:
   contents: read
@@ -34,6 +37,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Snapshot the view counts for /stats
+        run: npm run stats
+        continue-on-error: true
 
       - name: Build with Vite
         run: npm run build
