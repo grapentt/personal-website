@@ -1,0 +1,89 @@
+/* Design tokens. Light = paper, dark = the screening room the films are shown in.
+   Every colour is defined on :root (light) and overridden in the two dark blocks,
+   so an explicit data-theme wins over the system preference in both directions. */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f7f5ef;
+  --bg-elev: #fffdf8;
+  --bg-sunk: #efece4;
+  --bg-tint: rgba(23, 107, 138, 0.06);
+  --ink: #1b2130;
+  --ink-2: #4a5263;
+  --ink-3: #7a8294;
+  --rule: #dcd8cc;
+  --rule-strong: #c6c1b2;
+  --accent: #176b8a;
+  --accent-hover: #0f4f68;
+  --accent-ink: #ffffff;
+  --gold: #b88a12;
+  --selection: rgba(23, 107, 138, 0.18);
+  --shadow: 0 1px 2px rgba(27, 33, 48, 0.06), 0 8px 24px rgba(27, 33, 48, 0.08);
+  --shadow-lg: 0 2px 6px rgba(27, 33, 48, 0.08), 0 24px 64px rgba(27, 33, 48, 0.14);
+  --header-bg: rgba(247, 245, 239, 0.82);
+
+  /* the stage is always dark; these never change with the theme */
+  --stage-bg: #0d1321;
+  --stage-panel: #141c2e;
+  --stage-line: #28344d;
+  --stage-ink: #ece8de;
+  --stage-muted: #8a96ad;
+  --stage-gold: #f2cf63;
+  --stage-soft: #6cc4e8;
+
+  --font-display: 'Spectral', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-ui: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --measure: 42rem;
+  --container: 1160px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --radius: 10px;
+  --radius-lg: 16px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0a0f1a;
+    --bg-elev: #111828;
+    --bg-sunk: #070b13;
+    --bg-tint: rgba(242, 207, 99, 0.07);
+    --ink: #ece8de;
+    --ink-2: #b8bfcc;
+    --ink-3: #8a96ad;
+    --rule: #222c42;
+    --rule-strong: #34405c;
+    --accent: #f2cf63;
+    --accent-hover: #ffe08a;
+    --accent-ink: #0d1321;
+    --gold: #f2cf63;
+    --selection: rgba(242, 207, 99, 0.25);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 24px 64px rgba(0, 0, 0, 0.5);
+    --header-bg: rgba(10, 15, 26, 0.8);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0f1a;
+  --bg-elev: #111828;
+  --bg-sunk: #070b13;
+  --bg-tint: rgba(242, 207, 99, 0.07);
+  --ink: #ece8de;
+  --ink-2: #b8bfcc;
+  --ink-3: #8a96ad;
+  --rule: #222c42;
+  --rule-strong: #34405c;
+  --accent: #f2cf63;
+  --accent-hover: #ffe08a;
+  --accent-ink: #0d1321;
+  --gold: #f2cf63;
+  --selection: rgba(242, 207, 99, 0.25);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 24px 64px rgba(0, 0, 0, 0.5);
+  --header-bg: rgba(10, 15, 26, 0.8);
+}

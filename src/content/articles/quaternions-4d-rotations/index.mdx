@@ -1,0 +1,267 @@
+import film from './film';
+import complex from './explorables/complex';
+import doubleRotation from './explorables/doubleRotation';
+import rotate3d from './explorables/rotate3d';
+
+Hello, and welcome to my first blog article! We are going on a journey from the familiar line, plane and space into four-dimensional space. Along the way we will discover why the complex numbers exist, why there is no such thing as a three-dimensional number, and why there *is* a four-dimensional one: the **quaternions**. By the end you will also understand the strange tumbling tesseract below.
+
+No advanced prerequisites are needed. If you remember what a derivative is, you have everything. The film tells the whole story in under eight minutes; the text goes through it again more slowly, with the formulas, and with three explorables you can play with.
+
+<Film film={film} />
+
+## What is a dimension?
+
+A **dimension** is a direction you can move in, independently of all the others:
+
+- **One dimension: Lineland.** A world that is just a straight line. Every point is described by a single number, its position on the line.
+- **Two dimensions: Flatland.** A flat sheet of paper. You can move left–right or up–down, and every point is given by two coordinates $(x, y)$.
+- **Three dimensions: our space.** Left–right, up–down, forward–backward: every point is given by three coordinates $(x, y, z)$.
+
+We call the space of all lists of $n$ real numbers **$n$-space**, and write it $\mathbb{R}^n$. Four-dimensional space $\mathbb{R}^4$ is then simply the set of lists $(x_1, x_2, x_3, x_4)$. We cannot picture it, but we can compute in it exactly as in three dimensions: add vectors, measure lengths $\sqrt{x_1^2 + x_2^2 + x_3^2 + x_4^2}$, and measure angles. The way we will learn to *see* it is through its symmetries.
+
+## Symmetries
+
+What is a symmetry? We all have an intuitive idea, but I, at least, had a very poor one until quite recently. Consider a square:
+
+- **Rotation.** Turning the square by $90^\circ$, $180^\circ$, $270^\circ$ or $360^\circ$ leaves it looking exactly the same.
+- **Reflection.** Mirroring it across its vertical centreline also leaves it looking the same.
+
+A **symmetry** is a transformation that does not change the object. But what exactly does "does not change" mean? Every one of those transformations moved the corners around! The reflection even changed something more fundamental: label the corners $A, B, C, D$ clockwise, mirror the square, and the same labels now run *anticlockwise*. The reflection reversed the **orientation**, the rotations did not.
+
+So "unchanged" is a matter of perspective. We choose the structure we care about (the shape, or the shape *and* its orientation), and the symmetries are the transformations that keep that structure.
+
+## Symmetries of space
+
+What are the symmetries of space itself? Start with the plane. We could bend and stretch it in any way we like:
+
+<Figure video="visuals/nonlinear_isomorphism" alt="A nonlinear transformation of the plane" narrow caption="A transformation that bends the plane. It is perfectly reversible, but far too wild to be called a symmetry." />
+
+That is too much freedom: almost nothing survives such a transformation, so there is almost nothing to study. So we impose rules. We only allow transformations that
+
+- keep the origin where it is,
+- keep straight lines straight, and
+- keep parallel lines parallel.
+
+These are the **linear maps**. A linear map $T$ is determined by just two vectors, the images $T(e_1)$ and $T(e_2)$ of the two basis vectors, because every other vector is a combination of those: $T(a e_1 + b e_2) = a\,T(e_1) + b\,T(e_2)$.
+
+<Figure video="visuals/linear" alt="A linear transformation of the plane" narrow caption="A linear map: the grid is stretched and sheared, but its lines stay straight and parallel." />
+
+Linear maps are the heart of linear algebra, and they deserve an article of their own. Here we ask for even more. We want to keep **lengths**, **angles** and **orientation**. What remains are the **rotations**, and they are what this article is about.
+
+## Rotations in the plane: the quarter turn
+
+The plane has only one plane to rotate in, so a rotation is described by a single angle $\theta$. But there is a deeper way to look at it, and it is the key to everything that follows.
+
+Watch a vector $v(\theta)$ turn around the origin at constant speed. Its velocity, the derivative $v'(\theta)$, always points at right angles to the vector itself, and it has the same length. In other words:
+
+> The velocity of a turning vector is the vector itself, turned by a quarter.
+
+Call the quarter turn $J$. It sends $e_1$ to $e_2$ and $e_2$ to $-e_1$, and in the language of the wedge product it is written $J = e_1 \wedge e_2$. The observation above becomes an equation:
+
+$$
+v'(\theta) = J\, v(\theta).
+$$
+
+Two quarter turns make a half turn, which points every vector the other way:
+
+$$
+J^2 = -1 .
+$$
+
+Now we can find the rotation from its velocity alone. Try $v(\theta) = \cos\theta\; v + \sin\theta\; Jv$. Differentiating, and using $J^2 = -1$,
+
+$$
+v'(\theta) = -\sin\theta\; v + \cos\theta\; Jv = J\big(\cos\theta\; v + \sin\theta\; Jv\big) = J\, v(\theta),
+$$
+
+so it is the right answer (and since it starts at $v$, the only one). There is an even more suggestive way to write it. A rotation by $\theta$ is what you get by adding up infinitely many tiny quarter-turn nudges, and adding up infinitely many tiny steps is exactly what the exponential function does. Plug $\theta J$ into the exponential series and sort the terms by $J^2 = -1$: the even powers give $\cos\theta$, the odd powers give $J \sin\theta$,
+
+$$
+e^{\theta J} = \sum_{n=0}^\infty \frac{(\theta J)^n}{n!} = \Big(1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \dots\Big) + J\Big(\theta - \frac{\theta^3}{3!} + \dots\Big) = \cos\theta + J \sin\theta .
+$$
+
+So **every rotation of the plane is the quarter turn, exponentiated**. The quarter turn $J$ is called the *infinitesimal generator* of the rotations. (The generators of a group of symmetries form what mathematicians call its *Lie algebra*; we will meet that idea again.)
+
+<Figure video="visuals/2drotation_animation" alt="A vector rotating in the plane" narrow caption="The generator J nudges the vector at every moment; exponentiating adds the nudges up to a full rotation." />
+
+## Complex numbers: rotating and stretching
+
+Here is a lovely consequence. Every point $(a, b)$ of the plane can be read as a rotation followed by a stretch: write it in polar coordinates as $r(\cos\theta, \sin\theta)$ and use the formula above,
+
+$$
+(a, b) \;\longleftrightarrow\; a + b\,J = r\,(\cos\theta + J\sin\theta) = r\, e^{\theta J}.
+$$
+
+Reading points as transformations lets us *multiply* points: multiplying two of them means doing one transformation after the other. Rotations add their angles and stretches multiply their lengths, so
+
+$$
+r_1 e^{\theta_1 J} \cdot r_2 e^{\theta_2 J} = r_1 r_2\, e^{(\theta_1 + \theta_2) J}.
+$$
+
+In coordinates, multiplying out with $J^2 = -1$,
+
+$$
+(a_1 + b_1 J)(a_2 + b_2 J) = (a_1 a_2 - b_1 b_2) + (a_1 b_2 + b_1 a_2)\, J .
+$$
+
+These are the **complex numbers**. Mathematicians write $i$ instead of $J$, and the formula $e^{i\theta} = \cos\theta + i\sin\theta$ is Euler's famous formula, which we have just derived from a picture. Our notation is more suggestive of what is going on: $i$ *is* the quarter turn.
+
+<Explorable scene={complex} title="Multiply two complex numbers" caption="Set the lengths and angles of z and w and watch their product: the lengths multiply and the angles add. Multiplying by i (length 1, angle 90°) is the quarter turn." />
+
+Why did this work so smoothly? Because a rotation of the plane, unless it is no rotation at all, leaves no direction in place. Keep that in mind: it is exactly what goes wrong one dimension up.
+
+## Rotations in three dimensions
+
+In three dimensions there are infinitely many planes to rotate in, so a rotation needs a plane as well as an angle. If $v_1, v_2$ are orthonormal vectors spanning the plane, the generator $v_1 \wedge v_2$ does two things: it **projects** a vector onto the plane, and then turns the projection **by a quarter** within the plane.
+
+Everything at right angles to the plane, the rotation **axis**, does not move at all. So split a vector into its part in the plane and its part along the axis, $w = w_\parallel + w_\perp$. Exponentiating the generator turns the first part and leaves the second alone:
+
+$$
+e^{\theta\, v_1 \wedge v_2}\, w = \cos\theta\; w_\parallel + \sin\theta\; (v_1 \wedge v_2)\, w_\parallel + w_\perp .
+$$
+
+(This is why the exponential is no longer simply $\cos\theta + \sin\theta\, (v_1 \wedge v_2)$: that expression would shrink $w_\perp$ by $\cos\theta$.)
+
+<Figure video="visuals/rotating_sphere" alt="A sphere rotating about an axis" narrow caption="Every rotation of space has an axis of points that do not move." />
+
+Every rotation of space has such an axis. That innocent fact has a striking consequence.
+
+<Callout tag="Why there are no three-dimensional numbers">
+
+Suppose we could multiply vectors of $\mathbb{R}^3$ the way we multiply complex numbers: a multiplication that distributes over addition, has a unit element $1$, and multiplies lengths, $|uv| = |u|\,|v|$.
+
+Then for every unit vector $u$, the map $v \mapsto uv$ keeps lengths. It is a rotation or a rotation combined with a reflection; and since it is a rotation for $u = 1$ (it does nothing) and the unit sphere is connected, it is a rotation for every unit $u$. Every rotation of space fixes some vector $v \neq 0$ on its axis, so $uv = v = 1v$, so $(u - 1)v = 0$, so $|u - 1|\,|v| = 0$, so $u = 1$.
+
+That says *every* unit vector equals $1$, which is absurd. So no such multiplication exists. In the plane the argument breaks down exactly where it should: rotations of the plane fix no vector. In four dimensions, as we are about to see, there are rotations that fix no vector either.
+
+</Callout>
+
+## Rotations in four dimensions: two planes at once
+
+From now on we write a vector of $\mathbb{R}^4$ in the coordinates of the basis $e_1, e_2, e_3, e_4$, which we will soon call $1, i, j, k$. Split it into two halves: the part in the plane of $e_1$ and $e_2$, and the part in the plane of $e_3$ and $e_4$. These two planes are at right angles to each other.
+
+Here is the genuinely new phenomenon: **in four dimensions, the set of directions at right angles to a plane is not a line, but another plane.** So a rotation in the plane of $e_1$ and $e_2$,
+
+$$
+\begin{pmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{pmatrix}
+\longmapsto
+\begin{pmatrix} \cos\theta_1\, x_1 - \sin\theta_1\, x_2 \\ \sin\theta_1\, x_1 + \cos\theta_1\, x_2 \\ x_3 \\ x_4 \end{pmatrix},
+$$
+
+leaves an entire plane fixed. We call it a **single rotation**. But nothing stops us from turning the second plane as well, by its own angle $\theta_2$. That is a **double rotation**, and its generator is $\theta_1\, e_1 \wedge e_2 + \theta_2\, e_3 \wedge e_4$. In fact *every* rotation of $\mathbb{R}^4$ is a double rotation in a suitable pair of orthogonal planes (a single rotation being the case $\theta_2 = 0$); this is the normal form of orthogonal matrices from linear algebra.
+
+To see four dimensions we look at a **tesseract**, the four-dimensional cube with corners $(\pm1, \pm1, \pm1, \pm1)$. The films and explorables hide the first direction ($e_1$, later called $1$) by perspective: points with a larger first coordinate are closer to the eye and appear bigger. That is why the tesseract looks like a small cube inside a big one, and why a rotation that involves the hidden direction seems to turn it inside out. The colour of an edge says which coordinate changes along it.
+
+<Figure video="visuals/singleTesseract" alt="A tesseract under a single rotation" narrow caption="A single rotation of the tesseract: one plane turns, the plane at right angles to it stays fixed." />
+
+## Isoclinic rotations: every vector turns by the same angle
+
+How far does a double rotation move each vector? Write a unit vector as $v = a + b$, with $a$ in the first plane and $b$ in the second. Each part is rotated within its own plane, so its inner product with its image is $|a|^2\cos\theta_1$ or $|b|^2\cos\theta_2$, and therefore
+
+$$
+\cos \angle(v, Rv) = |a|^2 \cos\theta_1 + |b|^2 \cos\theta_2, \qquad |a|^2 + |b|^2 = 1 .
+$$
+
+The angle by which $v$ moves lies between $|\theta_1|$ and $|\theta_2|$ (for angles between $-180°$ and $180°$), depending on how $v$ is split between the planes. For a single rotation, vectors near the fixed plane hardly move at all.
+
+Now choose the two angles equal, $\theta_2 = \pm\theta_1$. Then $\cos\angle(v, Rv) = \cos\theta_1$ for **every** vector: everything turns by exactly the same angle, nothing stays behind, there is no axis. Such a rotation is called **isoclinic** ("equally inclined"). With $\theta_2 = \theta_1$ it is a **left-isoclinic** rotation, with $\theta_2 = -\theta_1$ a **right-isoclinic** one. For orthonormal $v_1, v_2, v_3, v_4$,
+
+$$
+\exp\big((v_1 \wedge v_2 \pm v_3 \wedge v_4)\,\theta\big) = \cos\theta + \sin\theta\, (v_1 \wedge v_2 \pm v_3 \wedge v_4),
+$$
+
+and this time the simple formula is right: the generator $v_1 \wedge v_2 \pm v_3 \wedge v_4$ turns *every* vector by a quarter, so it squares to $-1$ just like $J$, and the exponential series splits into cosine and sine exactly as in the plane.
+
+<Figure video="visuals/isoclinicTesseract" alt="A tesseract under an isoclinic double rotation" narrow caption="A left-isoclinic rotation of the tesseract: both planes turn by the same angle, and every vector moves by that angle." />
+
+One more fact we will use at the end. Doing a left-isoclinic and a right-isoclinic rotation by the same angle in the same pair of planes adds the angles in the first plane and cancels them in the second: the result is a *single* rotation by $2\theta$. Conversely, every rotation of $\mathbb{R}^4$ is a left-isoclinic rotation followed by a right-isoclinic one.
+
+<Explorable scene={doubleRotation} title="Double rotations in 4D" caption="Choose the angles θ₁ and θ₂ of the two planes. The dots below measure how far 220 random directions are turned: spread out for a single or a general double rotation, all at the same angle when θ₂ = ±θ₁." />
+
+## The 3-sphere of isoclinic rotations
+
+For complex numbers, the rotations of the plane were the points of the unit circle. What plays that role here? Let us describe all left-isoclinic rotations at once. Their generators are combinations of three basic ones,
+
+$$
+i_L = e_1 \wedge e_2 + e_3 \wedge e_4, \qquad j_L = e_1 \wedge e_3 + e_4 \wedge e_2, \qquad k_L = e_1 \wedge e_4 + e_2 \wedge e_3,
+$$
+
+each of which turns two orthogonal planes together by a quarter. If $v_1, v_2, v_3, v_4$ are orthonormal and positively oriented, the generator $v_1 \wedge v_2 + v_3 \wedge v_4$ can be written as
+
+$$
+n = a\, i_L + b\, j_L + c\, k_L, \qquad a^2 + b^2 + c^2 = 1,
+$$
+
+so a left-isoclinic generator is a *direction* $(a, b, c)$, a point on an ordinary sphere. Like $J$, it squares to $-1$, and so the left-isoclinic rotation by $\theta$ is
+
+$$
+e^{\theta n} = \cos\theta + \sin\theta\, \big(a\, i_L + b\, j_L + c\, k_L\big).
+$$
+
+Read off the four numbers $\big(\cos\theta,\ a\sin\theta,\ b\sin\theta,\ c\sin\theta\big)$: their squares add up to $\cos^2\theta + \sin^2\theta = 1$. So **left-isoclinic rotations correspond to points of the 3-sphere**
+
+$$
+S^3 = \{\, (x_1, x_2, x_3, x_4) \in \mathbb{R}^4 : x_1^2 + x_2^2 + x_3^2 + x_4^2 = 1 \,\},
+$$
+
+just as rotations of the plane corresponded to points of the circle. The same holds for right-isoclinic rotations, with the generators
+
+$$
+i_R = e_1 \wedge e_2 - e_3 \wedge e_4, \qquad j_R = e_1 \wedge e_3 - e_4 \wedge e_2, \qquad k_R = e_1 \wedge e_4 - e_2 \wedge e_3 .
+$$
+
+## Quaternions: four-dimensional numbers
+
+Now we can do in four dimensions what we did in the plane. Every point of $\mathbb{R}^4$ is a point of $S^3$ times a length, so it can be read as an isoclinic rotation followed by a stretch, and reading points as transformations lets us multiply them. Choosing left-isoclinic rotations for multiplication from the left and right-isoclinic rotations for multiplication from the right gives one consistent multiplication.
+
+Name the basis vectors $(e_1, e_2, e_3, e_4) = (1, i, j, k)$. Then the basic generators are multiplications by $i$, $j$ and $k$:
+
+$$
+i_L(v) = iv,\quad j_L(v) = jv,\quad k_L(v) = kv, \qquad i_R(v) = vi,\quad j_R(v) = vj,\quad k_R(v) = vk,
+$$
+
+and the whole multiplication fits in the line that William Rowan Hamilton carved into Brougham Bridge in Dublin on 16 October 1843:
+
+$$
+i^2 = j^2 = k^2 = ijk = -1 .
+$$
+
+From it everything else follows by the distributive law: $ij = k$, $jk = i$, $ki = j$, and in the other order $ji = -k$, $kj = -i$, $ik = -j$. Going around the circle $i \to j \to k \to i$ in its direction gives the next one; going against it gives a minus sign. These are the **quaternions**, and unlike complex numbers they do not commute: $ij \neq ji$. (Neither do rotations of space, as we will see in a moment.)
+
+Two properties come for free from the geometry. Multiplying by a unit quaternion is a rotation, so it keeps lengths: $|pq| = |p|\,|q|$, which is exactly the property that cannot hold in three dimensions. And every quaternion $q \neq 0$ has an inverse, $q^{-1} = \bar q / |q|^2$, where the **conjugate** $\bar q$ flips the signs of the $i$, $j$, $k$ parts.
+
+## Back to three dimensions: quaternions rotate space
+
+The quaternions pay us back in three dimensions. Read a vector of space as a quaternion with no real part, $v = x\,i + y\,j + z\,k$. Take a unit vector $u$ (also read as a quaternion) and an angle $\varphi$, and set
+
+$$
+q = \cos\tfrac{\varphi}{2} + \sin\tfrac{\varphi}{2}\, u .
+$$
+
+Then
+
+$$
+v \;\longmapsto\; q\, v\, \bar q
+$$
+
+is **the rotation of space by the angle $\varphi$ about the axis $u$**, turning anticlockwise when you look down the axis from its tip. Why? Multiplying by $q$ on the left is a left-isoclinic rotation by $\varphi/2$; multiplying by $\bar q$ on the right is a right-isoclinic rotation by $\varphi/2$. In the plane of $1$ and $u$ the two cancel, so $1$ and $u$ stay where they are. In the plane at right angles to it, which lies inside our three-dimensional space, they add up to the full angle $\varphi$: precisely the "left plus right equals a single rotation by twice the angle" from above. For example, with $u = k$ the rotation sends $i$ to $\cos\varphi\; i + \sin\varphi\; j$.
+
+Three things are worth noticing:
+
+- **Two quaternions per rotation.** $q$ and $-q$ give the same rotation, since the two signs cancel in $q v \bar q$. Turning by $360°$ gives $q = -1$, which also does nothing to space. This "two-to-one" relation is the mathematics behind the famous minus sign of spin-½ particles.
+- **Composition is multiplication.** Rotating first by $q$ and then by $p$ is the rotation by $pq$, because $p\,(q v \bar q)\,\bar p = (pq)\, v\, \overline{(pq)}$.
+- **The order matters**, just as $ij \neq ji$: a quarter turn about $z$ followed by one about $x$ is a different rotation from the same two turns in the opposite order.
+
+This is how computer games, robots and spacecraft store orientations: four numbers instead of nine, no gimbal lock, and smooth interpolation between orientations by moving along the 3-sphere.
+
+<Explorable scene={rotate3d} title="Quaternions rotate space" caption="Choose an axis u and an angle φ; the cube is rotated by v ↦ q v q̄. Switch to −q, or set φ = 360° (q = −1): nothing changes." />
+
+## Key takeaways
+
+- A rotation of the plane is the quarter turn $J$, exponentiated: $e^{\theta J} = \cos\theta + J\sin\theta$. Reading points as rotations-and-stretches gives the complex numbers, with $J = i$.
+- In three dimensions every rotation fixes an axis, and that is exactly why there is no way to multiply vectors of $\mathbb{R}^3$ that multiplies lengths.
+- In four dimensions the plane at right angles to a plane is another plane, and rotations can turn both. When both turn by the same angle (an isoclinic rotation), every vector moves by that angle and nothing stays fixed.
+- Isoclinic rotations are the points of the 3-sphere $S^3$. Reading points of $\mathbb{R}^4$ as isoclinic rotations-and-stretches gives the quaternions: $i^2 = j^2 = k^2 = ijk = -1$.
+- Back in three dimensions, $v \mapsto q v \bar q$ rotates space, with two quaternions $\pm q$ for every rotation.
+
+In the [next article](/personal-website/blog/hopf-fibration) we look at the 3-sphere of unit quaternions itself: how to see it through stereographic projection, and how left multiplication by $e^{i\theta}$ splits it into circles, every two of them linked: the **Hopf fibration**.

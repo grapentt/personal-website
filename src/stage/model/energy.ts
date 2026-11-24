@@ -1,0 +1,34 @@
+// A toy potential energy: every pair of atoms is joined by a harmonic spring.
+// Because it only depends on distances, it is exactly invariant under
+// translations and rotations of the whole molecule.
+
+import { sub, length, Vec3 } from './vec3';
+
+export interface Spring {
+  i: number;
+  j: number;
+  k: number;
+  rest: number;
+}
+
+const atom = (X: ArrayLike<number>, i: number): Vec3 => [X[3 * i], X[3 * i + 1], X[3 * i + 2]];
+const distance = (X: ArrayLike<number>, i: number, j: number) => length(sub(atom(X, j), atom(X, i)));
+
+/**
+ * Springs between all pairs, at rest in configuration X0.
+ * @param bonds  stiff springs; all other pairs get the soft constant
+ */
+export function springNetwork(X0: ArrayLike<number>, count: number, bonds: [number, number][], { bond = 20, other = 0.4 } = {}): Spring[] {
+  const isBond = (i: number, j: number) => bonds.some(([a, b]) => (a === i && b === j) || (a === j && b === i));
+  const springs: Spring[] = [];
+  for (let i = 0; i < count; i++) {
+    for (let j = i + 1; j < count; j++) {
+      springs.push({ i, j, k: isBond(i, j) ? bond : other, rest: distance(X0, i, j) });
+    }
+  }
+  return springs;
+}
+
+/** U(X) = Σ ½ k (d − d₀)², in eV when k is in eV/Å² and positions in Å. */
+export const springEnergy = (X: ArrayLike<number>, springs: Spring[]) =>
+  springs.reduce((sum, { i, j, k, rest }) => sum + 0.5 * k * (distance(X, i, j) - rest) ** 2, 0);
